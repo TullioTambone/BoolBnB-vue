@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>Ciao mondo</h1>
+  <h1>figli della merda</h1>
 </template>
 
 <style lang="scss">
