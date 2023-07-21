@@ -1,11 +1,27 @@
-<script >
+<script>
 
+    import HeaderComp from './components/HeaderComp.vue';
+    export default {
+        components: {
+            HeaderComp,
+
+        },
+        data() {
+            return {
+
+            }
+        },
+    }
 </script>
 
 <template>
-  <h1>figli della merda</h1>
+    <HeaderComp />
+
+    <router-view></router-view>
+
+
 </template>
 
 <style lang="scss">
-@use './style/main.scss';
+    @use './style/main.scss';
 </style>
