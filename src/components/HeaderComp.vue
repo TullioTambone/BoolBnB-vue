@@ -25,7 +25,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000">Login</a>
+                        <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/login">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
