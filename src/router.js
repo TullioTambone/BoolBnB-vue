@@ -1,6 +1,7 @@
 import{createRouter, createWebHistory} from 'vue-router'
 
-import Home from './pages/HomeComp.vue'
+import HomeComp from './pages/HomeComp.vue';
+import SearchComp from './pages/SearchComp.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -8,7 +9,12 @@ const router = createRouter({
         {
             path: '/',
             name: 'Home',
-            component: Home
+            component: HomeComp
+        },
+        {
+            path: '/search',
+            name: 'Search',
+            component: SearchComp
         }
     ]
 })
