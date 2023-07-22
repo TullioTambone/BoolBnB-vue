@@ -163,22 +163,12 @@ import ttServices from "@tomtom-international/web-sdk-services";
             </div>
         </div>
 
-        <!-- search -->
-        <div class="row">
-            <div class="col-12 mb-5">
-
-                <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search"  @keyup.enter="search"> -->
-                
-                
-            </div>
-        </div>
-
         <div class="container">
             <div class="row">
-                <div v-for="(elem, index) in apartments" :key='index' class="col-12 col-md-6 col-lg-4">
+                <RouterLink v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{slug:elem.slug}}" class="col-12 col-md-6 col-lg-4">
                     <h3>{{ elem.title }}</h3>
                     <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="title">
-                </div>
+                </RouterLink>
 
                 <div class="col-12" v-if="apartments.length === 0">
                     <h2>Non ci sono Appartamenti</h2>
