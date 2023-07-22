@@ -22,7 +22,9 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 bedrooms: 0,
                 selectRooms: [1, 2, 3, 4, 5],
                 address: '',
-                distance: 20,
+                longitude: 0,
+                latitude: 0,
+                distance: 20
             }
         },
         mounted(){
@@ -42,13 +44,15 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     page: apartmentApiPage
                 }
 
-                if(this.address){
+                if(this.address != ''){
                     params.address = this.address,
                     params.longitude = this.longitude,
-                    params.latitude = this.latitude,
+                    params.latitude = this.latitude
+                }
+                
+                if(this.distance){
                     params.distance = this.distance
                 }
-
                 if ( this.rooms !== 0) {
                     params.rooms = this.rooms
                 }
@@ -65,6 +69,8 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     this.apartments = res.data.apartment.data
                     this.currentPage = res.data.apartment.current_page
                     this.lastPage = res.data.apartment.last_page
+                    this.longitude = res.data.apartment.data[0].longitude
+                    this.latitude = res.data.apartment.data[0].latitude
                 })
 
                 // // tom tom
