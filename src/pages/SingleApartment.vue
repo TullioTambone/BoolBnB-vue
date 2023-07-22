@@ -16,9 +16,9 @@ export default{
         getSingleApartment(){
             axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
             .then(res => {
-                this.apartment = res.data.apartment;
+                this.apartment = res.data.apartment.data;
             },error => {
-                if(res.data.success){
+                if(this.res.data.data.success){
                     this.$router.push({name: 'NotFound'})
                 }
             })
@@ -28,7 +28,7 @@ export default{
 </script>
 
 <template>
-<h1>{{ apartment.title }}</h1>
+
 </template>
 
 <style lang="scss" scoped>
