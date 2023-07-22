@@ -24,7 +24,7 @@ import axios from 'axios';
     }
 </script>
 <template>
-    <h1>ciaooooo</h1>
+    <h1>home page</h1>
     <div class="container">
         <div class="row">
             <div v-for="(elem, index) in this.apartments" :key='index' class="col-12 col-md-6 col-lg-4">
