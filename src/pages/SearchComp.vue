@@ -22,6 +22,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 bedrooms: 0,
                 selectRooms: [1, 2, 3, 4, 5],
                 address: '',
+                distance: 20,
             }
         },
         mounted(){
@@ -44,7 +45,8 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 if(this.address){
                     params.address = this.address,
                     params.longitude = this.longitude,
-                    params.latitude = this.latitude
+                    params.latitude = this.latitude,
+                    params.distance = this.distance
                 }
 
                 if ( this.rooms !== 0) {
@@ -130,6 +132,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                                 </select>
                             </div>
 
+                            <!-- servizi -->
                             <div class="div row mb-3">
                                 <label for="" class="form-label">Servizi</label>
                                 <label for="" v-for="(e, i) in services" :key="i" class="col-4">
@@ -138,6 +141,13 @@ import ttServices from "@tomtom-international/web-sdk-services";
                                         {{ e.name }}
                                     </div>
                                 </label>
+                            </div>
+
+                            <!-- distanza -->
+                            <div class="div row mb-3">
+                                <label for="distance" class="form-label">Distanza Km</label>
+                                <input type="number" id="distance" v-model="distance" min="1" @keyup.enter="getApartment()">
+                                <button @click="getApartment()">Cerca</button>
                             </div>
                         </div>
                     </div>
