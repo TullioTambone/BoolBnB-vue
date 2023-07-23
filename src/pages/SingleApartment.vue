@@ -30,7 +30,10 @@ export default{
 </script>
 
 <template>
-    <h3>{{ this.apartment.title }}</h3>
+    <div v-if="apartment">
+
+        <h3>{{ apartment.title }}</h3>
+    </div>
         
 </template>
 

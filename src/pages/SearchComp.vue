@@ -39,27 +39,42 @@ import ttServices from "@tomtom-international/web-sdk-services";
         methods: {
             getApartment(apartmentApiPage){
 
+                
                 const params = {
                     page: apartmentApiPage
                 }
-
-                if(this.address !== ''){
-                    params.address = this.address,
-                    params.longitude = this.longitude,
-                    params.latitude = this.latitude
+                
+                // address
+                if(this.address){
+                    params.address = this.address
                 }
                 
+                // se abbiamo la distanza facciamo partire tom tom per ottenere le coordinate e poi passarle alla chiamata axios come parametri
                 if(this.distance){
                     params.distance = this.distance
+
+                    // if(this.address) {
+
+                    //     this.getTom();
+                    //     params.longitude = this.longitude
+                    //     params.latitude = this.latitude
+                    // } else {
+                    // }
+                    params.longitude = this.longitude
+                    params.latitude = this.latitude
                 }
+
+                // rooms
                 if ( this.rooms !== 0) {
                     params.rooms = this.rooms
                 }
                 
+                // bedrooms
                 if ( this.bedrooms !== 0) {
                     params.bedrooms = this.bedrooms
                 }
 
+                // services
                 if(this.selectedServices.length > 0){
                     params.services_ids = this.selectedServices.join(',');
                 }   
@@ -113,14 +128,14 @@ import ttServices from "@tomtom-international/web-sdk-services";
 
 
                         // Verifica se ci sono risultati validi
-                        if (this.isAddressOk) {
+                        // if (this.isAddressOk) {
                             // Ottenimento delle coordinate di latitudine e longitudine
-                            this.latitude = results[0].position.lat;
-                            this.longitude = results[0].position.lng;
-                            this.getApartment();
-                        } else {
-                            console.error('Nessun risultato trovato per l\'indirizzo fornito.');
-                        }
+                        //     this.latitude = results[0].position.lat;
+                        //     this.longitude = results[0].position.lng;
+
+                        // } else {
+                        //     console.error('Nessun risultato trovato per l\'indirizzo fornito.');
+                        // }
                     }
                 )
             }
@@ -133,7 +148,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
                 <!-- ricerca per longitudine -->
                 <label  for="address" class="form-label fw-semibold me-2">Ricerca</label>
-                <input id="address" v-model="address" type="text" class="w-100" placeholder="Inserisci la città o l'indirizzo" @keyup.enter="getTom()"> <button @click="getTom()">Cerca</button>
+                <input id="address" v-model="address" type="text" class="w-100" placeholder="Inserisci la città o l'indirizzo" @keyup.enter="getApartment()"> <button @click="getApartment()">Cerca</button>
             </div>
             <div class="col-12 col-md-2 col-lg-2">
 
