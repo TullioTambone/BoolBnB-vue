@@ -117,7 +117,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             // Ottenimento delle coordinate di latitudine e longitudine
                             this.latitude = results[0].position.lat;
                             this.longitude = results[0].position.lng;
-
+                            this.getApartment();
                         } else {
                             console.error('Nessun risultato trovato per l\'indirizzo fornito.');
                         }
@@ -133,7 +133,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
                 <!-- ricerca per longitudine -->
                 <label  for="address" class="form-label fw-semibold me-2">Ricerca</label>
-                <input id="address" v-model="address" type="text" class="w-100" placeholder="Inserisci la città o l'indirizzo" @keyup.enter="getApartment()"> <button @click="getTom()">Cerca</button>
+                <input id="address" v-model="address" type="text" class="w-100" placeholder="Inserisci la città o l'indirizzo" @keyup.enter="getTom()"> <button @click="getTom()">Cerca</button>
             </div>
             <div class="col-12 col-md-2 col-lg-2">
 
