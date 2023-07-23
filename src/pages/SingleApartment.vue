@@ -9,15 +9,17 @@ export default{
             apartment: null
         }
     },
-    created(){
+    mounted(){
         this.getSingleApartment()
     },
     methods:{
         getSingleApartment(){
             axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
             .then(res => {
-                this.apartment = res.data.apartment.data;
-            },error => {
+                this.apartment = res.data.apartment;
+                console.log(res.data)
+            }
+            ,error => {
                 if(this.res.data.data.success){
                     this.$router.push({name: 'NotFound'})
                 }
@@ -28,7 +30,8 @@ export default{
 </script>
 
 <template>
-
+    <h3>{{ this.apartment.title }}</h3>
+        
 </template>
 
 <style lang="scss" scoped>

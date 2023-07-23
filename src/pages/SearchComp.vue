@@ -17,7 +17,6 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 selectedServices: [],
                 currentPage: 1,
                 lastPage: 5,
-
                 rooms: 0,
                 bedrooms: 0,
                 selectRooms: [1, 2, 3, 4, 5],
@@ -28,14 +27,14 @@ import ttServices from "@tomtom-international/web-sdk-services";
             }
         },
         mounted(){
-            this.getApartment(),
+            this.getApartment(1),
             this.getServices()
         },
         watch:{
-            selectedServices: {
-                handler: 'getApartment',
-                deep: true
-            }
+            // selectedServices: {
+            //     handler: 'getApartment',
+            //     deep: true
+            // }
         },
         methods: {
             getApartment(apartmentApiPage){
@@ -44,7 +43,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     page: apartmentApiPage
                 }
 
-                if(this.address != ''){
+                if(this.address !== ''){
                     params.address = this.address,
                     params.longitude = this.longitude,
                     params.latitude = this.latitude
@@ -65,7 +64,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     params.services_ids = this.selectedServices.join(',');
                 }   
 
-                axios.get(`${this.baseUrl}/api/apartments`, {params}).then((res) =>{
+                axios.get(`${this.baseUrl}/api/apartments`, { params } ).then((res) =>{
                     this.apartments = res.data.apartment.data
                     this.currentPage = res.data.apartment.current_page
                     this.lastPage = res.data.apartment.last_page
@@ -107,41 +106,48 @@ import ttServices from "@tomtom-international/web-sdk-services";
             </div>
             <div class="col-12 col-md-2 col-lg-2">
 
+                <!-- button offcanvas -->
                 <button class="btn border py-1 px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtri</button>
 
+                <!-- offcanvas -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+
+                    <!-- header -->
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasRightLabel">Filtraggio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+
+                    <!-- body -->
                     <div class="offcanvas-body">
                         <div class="col-12">
-                            <!-- stanze totali -->
+
+                            <!-- Stanze totali -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze</label>
 
-                                <select @change="getApartment()" v-model="rooms" class="form-select form-select-lg" name="" id="">
+                                <select v-model="rooms" class="form-select form-select-lg" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
 
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
                                 </select>
                             </div>
 
-                            <!-- letti -->
+                            <!-- Stanze da Letto -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze da Letto</label>
 
-                                <select @change="getApartment()" v-model="bedrooms" class="form-select form-select-lg" name="" id="">
+                                <select v-model="bedrooms" class="form-select form-select-lg" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
 
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
                                 </select>
                             </div>
 
-                            <!-- servizi -->
+                            <!-- Servizi -->
                             <div class="div row mb-3">
-                                <label for="" class="form-label">Servizi</label>
-                                <label for="" v-for="(e, i) in services" :key="i" class="col-4">
+                                <label class="form-label">Servizi</label>
+                                <label v-for="(e, i) in services" :key="i" class="col-4">
                                     <div>
                                         <input type="checkbox" :value="e.id" v-model="selectedServices">
                                         {{ e.name }}
@@ -149,32 +155,40 @@ import ttServices from "@tomtom-international/web-sdk-services";
                                 </label>
                             </div>
 
-                            <!-- distanza -->
+                            <!-- Distanza -->
                             <div class="div row mb-3">
                                 <label for="distance" class="form-label">Distanza Km</label>
-                                <input type="number" id="distance" v-model="distance" min="1" @keyup.enter="getApartment()">
-                                <button @click="getApartment()">Cerca</button>
+                                <input type="number" id="distance" v-model="distance" min="1">
                             </div>
+
+                            <!-- button -->
+                            <button @click="getApartment()">Filtra</button>
                         </div>
                     </div>
-                </div>
-
-            
+                </div>            
             </div>
         </div>
 
+        <!-- apartments -->
         <div class="container">
             <div class="row">
-                <RouterLink v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{slug:elem.slug}}" class="col-12 col-md-6 col-lg-4">
+
+                <router-link :to="{ name: 'SingleApartment', params:{ slug: 'ciao2-d-1' }}" class="col-12 col-md-6 col-lg-4">
+                    single_apartment
+                </router-link>
+
+                <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
                     <h3>{{ elem.title }}</h3>
-                    <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="title">
-                </RouterLink>
+                    <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="elem.title">
+                </router-link>
 
                 <div class="col-12" v-if="apartments.length === 0">
                     <h2>Non ci sono Appartamenti</h2>
                 </div>
             </div>
         </div>
+
+        <!-- pagination -->
         <ul class="pagination my-2">
             <li class="page-item">
                 <a class="page-link" @click.prevent="getApartment(currentPage - 1)" href="#" aria-label="Previous" :disabled="currentPage === 1">
