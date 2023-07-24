@@ -16,7 +16,8 @@ import axios from 'axios';
         methods: {
             getApartment(){
                 axios.get(`${this.baseUrl}/api/apartments`).then((res) =>{
-                    this.apartments = res.data.apartment
+                    this.apartments = res.data.apartment.data
+                    console.log(res)
                 })
             }
         }
@@ -25,11 +26,11 @@ import axios from 'axios';
 </script>
 <template>
     <h1>home page</h1>
-    <div class="container">
+    <div v-if="apartments" class="container">
         <div class="row">
-            <div v-for="(elem, index) in this.apartments" :key='index' class="col-12 col-md-6 col-lg-4">
+            <div v-for="(elem, index) in apartments" :key='index' class="col-12 col-md-6 col-lg-4">
                 <h3>{{ elem.title }}</h3>
-                <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="title">
+                <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="elem.title">
             </div>
         </div>
     </div>
