@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
-import { myStore } from '../store.js';
+
 
     export default {
         name: "SearchComp",
@@ -10,7 +10,7 @@ import { myStore } from '../store.js';
         },
         data() {
             return {
-                myStore: myStore(),
+                address: '',
                 apartments:[],
                 baseUrl: 'http://127.0.0.1:8000',
                 services: null,
@@ -35,11 +35,44 @@ import { myStore } from '../store.js';
             //     handler: 'getApartment',
             //     deep: true
             // }
+            address() {
+                this.updateFiltersAndFetchData();
+            },
+            distance() {
+                this.updateFiltersAndFetchData();
+            },
+            rooms() {
+                this.updateFiltersAndFetchData();
+            },
+            bedrooms() {
+                this.updateFiltersAndFetchData();
+            },
+            selectedServices() {
+                this.updateFiltersAndFetchData();
+            },
         },
         methods: {
+            updateFiltersAndFetchData() {
+                const params = {
+                    address: this.address,
+                    distance: this.distance,
+                    rooms: this.rooms,
+                    bedrooms: this.bedrooms,
+                    services_ids: this.selectedServices.join(','),
+                    // ... Altri filtri se necessario ...
+                };
+
+                // Aggiorna l'URL senza ricaricare la pagina
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: params,
+                });
+
+                // Richiama la funzione getApartment() per ottenere i dati filtrati dal backend
+                this.getApartment(1);
+            },
             getApartment(apartmentApiPage){
 
-                
                 const params = {
                     page: apartmentApiPage
                 }
@@ -47,6 +80,7 @@ import { myStore } from '../store.js';
                 // address
                 if(this.address){
                     params.address = this.address
+                    this.getTom()
                 }
                 
                 // se abbiamo la distanza 
@@ -70,6 +104,7 @@ import { myStore } from '../store.js';
                 if(this.selectedServices.length > 0){
                     params.services_ids = this.selectedServices.join(',');
                 }   
+                
 
                 axios.get(`${this.baseUrl}/api/apartments`, { params } ).then((res) =>{
                     console.log(res.data.apartment)
@@ -101,7 +136,7 @@ import { myStore } from '../store.js';
  
                             for (const elem of results) {                          
                                 
-                                const userAddressLower = this.address.toLowerCase();
+                                const userAddressLower = myStore.address.toLowerCase();
                                 const resultAddressLower = elem.address.freeformAddress.toLowerCase();
 
                                 // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
@@ -117,6 +152,36 @@ import { myStore } from '../store.js';
                         }
                     }
                 )
+            },
+            autocomplete() {    
+                // Ottenimento dell'indirizzo dal campo input
+                const search = document.querySelector('#search');
+            
+                if( search.value ) {
+
+                    ttServices.services.geocode({
+                        batchMode: 'async',
+                        key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                        query: search.value,
+                        countrySet: 'IT',
+                        language: 'it-IT',
+                    }).then(
+                        function (response) {
+                            
+                            const results = response.results;
+                            console.log(results)                
+            
+                            // se abbiamo dei risultati ottenuti
+                            if (results.length)  {   
+            
+                                for (const elem of results) {
+                                    document.getElementById('datalistOptions').innerHTML += `<option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>`;
+                                }
+                            }
+                            
+                        }
+                    );
+                } 
             }
         }
     }
@@ -128,7 +193,7 @@ import { myStore } from '../store.js';
             <!-- search -->
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
                 
-                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="myStore.address"  list="datalistOptions" @keyup="myStore.autocomplete" @keyup.enter="getApartment()">
+                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
                 <button class="btn btn-outline-success" type="submit" @click="getApartment()">
@@ -158,7 +223,7 @@ import { myStore } from '../store.js';
                             <!-- Ricerca -->
                             <div class="mb-3">
                                 <label class="form-label">Ricerca</label>
-                                <input v-model="myStore.address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
+                                <input v-model="this.address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
                             </div>
 
                             <!-- Stanze totali -->
