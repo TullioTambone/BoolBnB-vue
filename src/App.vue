@@ -15,7 +15,7 @@
 </script>
 
 <template>
-    <HeaderComp />
+    <HeaderComp/>
 
     <main>
         <router-view></router-view>
