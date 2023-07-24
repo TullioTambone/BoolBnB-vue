@@ -17,6 +17,8 @@ export default{
         this.getSingleApartment()
     },
     methods:{
+
+        // chiamata api per il singolo appartamento
         getSingleApartment(){
             axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
             .then(res => {
@@ -29,12 +31,15 @@ export default{
                 }
             })
         },
+
+        // invio del form per mandare l'email
         sendForm() {
 
             const data = {
                 name: this.name,
                 email: this.email,
-                message: this.message
+                message: this.message,
+                apartment_id: this.apartment.id
             }      
 
 
@@ -133,20 +138,22 @@ export default{
                 <form action="" @submit.prevent="sendForm()">
                     <div class="mb-3">
                         <label for="" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="" placeholder="Nome" name="name" v-model="name">
+                        <input type="text" class="form-control" id="name" placeholder="Nome" name="name" v-model="name">
                     </div>
     
                     <div class="mb-3">
                         <label for="" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="" placeholder="name@example.com" name="email" v-model="email">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" v-model="email">
                     </div>
     
                     <div class="mb-3">
                         <div class="mb-3">
                             <label for="" class="form-label">Messaggio</label>
-                            <textarea class="form-control" id="" rows="3" name="message" v-model="message"></textarea>
+                            <textarea class="form-control" id="message" rows="3" name="message" v-model="message"></textarea>
                         </div>
                     </div>
+
+                    <input type="hidden" name="apartment_id" v-model="apartment.id">
     
                     <button type="submit" class="btn btn-primary">
                         Invia
