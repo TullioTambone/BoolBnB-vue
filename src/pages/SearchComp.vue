@@ -1,15 +1,16 @@
 <script>
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
+import { myStore } from '../store.js';
 
     export default {
         name: "SearchComp",
         components: {
 
-
         },
         data() {
             return {
+                myStore: myStore(),
                 apartments:[],
                 baseUrl: 'http://127.0.0.1:8000',
                 services: null,
@@ -19,7 +20,6 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 rooms: 0,
                 bedrooms: 0,
                 selectRooms: [1, 2, 3, 4, 5],
-                address: '',
                 longitude: 0,
                 latitude: 0,
                 distance: 20,
@@ -124,13 +124,19 @@ import ttServices from "@tomtom-international/web-sdk-services";
 <template>
     <div class="container mt-3">
         <div class="row mb-5">
+
+            <!-- search -->
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
                 
-                <input class="form-control me-2 w-75" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="address" @keyup.enter="getApartment()">
+                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="myStore.address"  list="datalistOptions" @keyup="myStore.autocomplete" @keyup.enter="getApartment()">
+                <datalist id="datalistOptions">                           
+                </datalist>
                 <button class="btn btn-outline-success" type="submit" @click="getApartment()">
                     Cerca
                 </button>
             </div>
+
+            <!-- filter -->
             <div class="col-12 col-md-2 col-lg-2">
 
                 <!-- button offcanvas -->
@@ -152,7 +158,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             <!-- Ricerca -->
                             <div class="mb-3">
                                 <label class="form-label">Ricerca</label>
-                                <input v-model="address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
+                                <input v-model="myStore.address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
                             </div>
 
                             <!-- Stanze totali -->
