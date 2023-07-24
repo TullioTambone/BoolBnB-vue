@@ -2,7 +2,6 @@
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
 
-
     export default {
         name: "SearchComp",
         components: {
@@ -23,55 +22,87 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 longitude: 0,
                 latitude: 0,
                 distance: 20,
-                isAddressOk: false
+                tomTomResults: null
             }
         },
         mounted(){
-            this.getApartment(1),
-            this.getServices()
+            // this.getApartment(1),
+            this.getServices(),
+            this.getFiltersFromURL()
         },
         watch:{
-            // selectedServices: {
-            //     handler: 'getApartment',
-            //     deep: true
-            // }
-            address() {
-                this.updateFiltersAndFetchData();
-            },
-            distance() {
-                this.updateFiltersAndFetchData();
-            },
-            rooms() {
-                this.updateFiltersAndFetchData();
-            },
-            bedrooms() {
-                this.updateFiltersAndFetchData();
-            },
-            selectedServices() {
-                this.updateFiltersAndFetchData();
-            },
         },
         methods: {
             updateFiltersAndFetchData() {
-                const params = {
-                    address: this.address,
-                    distance: this.distance,
-                    rooms: this.rooms,
-                    bedrooms: this.bedrooms,
-                    services_ids: this.selectedServices.join(','),
-                    // ... Altri filtri se necessario ...
-                };
+
+                const params = {}
+
+                // address
+                if(this.distance !== 20){
+                    params.distance = this.distance
+                }
+
+                // address
+                if(this.address){
+                    params.address = this.address
+                }
+
+                // rooms
+                if ( this.rooms !== 0) {
+                    params.rooms = this.rooms
+                }
+
+                // bedrooms
+                if ( this.bedrooms !== 0) {
+                    params.bedrooms = this.bedrooms
+                }
+
+                // services
+                if(this.selectedServices.length > 0){
+                    params.services_ids = this.getServiceNamesByIds(this.services, this.selectedServices).join(',');
+                } 
 
                 // Aggiorna l'URL senza ricaricare la pagina
                 this.$router.replace({
                     path: this.$route.path,
                     query: params,
                 });
-
-                // Richiama la funzione getApartment() per ottenere i dati filtrati dal backend
-                this.getApartment(1);
             },
-            getApartment(apartmentApiPage){
+            async getFiltersFromURL() {
+                const query = this.$route.query;
+
+                if (query.address) {
+                    this.address = query.address;
+                }
+                if (query.rooms) {
+                    this.rooms = query.rooms;
+                }
+                if (query.bedrooms) {
+                    this.bedrooms = query.bedrooms;
+                }
+                if (query.services_ids) {
+
+                    const serviceNames = query.services_ids.split(',');  
+                    await this.getServices();                  
+                    this.selectedServices = this.getServiceIdsByNames(this.services, serviceNames);
+                }
+
+                // Chiamata ad getTom() se address è presente (per ottenere latitude e longitude)
+                if (this.address) {
+                    this.getTom().then(() => {
+                    // Ripristina i valori dei filtri dopo aver ottenuto latitude e longitude
+                        if (query.distance) {
+                            this.distance = parseInt(query.distance);
+                        }
+                        this.getApartment();
+                    });
+
+                } else {
+                    // Esegui la ricerca con i filtri applicati
+                    this.getApartment(1);
+                }
+            },
+            async getApartment(apartmentApiPage){
 
                 const params = {
                     page: apartmentApiPage
@@ -79,17 +110,14 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 
                 // address
                 if(this.address){
+                    await this.getTom()
                     params.address = this.address
-                    this.getTom()
-                }
-                
-                // se abbiamo la distanza 
-                if(this.distance){
                     params.distance = this.distance
                     params.longitude = this.longitude
                     params.latitude = this.latitude
+                    console.log(this.latitude, this.longitude)
                 }
-
+                
                 // rooms
                 if ( this.rooms !== 0) {
                     params.rooms = this.rooms
@@ -111,47 +139,71 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     this.apartments = res.data.apartment.data
                     this.currentPage = res.data.apartment.current_page
                     this.lastPage = res.data.apartment.last_page
+                    this.updateFiltersAndFetchData()
                 })
             },
-            getServices(){
-                axios.get(`${this.baseUrl}/api/services`).then(res => {
-                    this.services = res.data.services
-                })
-            },
-            getTom(){
-                // // tom tom
-                ttServices.services.geocode({
-                    batchMode: 'async',
-                    key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                    query: this.address,
-                    countrySet: 'IT',
-                    language: 'it-IT',
-                }).then( (response) => {
-                        
-                        const results = response.results;
-                        console.log(results)
-                        
-                        // se abbiamo dei risultati ottenuti
-                        if (results.length)  {   
- 
-                            for (const elem of results) {                          
-                                
-                                const userAddressLower = myStore.address.toLowerCase();
-                                const resultAddressLower = elem.address.freeformAddress.toLowerCase();
+            async getServices(){
+                try {
+                    const response = await axios.get(`${this.baseUrl}/api/services`)
+                    this.services = response.data.services
+                } catch (error) {
+                    console.error(error);
+                }
 
-                                // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
-                                if (resultAddressLower.includes(userAddressLower)) {
-                                    this.isAddressOk = true;
-                                    this.latitude = elem.position.lat;
-                                    this.longitude = elem.position.lng;
-                                    break; 
-                                } else {
-                                    console.error('Nessun risultato trovato per l\'indirizzo fornito.');
-                                }
-                            }                            
+            },
+            getServiceNamesByIds(services, selectedIds) {
+                return selectedIds.map(id => {
+                    const service = services.find(s => s.id === id);
+                    return service ? service.name : '';
+                });
+            },
+            getServiceIdsByNames(services, selectedNames) {
+                return selectedNames.map((name) => {
+                    const service = services.find((s) => s.name === name);
+                    return service ? service.id : null;
+                });
+            },
+            // tom tom
+            async getTom(){
+
+                try {
+                    const response = await ttServices.services.geocode({
+                        batchMode: 'async',
+                        key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                        query: this.address,
+                        countrySet: 'IT',
+                        language: 'it-IT',
+                    }).then( (response) => {
+                            
+                            const results = response.results;
+                            // console.log(results)
+                            
+                            // se abbiamo dei risultati ottenuti
+                            if (results.length)  {   
+
+                                const userAddressLower = this.address.toLowerCase();
+                    
+                                for (const elem of results) {                          
+                                                
+                                    const resultAddressLower = elem.address.freeformAddress.toLowerCase();
+                    
+                                    // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
+                                    if (resultAddressLower.includes(userAddressLower)) {
+                                        this.latitude = elem.position.lat;
+                                        this.longitude = elem.position.lng;
+                                        console.log(this.latitude, this.longitude)
+                    
+                                        break; 
+                                    } 
+                                }                        
+                            } else {
+                                console.error('Nessun risultato trovato per l\'indirizzo fornito.');
+                            }
                         }
-                    }
-                )
+                    )
+                } catch (error) {
+                    console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
+                }
             },
             autocomplete() {    
                 // Ottenimento dell'indirizzo dal campo input
@@ -169,19 +221,23 @@ import ttServices from "@tomtom-international/web-sdk-services";
                         function (response) {
                             
                             const results = response.results;
-                            console.log(results)                
+                            // console.log(results)                
             
                             // se abbiamo dei risultati ottenuti
                             if (results.length)  {   
             
                                 for (const elem of results) {
-                                    document.getElementById('datalistOptions').innerHTML += `<option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>`;
+                                    document.getElementById('datalistOptions').innerHTML += `
+                                    <option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>
+                                    `;
                                 }
                             }
                             
                         }
-                    );
-                } 
+                    ).catch((error) => {
+                        console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
+                    });
+                }
             }
         }
     }
@@ -223,8 +279,11 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             <!-- Ricerca -->
                             <div class="mb-3">
                                 <label class="form-label">Ricerca</label>
-                                <input v-model="this.address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
+                                <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address" list="datalistOptions" @keyup="autocomplete()" required>
+                                <datalist id="datalistOptions">                           
+                                </datalist>
                             </div>
+
 
                             <!-- Stanze totali -->
                             <div class="mb-3">
