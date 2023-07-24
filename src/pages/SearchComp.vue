@@ -49,17 +49,9 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     params.address = this.address
                 }
                 
-                // se abbiamo la distanza facciamo partire tom tom per ottenere le coordinate e poi passarle alla chiamata axios come parametri
+                // se abbiamo la distanza 
                 if(this.distance){
                     params.distance = this.distance
-
-                    // if(this.address) {
-
-                    //     this.getTom();
-                    //     params.longitude = this.longitude
-                    //     params.latitude = this.latitude
-                    // } else {
-                    // }
                     params.longitude = this.longitude
                     params.latitude = this.latitude
                 }
@@ -106,7 +98,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                         
                         // se abbiamo dei risultati ottenuti
                         if (results.length)  {   
-
+ 
                             for (const elem of results) {                          
                                 
                                 const userAddressLower = this.address.toLowerCase();
@@ -121,21 +113,8 @@ import ttServices from "@tomtom-international/web-sdk-services";
                                 } else {
                                     console.error('Nessun risultato trovato per l\'indirizzo fornito.');
                                 }
-
-                            }
-                            
+                            }                            
                         }
-
-
-                        // Verifica se ci sono risultati validi
-                        // if (this.isAddressOk) {
-                            // Ottenimento delle coordinate di latitudine e longitudine
-                        //     this.latitude = results[0].position.lat;
-                        //     this.longitude = results[0].position.lng;
-
-                        // } else {
-                        //     console.error('Nessun risultato trovato per l\'indirizzo fornito.');
-                        // }
                     }
                 )
             }
@@ -143,17 +122,19 @@ import ttServices from "@tomtom-international/web-sdk-services";
     }
 </script>
 <template>
-    <div class="container">
-        <div class="row">
+    <div class="container mt-3">
+        <div class="row mb-5">
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
-                <!-- ricerca per longitudine -->
-                <label  for="address" class="form-label fw-semibold me-2">Ricerca</label>
-                <input id="address" v-model="address" type="text" class="w-100" placeholder="Inserisci la città o l'indirizzo" @keyup.enter="getApartment()"> <button @click="getApartment()">Cerca</button>
+                
+                <input class="form-control me-2 w-75" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="address" @keyup.enter="getApartment()">
+                <button class="btn btn-outline-success" type="submit" @click="getApartment()">
+                    Cerca
+                </button>
             </div>
             <div class="col-12 col-md-2 col-lg-2">
 
                 <!-- button offcanvas -->
-                <button class="btn border py-1 px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtri</button>
+                <button class="btn btn-primary border py-2 px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
 
                 <!-- offcanvas -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -168,11 +149,17 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     <div class="offcanvas-body">
                         <div class="col-12">
 
+                            <!-- Ricerca -->
+                            <div class="mb-3">
+                                <label class="form-label">Ricerca</label>
+                                <input v-model="address" type="text" class="form-control" placeholder="Inserisci la Città o l'Indirizzo">
+                            </div>
+
                             <!-- Stanze totali -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze</label>
 
-                                <select v-model="rooms" class="form-select form-select-lg" name="" id="">
+                                <select v-model="rooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
 
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
@@ -183,7 +170,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze da Letto</label>
 
-                                <select v-model="bedrooms" class="form-select form-select-lg" name="" id="">
+                                <select v-model="bedrooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
 
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
@@ -193,22 +180,22 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             <!-- Servizi -->
                             <div class="div row mb-3">
                                 <label class="form-label">Servizi</label>
-                                <label v-for="(e, i) in services" :key="i" class="col-4">
-                                    <div>
-                                        <input type="checkbox" :value="e.id" v-model="selectedServices">
+                                <div v-for="(e, i) in services" :key="i" class="col-5 form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" :value="e.id" v-model="selectedServices">
+                                    <label class="form-check-label" for="inlineCheckbox1">
                                         {{ e.name }}
-                                    </div>
-                                </label>
+                                    </label>
+                                </div>
                             </div>
 
                             <!-- Distanza -->
                             <div class="div row mb-3">
                                 <label for="distance" class="form-label">Distanza Km</label>
-                                <input type="number" id="distance" v-model="distance" min="1">
+                                <input type="number" id="distance" class="form-control" v-model="distance" min="1">
                             </div>
 
                             <!-- button -->
-                            <button @click="getApartment()">Filtra</button>
+                            <button class="btn btn-primary" @click="getApartment()">Filtra</button>
                         </div>
                     </div>
                 </div>            
