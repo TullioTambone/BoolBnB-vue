@@ -17,7 +17,6 @@ export default{
         this.getSingleApartment()
     },
     methods:{
-
         // chiamata api per il singolo appartamento
         getSingleApartment(){
             axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
@@ -41,7 +40,6 @@ export default{
                 message: this.message,
                 apartment_id: this.apartment.id
             }      
-
 
             axios.post(`${this.baseUrl}/api/contacts`, data ).then( response => {
 
@@ -163,6 +161,22 @@ export default{
             </div>
         </div>
     </div>
+
+
+        <!-- braintree -->
+    <!-- <div class="container my-5 py-12">
+        <div class="row justify-content-center">
+            <div class="col-6">
+
+                <div id="dropin-container"></div>
+            
+                <button id="submit-button" class="button button--small button--green">Submit payment</button>
+            </div>
+        </div>
+    </div> -->
+
+
+
         
 </template>
 
