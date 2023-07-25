@@ -42,11 +42,14 @@
         </nav> -->
 
 
-    <nav class="navbar navbar-expand-lg py-1">
+    <nav class="navbar navbar-expand-lg py-1 z-3">
         <div class="container-fluid d-flex justify-content-between">
             <div>
                 <h1>BoolBnB</h1>
             </div>
+
+
+    
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,6 +100,9 @@
         justify-content: center;
         align-items: center;
         background: #112c38;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
     }
 
     .navbar-collapse {

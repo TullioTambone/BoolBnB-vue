@@ -3,6 +3,7 @@ import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
 
 import JumboComp from '../components/JumboComp.vue';
+import CardComp from '../components/CardComp.vue';
     export default {
     name: "HomeComp",
     data() {
@@ -46,18 +47,19 @@ import JumboComp from '../components/JumboComp.vue';
         },
     },
     components: { 
-        JumboComp 
+        JumboComp,
+        CardComp
     }
 }
 </script>
 <template>
-    <h1>home page</h1>
-    <JumboComp/>
-    <div v-if="apartments" class="container">
-        <div class="row">
+    <!-- <h1>home page</h1> -->
+    <JumboComp :propsApartments="this.apartments"/>
+    <CardComp  v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
+        
 
             <!-- search -->
-            <div class="col-12 col-md-12 col-lg-12 d-flex align-items-center">
+            <!-- <div class="col-12 col-md-12 col-lg-12 d-flex align-items-center">
                 
                 <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address" @keyup="autocomplete()" list="datalistOptions">
                 <datalist id="datalistOptions">                           
@@ -65,15 +67,53 @@ import JumboComp from '../components/JumboComp.vue';
                 <router-link class="btn btn-outline-success" to="/search">
                     Cerca
                 </router-link>
-            </div>
+            </div> -->
 
-            <div v-for="(elem, index) in apartments" :key='index' class="col-12 col-md-6 col-lg-4">
+            <!-- <div v-for="(elem, index) in apartments" :key='index' class="col-12 col-md-6 col-lg-4">
                 <h3>{{ elem.title }}</h3>
                 <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="elem.title">
-            </div>
-        </div>
-    </div>
+            </div> -->
+
+                <!-- <div  v-for="(elem, index) in apartments" :key='index' class="card col-12 col-md-6 col-lg-4 gap-3 mt-4" style="width: 18rem;">
+                    <img :src="`${this.baseUrl}/storage/${elem.cover}`"   class="card-img-top" alt="elem.title">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ elem.title }}</h5>
+                        <p class="card-text">{{ elem.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ elem.address }}</li>
+                        <li class="list-group-item">n stanze da letto: {{ elem.bedrooms }} <br>
+                        n bagni {{ elem.bathrooms }}</li>
+                        <li class="list-group-item">{{ elem.price }}</li>
+                        <li  class="list-group-item"></li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div> -->
+
+                <!-- ultimo commento -->
+                 
+                <!-- <div v-for="(elem, index) in apartments" :key='index' class="col-12 col-md-6 col-lg-4 card mt-5">
+                    <div class="content">
+                        <div class="front">
+                            <img :src="`${this.baseUrl}/storage/${elem.cover}`"   class="card-img-top" alt="elem.title">
+                        </div>
+                        <div class="back">
+                            <h5 class="card-title">{{ elem.title }}</h5>
+                            <p class="card-text">{{ elem.description }}</p>
+                            <li class="list-group-item">{{ elem.address }}</li>
+                            <li class="list-group-item">n stanze da letto: {{ elem.bedrooms }} <br>
+                                n bagni {{ elem.bathrooms }}</li>
+                            <li class="list-group-item">{{ elem.price }}</li>
+                         </div>
+                    </div>
+                </div> -->
 </template>
+
+
+
 <style lang="scss" scoped>
 
 </style>
