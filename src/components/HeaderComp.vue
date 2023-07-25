@@ -42,10 +42,10 @@
         </nav> -->
 
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg py-1">
         <div class="container-fluid d-flex justify-content-between">
             <div>
-                <h1>BoolBnb</h1>
+                <h1>BoolBnB</h1>
             </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -113,6 +113,8 @@
         list-style: none;
         margin: 0 20px;
         transition: 0.5s;
+        padding: 11px;
+
     }
 
     ul li a {
@@ -120,11 +122,12 @@
         position: relative;
         text-decoration: none;
         padding: 5px;
-        font-size: 13px;
+        font-size: 16px;
         font-family: sans-serif;
         color: #fff;
         text-transform: uppercase;
         transition: 0.5s;
+
     }
 
     ul:hover li a {
