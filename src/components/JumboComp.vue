@@ -1,9 +1,10 @@
 <script>
 
-    import HeaderComp from './components/HeaderComp.vue';
+    
     export default {
+        name:'JumboComp',
         components: {
-            HeaderComp,
+            
 
         },
         data() {
@@ -15,15 +16,10 @@
 </script>
 
 <template>
-    <HeaderComp/>
-
-    <main>
-        <router-view></router-view>
-    </main>
-
+    <h1>qua ci va il componenete</h1>
 
 </template>
 
 <style lang="scss">
-    @use './style/main.scss';
+   
 </style>
