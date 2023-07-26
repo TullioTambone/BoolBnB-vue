@@ -59,7 +59,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .container {
-    height: 70vh;
+    height: 90vh;
     padding: 3rem 0;
     margin-left: 20px;
     .container-abs {
@@ -76,7 +76,7 @@ export default defineComponent({
       }
     }
     .contenitore {
-      width: 70%;
+      width: 80%;
       margin-right: 0;
       padding-bottom: 1rem;
 

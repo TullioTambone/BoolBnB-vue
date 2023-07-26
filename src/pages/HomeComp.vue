@@ -55,7 +55,12 @@ import CardComp from '../components/CardComp.vue';
 <template>
     <!-- <h1>home page</h1> -->
     <JumboComp :propsApartments="this.apartments"/>
-    <CardComp  v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
+    <div class="container">
+        <div class="row">
+             <CardComp v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
+        </div>
+    </div>
+   
         
 
             <!-- search -->
