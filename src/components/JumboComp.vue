@@ -40,16 +40,12 @@ export default defineComponent({
         </div>
     </div>
     <div class="contenitore">
-      <Carousel id="carousel" :autoplay="2000" :wrap-around="true">
+      <Carousel id="carousel" :autoplay="3000" :wrap-around="true">
         <Slide id="slide" v-for="elem in propsApartments" :key="index">
           <div class="carousel__item">
             <img :src="`${store.baseUrl}/storage/${elem.cover}`"  alt=""> 
           </div>
         </Slide>
-
-        <template #addons>
-          <Pagination />
-        </template>
       </Carousel>
     </div>
   
