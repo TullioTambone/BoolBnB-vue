@@ -28,21 +28,21 @@ export default{
 
             console.log(point);
             try {
-
                 let map = tt.map({
                     key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                    center: point, // Inverti la latitudine e longitudine per la posizione corretta
                     container: 'map',
-                    zoom: 15,
+                    ///dragPan: !isMobileOrTablet(),
+                    center: point,
+                    zoom: 15
                 });
                 
-                map.on('load', () => {
-                    new tt.Marker().setLngLat(point).addTo(map);
-                })
-
-    
                 map.addControl(new tt.FullscreenControl());
                 map.addControl(new tt.NavigationControl());
+                
+                map.on('load', () => {    
+                        new tt.Marker().setLngLat(point).addTo(map);
+                })    
+                
             } catch (error) {
                 console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
             }
