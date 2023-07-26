@@ -28,21 +28,21 @@ export default{
 
             console.log(point);
             try {
-
                 let map = tt.map({
                     key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                    center: point, // Inverti la latitudine e longitudine per la posizione corretta
                     container: 'map',
-                    zoom: 15,
+                    ///dragPan: !isMobileOrTablet(),
+                    center: point,
+                    zoom: 15
                 });
                 
-                map.on('load', () => {
-                    new tt.Marker().setLngLat(point).addTo(map);
-                })
-
-    
                 map.addControl(new tt.FullscreenControl());
                 map.addControl(new tt.NavigationControl());
+                
+                map.on('load', () => {    
+                        new tt.Marker().setLngLat(point).addTo(map);
+                })    
+                
             } catch (error) {
                 console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
             }
@@ -255,5 +255,40 @@ export default{
 </template>
 
 <style lang="scss" scoped>
-
+.marker-icon {
+    background-position: center;
+    background-size: 22px 22px;
+    border-radius: 50%;
+    height: 22px;
+    left: 4px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 22px;
+}
+.marker {
+    height: 30px;
+    width: 30px;
+}
+.marker-content {
+    background: #c30b82;
+    border-radius: 50% 50% 50% 0;
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    width: 30px;
+}
+.marker-content::before {
+    background: #ffffff;
+    border-radius: 50%;
+    content: "";
+    height: 24px;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    width: 24px;
+}
 </style>
