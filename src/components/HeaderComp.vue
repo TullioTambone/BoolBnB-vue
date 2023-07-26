@@ -47,29 +47,24 @@
             <div>
                 <h1>BoolBnB</h1>
             </div>
-
-
-    
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon icona-cl"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li>
                         <router-link class="nav-link" to="/">
-                            Home
+                            <i class="fa-solid fa-house-user"></i> Home
                         </router-link>
                     </li>
                     <li>
-                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login">Login</a>
+                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"> <i class="fa-solid fa-user"></i> Login</a>
                     </li>
                     <li>
                         <router-link class="nav-link" to="/search">
                             <span>
-                                Cerca
+                                <i class="fa-solid fa-magnifying-glass"></i> Cerca
                             </span>
                         </router-link>
                     </li>
@@ -169,5 +164,8 @@
         transition: transform 0.5s;
         transform-origin: left;
         transform: scaleX(1);
+    }
+    .fa-house:hover {
+        color: #112c38;
     }
 </style>
