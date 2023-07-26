@@ -1,4 +1,6 @@
 <script>
+import tt from "@tomtom-international/web-sdk-maps";
+import ttServices from "@tomtom-international/web-sdk-services";
 import axios from 'axios';
 
 export default{
@@ -17,18 +19,94 @@ export default{
         this.getSingleApartment()
     },
     methods:{
-        // chiamata api per il singolo appartamento
-        getSingleApartment(){
-            axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
-            .then(res => {
-                this.apartment = res.data.apartment;
-                console.log(res.data)
+
+        async getMap(longitude, latitude) {
+            //    PROVE PER INTEGRAZIONE MAPPA E PUNTATORE MAPPA
+
+            //document.querySelector('.mapboxgl-marker').classList.add("position-absolute");
+            const point =  [longitude, latitude];
+
+            console.log(point);
+            try {
+
+                let map = tt.map({
+                    key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                    center: point, // Inverti la latitudine e longitudine per la posizione corretta
+                    container: 'map',
+                    zoom: 15,
+                });
+                
+                map.on('load', () => {
+                    new tt.Marker().setLngLat(point).addTo(map);
+                })
+
+    
+                map.addControl(new tt.FullscreenControl());
+                map.addControl(new tt.NavigationControl());
+            } catch (error) {
+                console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
             }
-            ,error => {
+        },
+        async getTom(address){
+
+            try {
+                const response = await ttServices.services.geocode({
+                    batchMode: 'async',
+                    key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
+                    query: address,
+                    countrySet: 'IT',
+                    language: 'it-IT',
+                }).then( (response) => {
+                        
+                        const results = response.results;
+                        // console.log(results)
+                        
+                        // se abbiamo dei risultati ottenuti
+                        if (results.length)  {   
+
+                            const userAddressLower = address.toLowerCase();
+
+                            let latitude, longitude
+                
+                            for (const elem of results) {                          
+                                            
+                                let resultAddressLower = elem.address.freeformAddress.toLowerCase();
+                
+                                // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
+                                if (resultAddressLower.includes(userAddressLower)) {
+                                    latitude = elem.position.lat;
+                                    longitude = elem.position.lng;                
+                                    break; 
+                                } 
+                            }
+                            
+                            if(latitude && longitude) {
+                                this.getMap(longitude, latitude)
+                            }
+                        } else {
+                            console.error('Nessun risultato trovato per l\'indirizzo fornito.');
+                        }
+                    }
+                )
+            } catch (error) {
+                console.error('Si è verificato un errore nella richiesta al servizio di geocodifica di TomTom:', error);
+            }
+        },
+        // chiamata api per il singolo appartamento
+        async getSingleApartment(){
+            try {
+                const response = await axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
+           
+                this.apartment = response.data.apartment;
+
+                if (this.apartment.address) {
+                    this.getTom(this.apartment.address)
+                }
+            } catch (error) {
                 if(this.res.data.data.success){
                     this.$router.push({name: 'NotFound'})
                 }
-            })
+            }
         },
 
         // invio del form per mandare l'email
@@ -57,77 +135,87 @@ export default{
 </script>
 
 <template>
-    <div v-if="apartment" class="row">
-        <div class="col-12 col-md-6 col-lg-6 text-center">
+    <div class="container">
 
-            <div v-if="apartment.cover">
-                <img class="img-fluid" :src="`${this.baseUrl}/storage/${apartment.cover}`" :alt="apartment.title">
-            </div>
-                
-            <div class="row justify-content-center mt-3 gap-0">
-
-                <!-- carousel -->
-                <div v-if="apartment.images" class="carousel slide col-12 col-md-6 col-lg-6" id="carouselExampleAutoplaying" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-
-                        <!-- images -->
-                        <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item" :class="index === 0 ? 'active' : ''">                                
-                            <img class="d-block w-100" :src="`${this.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+        <div v-if="apartment" class="row">
+            <div class="col-12 col-md-6 col-lg-6 text-center">
+    
+                <!-- cover -->
+                <div v-if="apartment.cover">
+                    <img class="img-fluid" :src="`${this.baseUrl}/storage/${apartment.cover}`" :alt="apartment.title">
+                </div>
+                    
+                <!-- images -->
+                <div class="d-flex justify-content-center mt-3">
+    
+                    <!-- carousel -->
+                    <div v-if="apartment.images" class="carousel slide col-12 col-md-6 col-lg-6" id="carouselExampleAutoplaying" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+    
+                            <!-- images -->
+                            <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item" :class="index === 0 ? 'active' : ''">                                
+                                <img class="d-block w-100" :src="`${this.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- prev button -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-
-                    <!-- next button -->
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>                
+    
+                        <!-- prev button -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+    
+                        <!-- next button -->
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>                
+                </div>
             </div>
+    
+            <!-- details -->
+            <div class="col-12 col-md-6 col-lg-6">
+                <h1 class="border-bottom">{{ apartment.title }}</h1>
+                <div>
+                    <p>{{ apartment.description }}</p>
+                    <span class="d-block">
+                        numero stanza: {{ apartment.rooms }}
+                    </span>
+                    <span class="d-block">
+                        numero stanze letto: {{ apartment.bedrooms }}
+                    </span>
+                    <span class="d-block">
+                        numero bagni: {{ apartment.bathrooms }}
+                    </span>
+                    <span class="d-block">
+                        metri quadri: {{ apartment.square_meters }}mq
+                    </span>
+                    <span class="d-block">
+                    indirizzo: {{ apartment.address }}
+                    </span>
+                    <span v-if="apartment.price" class="d-block">
+                        prezzo: {{ apartment.price }}&euro;
+                    </span>
+                    <span class="d-block">
+                        visibilità: {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
+                    </span>
+                    <h5 class="mt-2"> Servizi</h5>
+    
+                    <span v-for="( elem, index ) in apartment.services" :key="index" class="d-block mt-1"> 
+                        <i class="fa-solid {{ elem.icon }} me-1 "></i> {{  elem.name }} 
+                    </span>
+                </div>
+            </div>    
         </div>
-
-
-        <div class="col-12 col-md-6 col-lg-6">
-            <h1 class="border-bottom">{{ apartment.title }}</h1>
-            <div>
-                <p>{{ apartment.description }}</p>
-                <span class="d-block">
-                    numero stanza: {{ apartment.rooms }}
-                </span>
-                <span class="d-block">
-                    numero stanze letto: {{ apartment.bedrooms }}
-                </span>
-                <span class="d-block">
-                    numero bagni: {{ apartment.bathrooms }}
-                </span>
-                <span class="d-block">
-                    metri quadri: {{ apartment.square_meters }}mq
-                </span>
-                <span class="d-block">
-                indirizzo: {{ apartment.address }}
-                </span>
-                <span v-if="apartment.price" class="d-block">
-                    prezzo: {{ apartment.price }}&euro;
-                </span>
-                <span class="d-block">
-                    visibilità: {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
-                </span>
-                <h5 class="mt-2"> Servizi</h5>
-
-                <span v-for="( elem, index ) in apartment.services" :key="index" class="d-block mt-1"> 
-                    <i class="fa-solid {{ elem.icon }} me-1 "></i> {{  elem.name }} 
-                </span>
-            </div>
-        </div>
-
     </div>
 
-    <div class="container m-5">
+    <!-- mappa -->
+    <div class="container">
+
+        <div id='map' class='map' style="height: 350px;"></div>
+    </div>
+
+    <div class="container p-5">
         <h3>Contattami</h3>
 
         <div class="row">
@@ -161,20 +249,6 @@ export default{
             </div>
         </div>
     </div>
-
-
-        <!-- braintree -->
-    <!-- <div class="container my-5 py-12">
-        <div class="row justify-content-center">
-            <div class="col-6">
-
-                <div id="dropin-container"></div>
-            
-                <button id="submit-button" class="button button--small button--green">Submit payment</button>
-            </div>
-        </div>
-    </div> -->
-
 
 
         
