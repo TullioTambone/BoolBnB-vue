@@ -1,15 +1,20 @@
 <script>
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
+import { store } from '../store';
 
 import JumboComp from '../components/JumboComp.vue';
 import CardComp from '../components/CardComp.vue';
     export default {
     name: "HomeComp",
+    components: { 
+        JumboComp,
+        CardComp
+    },
     data() {
         return {
+            store,
             apartments: [],
-            address: "",
             baseUrl: "http://127.0.0.1:8000"
         };
     },
@@ -20,7 +25,7 @@ import CardComp from '../components/CardComp.vue';
         getApartment() {
             axios.get(`${this.baseUrl}/api/apartments`).then((res) => {
                 this.apartments = res.data.apartment.data;
-                console.log(res);
+                console.log(this.apartments);
             });
         },
         autocomplete() {
@@ -45,10 +50,6 @@ import CardComp from '../components/CardComp.vue';
                 });
             }
         },
-    },
-    components: { 
-        JumboComp,
-        CardComp
     }
 }
 </script>
@@ -57,7 +58,7 @@ import CardComp from '../components/CardComp.vue';
     <JumboComp :propsApartments="this.apartments"/>
     <div class="container">
         <div class="row">
-             <CardComp v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
+            <CardComp v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
         </div>
     </div>
    
