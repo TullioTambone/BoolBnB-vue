@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
+import { store } from '../store';
 
     export default {
         name: "SearchComp",
@@ -9,7 +10,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
         },
         data() {
             return {
-                address: '',
+                store,
                 apartments:[],
                 baseUrl: 'http://127.0.0.1:8000',
                 services: null,
@@ -43,8 +44,8 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 }
 
                 // address
-                if(this.address){
-                    params.address = this.address
+                if(store.address){
+                    params.address = store.address
                 }
 
                 // rooms
@@ -72,7 +73,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 const query = this.$route.query;
 
                 if (query.address) {
-                    this.address = query.address;
+                    store.address = query.address;
                 }
                 if (query.rooms) {
                     this.rooms = query.rooms;
@@ -88,7 +89,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 }
 
                 // Chiamata ad getTom() se address è presente (per ottenere latitude e longitude)
-                if (this.address) {
+                if (store.address) {
                     this.getTom().then(() => {
                     // Ripristina i valori dei filtri dopo aver ottenuto latitude e longitude
                         if (query.distance) {
@@ -109,7 +110,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                 }
                 
                 // address
-                if(this.address){
+                if(store.address){
                     await this.getTom()
                     params.address = this.address
                     params.distance = this.distance
@@ -170,7 +171,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                     const response = await ttServices.services.geocode({
                         batchMode: 'async',
                         key: "74CVsbN34KoIljJqOriAYN2ZMEYU1cwO",
-                        query: this.address,
+                        query: store.address,
                         countrySet: 'IT',
                         language: 'it-IT',
                     }).then( (response) => {
@@ -181,7 +182,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             // se abbiamo dei risultati ottenuti
                             if (results.length)  {   
 
-                                const userAddressLower = this.address.toLowerCase();
+                                const userAddressLower = store.address.toLowerCase();
                     
                                 for (const elem of results) {                          
                                                 
@@ -249,7 +250,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
             <!-- search -->
             <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
                 
-                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
+                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
                 <button class="btn btn-outline-success" type="submit" @click="getApartment()">
@@ -279,7 +280,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
                             <!-- Ricerca -->
                             <div class="mb-3">
                                 <label class="form-label">Ricerca</label>
-                                <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address" list="datalistOptions" @keyup="autocomplete()" required>
+                                <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" list="datalistOptions" @keyup="autocomplete()" required>
                                 <datalist id="datalistOptions">                           
                                 </datalist>
                             </div>
@@ -338,7 +339,7 @@ import ttServices from "@tomtom-international/web-sdk-services";
 
                 <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
                     <h3>{{ elem.title }}</h3>
-                    <img class="img-fluid" :src="`${this.baseUrl}/storage/${elem.cover}`" :alt="elem.title">
+                    <img class="img-fluid" :src="elem.cover" :alt="elem.title">
                 </router-link>
 
                 <div class="col-12" v-if="apartments.length === 0">

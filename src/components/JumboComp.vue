@@ -29,7 +29,7 @@ export default defineComponent({
           <div class="card d-flex align-items-center justify-content-center">
               <div class="p-1 box-card">
                 <h4 class="mb-5">Cerca il tuo primo appartamento</h4>
-                  <input class="form-control w-100" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="this.address" @keyup="autocomplete()" list="datalistOptions">
+                  <input class="form-control w-100" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" @keyup="autocomplete()" list="datalistOptions">
                     <datalist id="datalistOptions">                           
                     </datalist>
                     <router-link class="btn btn-primary mt-4 w-100" to="/search">
@@ -41,9 +41,10 @@ export default defineComponent({
     </div>
     <div class="contenitore">
       <Carousel id="carousel" :autoplay="3000" :wrap-around="true">
-        <Slide id="slide" v-for="elem in propsApartments" :key="index">
+        <Slide id="slide" v-for="(element, index) in propsApartments" :key="index">
           <div class="carousel__item">
-            <img :src="`${store.baseUrl}/storage/${elem.cover}`"  alt=""> 
+            <!-- <img :src="`${store.baseUrl}/storage/${element.cover}`"  alt="">  -->
+            <img :src="element.cover"  :alt="element.title"> 
           </div>
         </Slide>
       </Carousel>
