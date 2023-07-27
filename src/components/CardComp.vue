@@ -94,10 +94,5 @@ img {
     transition: transform 0.9s ease;
 }
 
-// @media screen and (max-width: 768px) {
-//   .card {
-//     flex-basis: calc(50% - 10px);
-//   }
-// }
 
 </style>

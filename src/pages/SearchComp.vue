@@ -336,10 +336,12 @@ import { store } from '../store';
         <!-- apartments -->
         <div class="container">
             <div class="row">
-
                 <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
-                    <h3>{{ elem.title }}</h3>
-                    <img class="img-fluid" :src="elem.cover" :alt="elem.title">
+                    <div class="car">
+                        <h3>{{ elem.title }}</h3>
+                        <img v-if="elem.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${elem.cover}`"  alt="">
+                        <img v-else class="img-fluid" :src="elem.cover" :alt="elem.title">
+                    </div>
                 </router-link>
 
                 <div class="col-12" v-if="apartments.length === 0">
@@ -369,5 +371,23 @@ import { store } from '../store';
 </template>
 
 <style lang="scss" scoped>
-
+    .container {
+        img {
+            border-radius: 20px;
+            width: 300px;
+            height: 150px;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            
+            h3 {
+                font-size: 20px;
+            }
+        }
+        .car:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        }
 </style>

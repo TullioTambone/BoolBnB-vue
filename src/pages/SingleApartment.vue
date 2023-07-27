@@ -2,12 +2,13 @@
 import tt from "@tomtom-international/web-sdk-maps";
 import ttServices from "@tomtom-international/web-sdk-services";
 import axios from 'axios';
+import { store } from '../store';
 
 export default{
     name:"SingleApartment",
     data(){
         return{
-            baseUrl:'http://127.0.0.1:8000',
+            store,
             apartment: [],            
             name: '',
             email: '',
@@ -95,7 +96,7 @@ export default{
         // chiamata api per il singolo appartamento
         async getSingleApartment(){
             try {
-                const response = await axios.get(`${this.baseUrl}/api/apartments/${this.$route.params.slug}`)
+                const response = await axios.get(`${store.baseUrl}/api/apartments/${this.$route.params.slug}`)
            
                 this.apartment = response.data.apartment;
 
@@ -142,19 +143,20 @@ export default{
     
                 <!-- cover -->
                 <div v-if="apartment.cover">
-                    <img class="img-fluid" :src="`${this.baseUrl}/storage/${apartment.cover}`" :alt="apartment.title">
+                    <img v-if="apartment.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${apartment.cover}`"  alt="">
+                    <img v-else class="img-fluid" :src="apartment.cover" :alt="apartment.title">
                 </div>
                     
                 <!-- images -->
                 <div class="d-flex justify-content-center mt-3">
-    
+                    
                     <!-- carousel -->
                     <div v-if="apartment.images" class="carousel slide col-12 col-md-6 col-lg-6" id="carouselExampleAutoplaying" data-bs-ride="carousel">
                         <div class="carousel-inner">
     
                             <!-- images -->
                             <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item" :class="index === 0 ? 'active' : ''">                                
-                                <img class="d-block w-100" :src="`${this.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                                <img class="d-block w-100" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
                             </div>
                         </div>
     
