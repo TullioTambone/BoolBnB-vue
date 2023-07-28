@@ -221,6 +221,21 @@ h3 {
   }
 }
 
+.card__four {
+  .card__img {
+    top: 5px;
+    left: -4px;
+    height: 110%;
+  }
+  .card__bg {
+    // background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/62105/3dr_howlbg.jpg') center / cover no-repeat;
+  }
+  .card__text {
+    //background-color: #3e2222;
+  }
+}
+
+
 .card__text {
   align-items: center;
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.55) 100%);
