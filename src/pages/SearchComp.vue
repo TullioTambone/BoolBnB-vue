@@ -16,7 +16,7 @@ import { store } from '../store';
                 services: null,
                 selectedServices: [],
                 currentPage: 1,
-                lastPage: 5,
+                lastPage: null,
                 rooms: 0,
                 bedrooms: 0,
                 selectRooms: [1, 2, 3, 4, 5],
@@ -24,7 +24,6 @@ import { store } from '../store';
                 latitude: 0,
                 distance: 20,
                 tomTomResults: null,
-                showSpinner: true,
             }
         },
         mounted(){
@@ -105,7 +104,6 @@ import { store } from '../store';
                 }
             },
             async getApartment(apartmentApiPage){
-                this.showSpinner = true
 
                 const params = {
                     page: apartmentApiPage
@@ -144,8 +142,6 @@ import { store } from '../store';
                     this.lastPage = res.data.apartment.last_page
                     this.updateFiltersAndFetchData()
                 })
-
-                this.showSpinner = false
             },
             async getServices(){
                 try {
@@ -346,14 +342,9 @@ import { store } from '../store';
 
                 
                 <div v-if="apartments.length === 0">
-                    <div class="col-12" v-if="this.showSpinner">
-                        <div class="spinner-border text-warning" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                    <h1 v-else>Non ci sono appartamenti</h1>
+                    <h1>Non ci sono appartamenti</h1>
                 </div>
-                
+
             </div>
         </div>
 
