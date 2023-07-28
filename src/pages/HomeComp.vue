@@ -69,8 +69,6 @@ import TeamComp from '../components/TeamComp.vue';
 </script>
 <template>
     <!-- <h1>home page</h1> -->
-    
-
     <JumboComp 
     v-if="apartments.length"
         :image="apartments[store.activeSlide].cover"

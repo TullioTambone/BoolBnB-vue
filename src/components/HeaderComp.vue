@@ -13,8 +13,9 @@
             window.removeEventListener('wheel', this.scroll);
         },
         methods: {
-            scroll() {
+            scroll(event) {
 
+                const scrollDirection = event.deltaY > 0 ? 'down' : 'up';
                 // altezza visibile della finestra del browser
                 const windowHeight = window.innerHeight;
 
@@ -26,10 +27,27 @@
 
                 const remainingDistance = documentHeight - (scrollPosition + windowHeight);
 
+                const nav = document.querySelector('nav');
+                
                 // se delta è positivo e quindi scorri verso il basso
-                if (remainingDistance < 500) {
+                // if (remainingDistance < 500) {
 
-                    document.querySelector('nav').style.filter = 'opacity(0.5)';
+                //     document.querySelector('nav').style.filter = 'opacity(0.5)';
+                // }
+
+                if (scrollDirection === 'down') {
+                    // Se l'utente ha scorso più di 100px dalla parte superiore della pagina, applica lo stile filtrato
+                    if (scrollPosition > 80) {
+                        nav.style.background = '#ffffff';
+                    } else {
+                        // Altrimenti, rimuovi lo stile filtrato
+                        nav.style.background = '#ffffff5e';
+                    }
+                } else {
+                    // Se l'utente sta scorrendo verso l'alto e la distanza rimanente dalla parte superiore è inferiore a 80px, applica lo stile filtrato
+                    if (scrollPosition <= 80) {
+                        nav.style.background = '#ffffff5e';
+                    }
                 }
             }
         }
@@ -44,7 +62,7 @@
             <!-- logo -->
             <div class="logo">
                 <router-link class="nav-link" to="/">
-                    <img src="/img/Boolbnb-logo.png" alt="Boolbnb logo">
+                    <img src="/img/Boolbnb-logo-transparent.png" alt="Boolbnb logo">
                 </router-link>
             </div>
 
@@ -107,11 +125,12 @@
     padding: 0;
     display: flex;
     align-items: center;
-    background: #ffffff;
+    background: #ffffff5e;
     position: fixed;
     top: 0;
     left: 0;
     transition: 0.2s;
+    // filter: opacity(0.5);
     
     .container {
         height: 100%;
