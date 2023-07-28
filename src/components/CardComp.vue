@@ -30,13 +30,13 @@ import { store } from '../store';
                 <img :src="propsCard.cover" class="card-img-top" :alt="propsCard.title">
 
             </div>
-            <h5 class="card-title">{{ propsCard.title }}</h5>
-            <p class="card-text">{{ propsCard.description }}</p>
+            <h5 class="card-title p-2">{{ propsCard.title }}</h5>
+            <!-- <p class="card-text p-2 w-100">{{ propsCard.description }}</p> -->
             <ul>
-                <li class="list-group-item">{{ propsCard.address }}</li>
-                <li class="list-group-item">n stanze da letto: {{ propsCard.bedrooms }} <br>
-                    n bagni {{ propsCard.bathrooms }}</li>
-                <li class="list-group-item">prezzo:{{ propsCard.price }}</li>
+                <li class="list-group-item"> <i class="fa-solid fa-location-dot"></i> {{ propsCard.address }}</li>
+                <li class="list-group-item"> <strong>stanze da letto:</strong>{{ propsCard.bedrooms }} <br>
+                    <strong>bagni:</strong> {{ propsCard.bathrooms }}</li>
+                <li class="list-group-item"> <strong>prezzo: </strong>{{ propsCard.price }} €</li>
             </ul>
         </div>
     </div>
@@ -66,12 +66,15 @@ import { store } from '../store';
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   overflow: hidden;
+  border-radius: 20px;
+  aspect-ratio: 1;
 }
 
 .card img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 20px;
 }
 
 /* Stile aggiuntivo per rendere il layout più accattivante */
@@ -87,6 +90,7 @@ import { store } from '../store';
 }
 img {
     transition: all 0.7s ease-in-out;
+    border-radius: 20px;
 }
 .zoom:hover img {
     transform: scale(1.5);

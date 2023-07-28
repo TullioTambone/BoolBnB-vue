@@ -4,13 +4,35 @@
 
         data() {
             return {
-
             }
         },
+        mounted() {
+            window.addEventListener('wheel', this.scroll);
+        },
+        beforeUnmount() {
+            window.removeEventListener('wheel', this.scroll);
+        },
         methods: {
+            scroll() {
 
+                // altezza visibile della finestra del browser
+                const windowHeight = window.innerHeight;
+
+                // altezza totale del documento HTML
+                const documentHeight = document.documentElement.scrollHeight;
+
+                // posizione verticale dello scroll della finestra rispetto all'inizio del documento
+                const scrollPosition = window.scrollY;
+
+                const remainingDistance = documentHeight - (scrollPosition + windowHeight);
+
+                // se delta è positivo e quindi scorri verso il basso
+                if (remainingDistance < 500) {
+
+                    document.querySelector('nav').style.filter = 'opacity(0.5)';
+                }
+            }
         }
-
     }
 </script>
 <template>

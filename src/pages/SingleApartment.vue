@@ -143,10 +143,10 @@ export default{
     
                 <!-- cover -->
                 <div v-if="apartment.cover">
-                    <img v-if="apartment.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${apartment.cover}`"  alt="">
-                    <img v-else class="img-fluid" :src="apartment.cover" :alt="apartment.title">
+                    <img class="img-fluid w-100" v-if="apartment.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${apartment.cover}`"  alt="">
+                    <img v-else class="img-fluid w-100" :src="apartment.cover" :alt="apartment.title">
                 </div>
-                    
+                
                 <!-- images -->
                 <div class="d-flex justify-content-center mt-3">
                     
@@ -155,11 +155,10 @@ export default{
                         <div class="carousel-inner">
     
                             <!-- images -->
-                            <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item" :class="index === 0 ? 'active' : ''">                                
-                                <img class="d-block w-100" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                            <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item " :class="index === 0 ? 'active' : ''">                                
+                                <img class="d-block w-50" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
                             </div>
                         </div>
-    
                         <!-- prev button -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -178,34 +177,34 @@ export default{
             <!-- details -->
             <div class="col-12 col-md-6 col-lg-6">
                 <h1 class="border-bottom">{{ apartment.title }}</h1>
+                <span class="d-block">
+                    <i class="fa-solid fa-location-dot"></i> {{ apartment.address }}
+                    </span>
+                <h4 class="mt-2">Info Appartamento</h4>
+                <p>{{ apartment.description }}</p>
                 <div>
-                    <p>{{ apartment.description }}</p>
-                    <span class="d-block">
-                        numero stanza: {{ apartment.rooms }}
-                    </span>
-                    <span class="d-block">
-                        numero stanze letto: {{ apartment.bedrooms }}
-                    </span>
-                    <span class="d-block">
-                        numero bagni: {{ apartment.bathrooms }}
-                    </span>
-                    <span class="d-block">
-                        metri quadri: {{ apartment.square_meters }}mq
-                    </span>
-                    <span class="d-block">
-                    indirizzo: {{ apartment.address }}
-                    </span>
-                    <span v-if="apartment.price" class="d-block">
-                        prezzo: {{ apartment.price }}&euro;
-                    </span>
-                    <span class="d-block">
-                        visibilità: {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
-                    </span>
-                    <h5 class="mt-2"> Servizi</h5>
-    
-                    <span v-for="( elem, index ) in apartment.services" :key="index" class="d-block mt-1"> 
-                        <i class="fa-solid {{ elem.icon }} me-1 "></i> {{  elem.name }} 
-                    </span>
+                        <span class="d-block">
+                           <strong>numero stanze:</strong>  {{ apartment.rooms }}
+                        </span>
+                        <span class="d-block">
+                           <strong>numero stanze letto:</strong>  {{ apartment.bedrooms }}
+                        </span>
+                        <span class="d-block">
+                           <strong>numero bagni:</strong>  {{ apartment.bathrooms }}
+                        </span>
+                        <span class="d-block">
+                          <strong>metri quadri:</strong>   {{ apartment.square_meters }}mq
+                        </span>
+                        <span v-if="apartment.price" class="d-block">
+                          <strong>prezzo:</strong>   {{ apartment.price }}&euro;
+                        </span>
+                        <span class="d-block">
+                           <strong>visibilità:</strong>  {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
+                        </span>
+                        <h5 class="mt-2"> Servizi della struttura</h5>
+                            <span v-for="( elem, index ) in apartment.services" :key="index" class="p-1 mt-1 card d-inline"> 
+                                <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
+                            </span>
                 </div>
             </div>    
         </div>
@@ -214,11 +213,11 @@ export default{
     <!-- mappa -->
     <div class="container">
 
-        <div id='map' class='map' style="height: 350px;"></div>
+        <div id='map' class='map' style="height: 250px;"></div>
     </div>
 
     <div class="container p-5">
-        <h3>Contattami</h3>
+        <h3>Contatta la struttura</h3>
 
         <div class="row">
             <div class="col-12 col-md-6 col-lg-6">
@@ -257,5 +256,10 @@ export default{
 </template>
 
 <style lang="scss" scoped>
-
+ .container {
+    margin-top: 100px;
+    img {
+        border-radius: 20px;
+    }
+ }
 </style>
