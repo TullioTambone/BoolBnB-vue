@@ -23,7 +23,8 @@ import { store } from '../store';
                 longitude: 0,
                 latitude: 0,
                 distance: 20,
-                tomTomResults: null
+                tomTomResults: null,
+                showSpinner: true,
             }
         },
         mounted(){
@@ -104,6 +105,7 @@ import { store } from '../store';
                 }
             },
             async getApartment(apartmentApiPage){
+                this.showSpinner = true
 
                 const params = {
                     page: apartmentApiPage
@@ -142,6 +144,8 @@ import { store } from '../store';
                     this.lastPage = res.data.apartment.last_page
                     this.updateFiltersAndFetchData()
                 })
+
+                this.showSpinner = false
             },
             async getServices(){
                 try {
@@ -340,11 +344,16 @@ import { store } from '../store';
                     </div>
                 </router-link>
 
-                <div class="col-12" v-if="apartments.length === 0">
-                    <div class="spinner-border text-warning" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                
+                <div v-if="apartments.length === 0">
+                    <div class="col-12" v-if="this.showSpinner">
+                        <div class="spinner-border text-warning" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
+                    <h1 v-else>Non ci sono appartamenti</h1>
                 </div>
+                
             </div>
         </div>
 
