@@ -139,7 +139,7 @@ export default{
     <div class="container">
 
         <div v-if="apartment" class="row">
-            <div class="col-12 col-md-6 col-lg-6 text-center">
+            <div class="col-12 col-md-6 col-lg-6">
     
                 <!-- cover -->
                 <div v-if="apartment.cover">
@@ -147,35 +147,44 @@ export default{
                     <img v-else class="img-fluid w-100" :src="apartment.cover" :alt="apartment.title">
                 </div>
                 
-                <!-- images -->
-                <div class="d-flex justify-content-center mt-3">
+              
+                <div class="d-flex over">
                     
                     <!-- carousel -->
-                    <div v-if="apartment.images" class="carousel slide col-12 col-md-6 col-lg-6" id="carouselExampleAutoplaying" data-bs-ride="carousel">
-                        <div class="carousel-inner">
+                    <!-- <div v-if="apartment.images" class=" col-12 col-md-6 col-lg-6"> -->
+                        <!-- <div class="carousel-inner"> -->
     
                             <!-- images -->
-                            <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item " :class="index === 0 ? 'active' : ''">                                
+                            <!-- <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item " :class="index === 0 ? 'active' : ''">                                
                                 <img class="d-block w-50" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
                             </div>
-                        </div>
+                        </div> -->
                         <!-- prev button -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
+                        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                             </button> -->
     
                         <!-- next button -->
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>                
+                        <!-- <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button> -->
+                    <!-- </div>                 -->
+                        
+
+                <!-- images -->
+                <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
+                    <div class="box margine">                              
+                        <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                    </div>
                 </div>
-            </div>
-    
+                <!-- mappa -->
+                </div>
+                     <div id='map' class='map mt-5 margine' style="height: 200px;"></div>
+                </div>
             <!-- details -->
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-12 col-md-6 col-lg-6 ">
                 <h1 class="border-bottom">{{ apartment.title }}</h1>
                 <span class="d-block">
                     <i class="fa-solid fa-location-dot"></i> {{ apartment.address }}
@@ -184,19 +193,19 @@ export default{
                 <p>{{ apartment.description }}</p>
                 <div>
                         <span class="d-block">
-                           <strong>numero stanze:</strong>  {{ apartment.rooms }}
+                           <strong>Stanze:</strong>  {{ apartment.rooms }}
                         </span>
                         <span class="d-block">
-                           <strong>numero stanze letto:</strong>  {{ apartment.bedrooms }}
+                           <strong>Stanze letto:</strong>  {{ apartment.bedrooms }}
                         </span>
                         <span class="d-block">
-                           <strong>numero bagni:</strong>  {{ apartment.bathrooms }}
+                           <strong>Bagni:</strong>  {{ apartment.bathrooms }}
                         </span>
                         <span class="d-block">
-                          <strong>metri quadri:</strong>   {{ apartment.square_meters }}mq
+                          <strong>Metri quadri:</strong>   {{ apartment.square_meters }}mq
                         </span>
                         <span v-if="apartment.price" class="d-block">
-                          <strong>prezzo:</strong>   {{ apartment.price }}&euro;
+                          <strong>Prezzo:</strong>   {{ apartment.price }}&euro;
                         </span>
                         <span class="d-block">
                            <strong>visibilità:</strong>  {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
@@ -206,23 +215,9 @@ export default{
                                 <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
                             </span>
                 </div>
-            </div>    
-        </div>
-    </div>
-
-    <!-- mappa -->
-    <div class="container">
-
-        <div id='map' class='map' style="height: 250px;"></div>
-    </div>
-
-    <div class="container p-5">
-        <h3>Contatta la struttura</h3>
-
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-
-                <form action="" @submit.prevent="sendForm()">
+                <!-- form contatta la truttura -->
+                <form class="card p-4 mt-5 mb-4 margine" action="" @submit.prevent="sendForm()">
+                    <h3 class="">Contatta la struttura</h3>
                     <div class="mb-3">
                         <label for="" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="name" placeholder="Nome" name="name" v-model="name">
@@ -242,24 +237,53 @@ export default{
 
                     <input type="hidden" name="apartment_id" v-model="apartment.id">
     
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn">
                         Invia
                     </button>
     
                 </form>
-            </div>
+            </div>    
         </div>
     </div>
-
-
-        
 </template>
 
 <style lang="scss" scoped>
  .container {
     margin-top: 100px;
-    img {
-        border-radius: 20px;
+    .box {
+        img {
+            width: 100px;
+            height: 100px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            cursor: pointer;
+
+            &:hover {
+                transform: translateY(-5px);
+                transition: transform 0.3s ease;
+}
+        }
     }
- }
+    img {
+        border-radius: 10px;
+    }
+}
+.over {
+    overflow-x: auto;
+}
+form {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+    .btn {
+        background-color: #C6AB7C;
+        color: white;
+    }
+}
+.map {
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.margine {
+    margin-top: 40px;
+}
+ 
 </style>
