@@ -5,12 +5,14 @@ import { store } from '../store';
 
 import JumboComp from '../components/JumboComp.vue';
 import CardComp from '../components/CardComp.vue';
+import TeamComp from '../components/TeamComp.vue';
     export default {
     name: "HomeComp",
-    components: { 
-        JumboComp,
-        CardComp
-    },
+    components: {
+    JumboComp,
+    CardComp,
+    TeamComp
+},
     data() {
         return {
             store,
@@ -56,6 +58,9 @@ import CardComp from '../components/CardComp.vue';
 <template>
     <!-- <h1>home page</h1> -->
     <JumboComp :propsApartments="this.apartments"/>
+    <div class="py-5">
+        <TeamComp/>
+    </div>
     <div class="container">
         <div class="row">
             <CardComp v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
