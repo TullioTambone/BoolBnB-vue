@@ -73,7 +73,7 @@
                         <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"> 
                             <i class="fa-solid fa-user me-2"></i>
                             <span>
-                                Login
+                                Profilo
                             </span>
                         </a>
                     </li>
