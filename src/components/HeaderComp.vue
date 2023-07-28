@@ -15,51 +15,45 @@
 </script>
 <template>
 
-
-    <!-- <nav class="navbar navbar-expand-lg bg-white">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 column-gap-4">
-                        <li class="nav-item fs-5 fw-semibold text-uppercase">
-                            <router-link class="nav-link" to="/">
-                                Home                       
-                            </router-link > 
-                        </li>
-                        <li class="nav-item fs-5 fw-semibold text-uppercase">
-                            <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login">Login</a>
-                        </li>
-                        <li class="nav-item fs-5 fw-semibold text-uppercase">
-                            <router-link class="nav-link" to="/search">
-                                <span>
-                                    Search
-                                </span>                           
-                            </router-link > 
-                        </li>
-                        
-                    </ul>
-                </div>
-            </div>
-        </nav> -->
-
-
+    <!-- nav -->
     <nav class="navbar navbar-expand-lg py-1 z-3">
-        <div class="container-fluid d-flex justify-content-between">
-            <div>
-                <h1>BoolBnB</h1>
+        <div class="container">
+
+            <!-- logo -->
+            <div class="logo">
+                <router-link class="nav-link" to="/">
+                    <img src="/img/Boolbnb-logo.png" alt="Boolbnb logo">
+                </router-link>
             </div>
+
+            <!-- burguer menu on mobile and tablet-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon icona-cl"></span>
             </button>
+
+            <!-- links -->
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mb-2 mb-lg-0">
+
+                    <!-- home -->
                     <li>
                         <router-link class="nav-link" to="/">
-                            <i class="fa-solid fa-house-user"></i> Home
+                            <i class="fa-solid fa-house-user me-2"></i>
+                            <span>
+                                Home
+                            </span>
                         </router-link>
                     </li>
+
+                    <!-- login -->
                     <li>
-                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"> <i class="fa-solid fa-user"></i> Login</a>
+                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"> 
+                            <i class="fa-solid fa-user me-2"></i>
+                            <span>
+                                Login
+                            </span>
+                        </a>
                     </li>
                     <li>
                         <router-link class="nav-link" to="/search">
@@ -68,104 +62,121 @@
                             </span>
                         </router-link>
                     </li>
-
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- colori
+    Beige (#DDD0C8),
+    dark grey (#323232),
+    bianco
+    nero 
+    -->
+
 </template>
-<style scoped>
-    h1 {
-        color: #fff;
-        padding-left: 20px;
-        font-family: sans-serif;
-    }
+<style lang="scss" scoped>
 
-    .navbar-toggler {
-
-        background-color: #fff;
-        margin: 15px;
-    }
-
-    nav {
-        margin-top: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #112c38;
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-    }
-
-    .navbar-collapse {
-        flex-grow: 0;
-    }
-
-    ul {
-        margin: 0;
-        padding: 15px;
-        display: flex;
-    }
-
-    ul li {
-        list-style: none;
-        margin: 0 20px;
-        transition: 0.5s;
-        padding: 11px;
-
-    }
-
-    ul li a {
-        display: block;
-        position: relative;
-        text-decoration: none;
-        padding: 5px;
-        font-size: 16px;
-        font-family: sans-serif;
-        color: #fff;
-        text-transform: uppercase;
-        transition: 0.5s;
-
-    }
-
-    ul:hover li a {
-        transform: scale(1);
-        opacity: 0.2;
-        filter: blur(1px);
-    }
-
-    ul li a:hover {
-        transform: scale(1.1);
-        opacity: 0.9;
-        filter: blur(0);
-        text-decoration: none;
-        color: #112c38;
-    }
-
-    ul li a:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+// nav
+.navbar {
+    height: 5rem;
+    width: 100vw;
+    margin-top: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: 0.2s;
+    
+    .container {
         height: 100%;
-        border-radius: 7px;
-        background: #fff;
-        transition: 0.5s;
-        transform-origin: right;
-        transform: scaleX(0);
-        z-index: -1;
-    }
 
-    ul li a:hover:before {
-        transition: transform 0.5s;
-        transform-origin: left;
-        transform: scaleX(1);
+        // logo
+        .logo {
+            height: 100%;
+
+            a {
+                height: 100%;
+
+                img {
+                    height: 100%;
+                }
+            }
+        }
+
+        .navbar-toggler {    
+            // background-color: #fff;
+            margin: 15px;
+        }
+    
+        .navbar-collapse {
+            flex-grow: 0;
+        }
+    
+        ul {
+            margin: 0;
+            padding: 15px;
+
+            li {
+                height: 100%;
+                list-style: none;
+                margin: 0 20px;
+                transition: 0.5s;
+
+                a {
+                    height: 100%;
+                    display: block;
+                    position: relative;
+                    text-decoration: none;
+                    padding: 5px;
+                    font-size: 16px;
+                    font-family: sans-serif;
+                    color: #C6AB7C;
+                    text-transform: uppercase;
+                    transition: 0.5s;            
+                    
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 7px;
+                        background: #C6AB7C;
+                        transition: 0.5s;
+                        transform-origin: right;
+                        transform: scaleX(0);
+                        z-index: -1;
+                    }
+                    
+                    &:hover:before {
+                        transition: transform 0.5s;
+                        transform-origin: left;
+                        transform: scaleX(1);
+                    }
+            
+                }
+                
+                &:hover a {
+                    color: #ffffff ;
+                    transform: scale(1.1);
+                    opacity: 0.95;
+                    // filter: blur(0);
+                    text-decoration: none;
+
+                    // &:not(:hover) {
+                    //     filter: blur(1px);
+    
+                    // }
+                }
+
+            }            
+        }    
     }
-    .fa-house:hover {
-        color: #112c38;
-    }
+}
+
 </style>
