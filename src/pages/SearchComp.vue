@@ -337,8 +337,8 @@ import { store } from '../store';
         <div class="container">
             <div class="row">
                 <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
-                    <div class="car">
-                        <h3>{{ elem.title }}</h3>
+                    <div class="car mb-4">
+                        <h3 class="w-75">{{ elem.title }}</h3>
                         <img v-if="elem.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${elem.cover}`"  alt="">
                         <img v-else class="img-fluid" :src="elem.cover" :alt="elem.title">
                     </div>
@@ -372,6 +372,7 @@ import { store } from '../store';
 
 <style lang="scss" scoped>
     .container {
+        
         img {
             border-radius: 20px;
             width: 300px;
