@@ -59,8 +59,8 @@ export default {
 
 <div class="d-flex justify-content-center">
     <div class="cards">
-     <h3>Il Team</h3>
-     <h1>Che Lavoratori!!</h1>
+     <h3>Boolean</h3>
+     <h1>Il Team  7️⃣</h1>
      <div class="card card__one">
         <div class="card__bg"></div>
         <img class="card__img" src="/img/01_gabri.png" />
