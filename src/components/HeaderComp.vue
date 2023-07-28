@@ -21,7 +21,9 @@
 
             <!-- logo -->
             <div class="logo">
-                <img src="/img/Boolbnb-logo.png" alt="Boolbnb logo">
+                <router-link class="nav-link" to="/">
+                    <img src="/img/Boolbnb-logo.png" alt="Boolbnb logo">
+                </router-link>
             </div>
 
             <!-- burguer menu on mobile and tablet-->
@@ -75,6 +77,7 @@
 </template>
 <style lang="scss" scoped>
 
+// nav
 .navbar {
     height: 5rem;
     width: 100vw;
@@ -91,11 +94,16 @@
     .container {
         height: 100%;
 
+        // logo
         .logo {
             height: 100%;
 
-            img {
+            a {
                 height: 100%;
+
+                img {
+                    height: 100%;
+                }
             }
         }
 
