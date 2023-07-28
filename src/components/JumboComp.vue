@@ -1,24 +1,17 @@
 <script>
-import { defineComponent } from 'vue'
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import { store } from '../store.js'
 
-import 'vue3-carousel/dist/carousel.css'
-
-export default defineComponent({
-    name: 'Autoplay',
+export default {
+    name: 'JumboComp',
     props: ["propsApartments"],
     components: {
-        Carousel,
-        Slide,
-        Pagination,
     },
     data() {
             return {
                 store
             };
         },
-})
+}
 </script>
 
 <template>
@@ -38,20 +31,17 @@ export default defineComponent({
             </div>
         </div>
 
-        <div class="contenitore">
-            <!-- :autoplay="4000" -->
-            <Carousel :wrap-around="true">
-                <Slide id="slide" v-for="(element, index) in propsApartments" :key="index">
-                    <div class="carousel__item">
-                        <!-- <img :src="`${store.baseUrl}/storage/${element.cover}`"  alt="">  -->
-                        <img :src="element.cover"  :alt="element.title"> 
-                    </div>
-                </Slide>
-            </Carousel>
+        <div class="contenitore d-flex position-relative">
+            <div class="item position-absolute" v-for="(element, index) in propsApartments" :key="index">
+                <img :src="element.cover"  :alt="element.title"> 
+            </div>
         </div>
+
     </div>
 </template>
 <style lang="scss" scoped>
+
+    
     .container-fluid {
         height: 90vh;
         
@@ -72,28 +62,17 @@ export default defineComponent({
             width: 100%;
             height: 100%;
             padding-bottom: 1rem;
+            overflow: hidden;
 
-            .carousel {
-                height: 100%;
+            .item {
+                width: 100vw;
+                top: 0;
+                left: 0;
+                right: 0;
 
-                .carousel__viewport {
-                    height: 100%;
-
-                    #slide {
-                        height: 60vh;
-    
-                        .carousel__item {
-                            width: 100%;
-                            height: 100%;
-    
-                            img {
-                                object-fit: fill;
-                                background-repeat: no-repeat;
-                            }
-                        }            
-                    }
-                }
-
+                img {
+                    width: 100%;
+                }        
             }
         }
     }
