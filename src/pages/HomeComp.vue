@@ -69,8 +69,6 @@ import TeamComp from '../components/TeamComp.vue';
 </script>
 <template>
     <!-- <h1>home page</h1> -->
-    <img src="https://live.staticflickr.com/65535/53077135481_9d42c3023a_h.jpg" width="1500" height="1000" alt="villa-di-lusso-con-piscina-spettacolare-design-contemporaneo-arte-digitale-casa-immobiliare-casa-e-proprieta-ge"/>
-
     <JumboComp 
     v-if="apartments.length"
         :image="apartments[store.activeSlide].cover"
