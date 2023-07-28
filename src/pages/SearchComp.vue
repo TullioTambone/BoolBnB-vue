@@ -248,35 +248,31 @@ import { store } from '../store';
         <div class="row mb-5">
 
             <!-- search -->
-            <div class="col-12 col-md-10 col-lg-10 d-flex align-items-center">
+            <div class="col-12 d-flex pt-5 mt-5">
                 
                 <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
-                <button class="btn btn-outline-success" type="submit" @click="getApartment()">
+
+                <button class="btn btn-outline-success mx-2" type="submit" @click="getApartment()">
                     Cerca
                 </button>
-            </div>
-
-            <!-- filter -->
-            <div class="col-12 col-md-2 col-lg-2">
-
                 <!-- button offcanvas -->
-                <button class="btn btn-primary border py-2 px-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
-
+                <button class="btn btn-primary border py-2 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
+    
                 <!-- offcanvas -->
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-
+                <div class="px-3 offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    
                     <!-- header -->
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasRightLabel">Filtraggio</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-
+    
                     <!-- body -->
                     <div class="offcanvas-body">
                         <div class="col-12">
-
+    
                             <!-- Ricerca -->
                             <div class="mb-3">
                                 <label class="form-label">Ricerca</label>
@@ -284,30 +280,30 @@ import { store } from '../store';
                                 <datalist id="datalistOptions">                           
                                 </datalist>
                             </div>
-
-
+    
+    
                             <!-- Stanze totali -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze</label>
-
+    
                                 <select v-model="rooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
-
+    
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
                                 </select>
                             </div>
-
+    
                             <!-- Stanze da Letto -->
                             <div class="mb-3">
                                 <label for="" class="form-label">Stanze da Letto</label>
-
+    
                                 <select v-model="bedrooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
-
+    
                                     <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
                                 </select>
                             </div>
-
+    
                             <!-- Servizi -->
                             <div class="div row mb-3">
                                 <label class="form-label">Servizi</label>
@@ -318,13 +314,13 @@ import { store } from '../store';
                                     </label>
                                 </div>
                             </div>
-
+    
                             <!-- Distanza -->
                             <div class="div row mb-3">
                                 <label for="distance" class="form-label">Distanza Km</label>
                                 <input type="number" id="distance" class="form-control" v-model="distance" min="1">
                             </div>
-
+    
                             <!-- button -->
                             <button class="btn btn-primary" @click="getApartment()">Filtra</button>
                         </div>
@@ -345,7 +341,9 @@ import { store } from '../store';
                 </router-link>
 
                 <div class="col-12" v-if="apartments.length === 0">
-                    <h2>Non ci sono Appartamenti</h2>
+                    <div class="spinner-border text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>
