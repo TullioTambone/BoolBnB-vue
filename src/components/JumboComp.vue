@@ -3,14 +3,17 @@ import { store } from '../store.js'
 
 export default {
     name: 'JumboComp',
-    props: ["propsApartments"],
+    props: {
+        image: String,
+        title: String
+    },
     components: {
     },
     data() {
-            return {
-                store
-            };
-        },
+        return {
+            store
+        };
+    },
 }
 </script>
 
@@ -22,7 +25,7 @@ export default {
                 <div class="p-1 box-card">
                     <h4 class="mb-5">Cerca il tuo primo appartamento</h4>
                     <input class="form-control w-100" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" @keyup="autocomplete()" list="datalistOptions">
-                    <datalist id="datalistOptions">                           
+                    <datalist id="datalistOptions">                
                     </datalist>
                     <router-link class="btn btn-primary mt-4 w-100" to="/search">
                         Cerca
@@ -32,8 +35,16 @@ export default {
         </div>
 
         <div class="contenitore d-flex position-relative">
-            <div class="item position-absolute" v-for="(element, index) in propsApartments" :key="index">
-                <img :src="element.cover"  :alt="element.title"> 
+            <div class="item position-absolute">
+
+                <img 
+                    v-if="image.includes('apartment_cover_img')" 
+                    :src="`${store.baseUrl}/storage/${image}`" 
+                    :alt="title"
+                >
+                <img 
+                    v-else :src="image" :alt="title"
+                >
             </div>
         </div>
 
