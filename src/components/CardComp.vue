@@ -31,7 +31,7 @@ import { store } from '../store';
 
             </div>
             <h5 class="card-title p-2">{{ propsCard.title }}</h5>
-            <p class="card-text p-2 w-100">{{ propsCard.description }}</p>
+            <!-- <p class="card-text p-2 w-100">{{ propsCard.description }}</p> -->
             <ul>
                 <li class="list-group-item"> <i class="fa-solid fa-location-dot"></i> {{ propsCard.address }}</li>
                 <li class="list-group-item"> <strong>stanze da letto:</strong>{{ propsCard.bedrooms }} <br>
@@ -67,6 +67,7 @@ import { store } from '../store';
   border-radius: 15px;
   overflow: hidden;
   border-radius: 20px;
+  aspect-ratio: 1;
 }
 
 .card img {
