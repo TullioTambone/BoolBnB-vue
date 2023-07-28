@@ -27,7 +27,7 @@
                 const remainingDistance = documentHeight - (scrollPosition + windowHeight);
 
                 // se delta è positivo e quindi scorri verso il basso
-                if (remainingDistance < 200) {
+                if (remainingDistance < 500) {
 
                     document.querySelector('nav').style.filter = 'opacity(0.5)';
                 }
