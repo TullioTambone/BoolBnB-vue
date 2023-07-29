@@ -369,6 +369,8 @@ import { store } from '../store';
 </template>
 
 <style lang="scss" scoped>
+@import '../style/main.scss';
+
     .container {
         
         img {

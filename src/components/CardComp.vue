@@ -23,85 +23,112 @@ import { store } from '../store';
 }
 </script>
 <template>
-   
-    <div class="col-12 col-md-4">    
-        <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">     
-            <div  class="card p-1 ">
-                <div class="zoom">
-                    <!-- <img :src="`${store.baseUrl}/storage/${propsCard.cover}`"   class="card-img-top" alt="propsCard.title"> -->
-                    <img :src="propsCard.cover" class="card-img-top" :alt="propsCard.title">
+   <div class="col-12 col-md-4 col-lg-3" v-if="propsCard.visibility">
 
+        <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
+
+            <div class="card p-1" >
+
+                <!-- image -->
+                <div class="zoom">
+                    <img v-if="propsCard.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${propsCard.cover}`"  :alt="propsCard.title">
+                    <img v-else :src="propsCard.cover" :alt="propsCard.title">
                 </div>
-                <h5 class="card-title p-2">{{ propsCard.title }}</h5>
-                <!-- <p class="card-text p-2 w-100">{{ propsCard.description }}</p> -->
-                <ul>
-                    <li class="list-group-item"> <i class="fa-solid fa-location-dot"></i> {{ propsCard.address }}</li>
-                    <li class="list-group-item"> <strong>stanze da letto:</strong>{{ propsCard.bedrooms }} <br>
-                        <strong>bagni:</strong> {{ propsCard.bathrooms }}</li>
-                    <li class="list-group-item"> <strong>prezzo: </strong>{{ propsCard.price }} €</li>
-                </ul>
-            </div> 
-        </router-link>   
+
+                <!-- list -->
+                <div class="card-body pt-2">
+
+                    <ul class="p-0">
+
+                        <!-- address -->
+                        <li class="list-group-item address-card">
+                            <h6 class="d-flex gap-1">    
+                                <i class="fa-solid fa-location-dot me-1"></i>
+                                <span>
+                                    {{ propsCard.address }}
+                                </span>
+                            </h6>
+                        </li>
+
+                        <!-- bedrooms -->
+                        <li class="list-group-item">
+                            <strong>Stanze da letto:</strong>
+                            {{ propsCard.bedrooms }}
+                        </li>
+
+                        <!-- bathrooms -->
+                        <li class="list-group-item">
+                            <strong>Bagni:</strong>
+                            {{ propsCard.bathrooms }}
+                        </li>
+
+                        <!-- price -->
+                        <li class="list-group-item">
+                            <strong>Prezzo:</strong>
+                            {{ propsCard.price }} €
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </router-link> 
     </div>
+                
 </template>
 
-
-
 <style lang="scss" scoped>
-    body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+@import '../style/main.scss';
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.card {
-  flex: 0 0 calc(33.33% - 10px); /* Dividere il contenitore in tre colonne con uno spazio di 10px tra le card */
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  overflow: hidden;
-  border-radius: 20px;
-  aspect-ratio: 1;
-}
 
-.card img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 20px;
-}
-
-/* Stile aggiuntivo per rendere il layout più accattivante */
-.card:hover {
-  transform: translateY(-5px);
-  transition: transform 0.3s ease;
-}
-
-.zoom {
-    overflow: hidden;
-    width: 100%;
-    height: 100%px;
-}
-img {
-    transition: all 0.7s ease-in-out;
-    border-radius: 20px;
-}
-.zoom:hover img {
-    transform: scale(1.5);
-    filter: brightness(0.7);
-    transition: transform 0.9s ease;
-}
 a {
     text-decoration: none;
+    .card {
+        flex: 0 0 calc(33.33% - 10px); /* Dividere il contenitore in tre colonne con uno spazio di 10px tra le card */
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+
+
+        img {
+            width: 100%;
+            display: block;
+            transition: all 0.7s ease-in-out;
+        }
+
+        .zoom {
+            overflow: hidden;
+            width: 100%;
+            height: 200px;
+
+            &:hover img {
+                transform: scale(1.5);
+                filter: brightness(0.7);
+                transition: transform 0.9s ease;
+            }
+        }
+
+        .card-body {
+            ul {
+                li.address-card {
+                    height: 3.8rem;
+
+                    h6 {
+                        i {
+                            align-self: center;
+                            font-size: 1.3rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Stile aggiuntivo per rendere il layout più accattivante */
+        &:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+        }
+
+    }
 }
 
 </style>
