@@ -120,7 +120,7 @@ export default{
                 apartment_id: this.apartment.id
             }      
 
-            axios.post(`${this.baseUrl}/api/contacts`, data ).then( response => {
+            axios.post(`${store.baseUrl}/api/contacts`, data ).then( response => {
 
                 this.success = response.data.success;
                 if(this.success) {
