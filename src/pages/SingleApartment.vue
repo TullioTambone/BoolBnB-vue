@@ -150,29 +150,6 @@ export default{
               
                 <div class="d-flex over">
                     
-                    <!-- carousel -->
-                    <!-- <div v-if="apartment.images" class=" col-12 col-md-6 col-lg-6"> -->
-                        <!-- <div class="carousel-inner"> -->
-    
-                            <!-- images -->
-                            <!-- <div v-for="( elem, index ) in apartment.images" :key="index" class="carousel-item " :class="index === 0 ? 'active' : ''">                                
-                                <img class="d-block w-50" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
-                            </div>
-                        </div> -->
-                        <!-- prev button -->
-                        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                             </button> -->
-    
-                        <!-- next button -->
-                        <!-- <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button> -->
-                    <!-- </div>                 -->
-                        
-
                 <!-- images -->
                 <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
                     <div class="box margine">                              
