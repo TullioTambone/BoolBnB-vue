@@ -20,8 +20,8 @@ export default {
 <template>
  <div class="contenitore">
     <div class="contenitore2 d-flex justify-content-between ">
-        <div class="p-2">
-            <h3 class="ms-4 ">boolbnb</h3>
+        <div class="p-3">
+            <img class="logo-img" src="/img/Boolbnb-logo-transparente-total-white.png" alt="Boolbnb logo">
         </div>
         <div class="d-flex p-3">
                 <li><a href="#"><i class="fab fa-facebook"></i></a></li>
@@ -33,7 +33,7 @@ export default {
     </div>
     <div class="contenitore3 d-flex">
         <div>
-            <ul class="mt-3">
+            <ul class="mt-3 p-3">
                 <li>
                     SOCIETA'
                 </li>
@@ -49,7 +49,7 @@ export default {
             </ul>
         </div>
         <div>
-            <ul class="mt-3">
+            <ul class="mt-3 p-3">
                 <li>AIUTO</li>
                 <li> <a href="">Scopri come funziona Boolbnb</a> </li>
                 <li> <a href="">Termini e condizioni</a> </li>
@@ -61,7 +61,7 @@ export default {
             </ul>
         </div> 
         <div>
-            <ul class="mt-3">
+            <ul class="mt-3 p-3">
                 <li>
                     INFORMAZIONI SU BOOLBNB
                 </li>
@@ -81,43 +81,9 @@ export default {
         </div>
     </div>
     <div class="contenitore2 mt-3 d-flex justify-content-center ">
-        <span class="ms-5" > <i class="fa-solid fa-location-dot"></i> italia  © 2023 Boolbnb, Inc. Tutti i diritti riservati </span>
+        <span> <i class="fa-solid fa-location-dot"></i> italia  © 2023 Boolbnb, Inc. Tutti i diritti riservati </span>
     </div>
  </div>
-
-
-
-
-
-
-
- <!-- <footer class="footer">
-  <div class="footer-content">
-    <div class="footer-logo">
-      <h5>Boolbnb</h5>
-    </div>
-    <div class="footer-links">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Rooms</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-social">
-      <ul>
-        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2023 Your Hotel Name. All rights reserved.</p>
-  </div>
-</footer> -->
-
-
 </template>
 
 
@@ -136,6 +102,8 @@ export default {
             list-style-type: none;
             margin-top: 10px;
             font-size: 15px;
+            color: rgb(130, 179, 179);
+            padding: 3px;
             a {
                 text-decoration: none;
                 color: rgb(86, 104, 104);
@@ -150,7 +118,10 @@ export default {
         margin: 0 auto;
         border: 1px solid black;
          i {
-            color: white;
+            color: rgb(130, 179, 179);
+            &:hover {
+                color: white;
+            }
         }
 
         li {
@@ -160,109 +131,25 @@ export default {
         }
     }
 }
+span {
+    color: rgb(130, 179, 179);
+}
+.images {
+    width: 70px;
+}
+a:hover {
+    color: white;
+}
+.p-3 img {
+    width: 90px;
+}
+
+
 @media (max-width: 768px) {
     .contenitore3 {
         display: flex;
         flex-direction: column;
     }
 }
-
-/* Reset CSS styles for better consistency */
-//  * {
-//    margin: 0;
-//    padding: 0;
-//    box-sizing: border-box;
-//  }
-
-//  /* Styles for the footer */
-//  .footer {
-//    background: #112c38;
-//    color: #fff;
-//    padding: 20px 0;
-//  }
-
-//  .footer-content {
-//    display: flex;
-//    flex-wrap: wrap;
-//    justify-content: space-between;
-//    align-items: center;
-//    max-width: 1200px;
-//    margin: 0 auto;
-//    padding: 0 20px;
-//  }
-
-//  .footer-logo img {
-//    max-width: 150px;
-//  }
-
-//  .footer-links ul {
-//    list-style: none;
-//    display: flex;
-//    flex-wrap: wrap;
-//  }
-
-//  .footer-links li {
-//    margin-right: 20px;
-//  }
-
-//  .footer-links a {
-//    color: #fff;
-//    text-decoration: none;
-//    transition: color 0.3s;
-//  }
-
-//  .footer-links a:hover {
-//    color: #007bff;
-//  }
-
-//  .footer-social ul {
-//    list-style: none;
-//    display: flex;
-//  }
-
-//  .footer-social li {
-//    margin-right: 10px;
-//  }
-
-//  .footer-social a {
-//    color: #fff;
-//    text-decoration: none;
-//    font-size: 20px;
-//    transition: color 0.3s;
-//  }
-
-//  .footer-social a:hover {
-//    color: #007bff;
-//  }
-
-//  .footer-bottom {
-//    text-align: center;
-//    padding-top: 10px;
-//    border-top: 1px solid #555;
-//  }
-
-//  /* Responsive styles */
-//  @media (max-width: 768px) {
-//    .footer-content {
-//      flex-direction: column;
-//      align-items: center;
-//    }
-  
-//    .footer-links {
-//      margin-top: 10px;
-//      text-align: center;
-//    }
-  
-//    .footer-links li {
-//      margin-right: 10px;
-//      margin-bottom: 10px;
-//    }
-  
-//    .footer-social ul {
-//      justify-content: center;
-//      margin-top: 10px;
-//    }
-//  }
-
 
 </style>

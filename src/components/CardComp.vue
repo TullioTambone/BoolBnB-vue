@@ -7,11 +7,12 @@ import { store } from '../store';
     props: ["propsCard"],
     data() {
         return {
-            store
+            store,
+            baseUrl: 'http://127.0.0.1:8000',
         };
     },
     mounted() {
-        
+
     },
     methods: {
  
@@ -23,22 +24,24 @@ import { store } from '../store';
 </script>
 <template>
    
-    <div class="col-12 col-md-4">
-        <div  class="card p-1 ">
-            <div class="zoom">
-                <!-- <img :src="`${store.baseUrl}/storage/${propsCard.cover}`"   class="card-img-top" alt="propsCard.title"> -->
-                <img :src="propsCard.cover" class="card-img-top" :alt="propsCard.title">
+    <div class="col-12 col-md-4">    
+        <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">     
+            <div  class="card p-1 ">
+                <div class="zoom">
+                    <!-- <img :src="`${store.baseUrl}/storage/${propsCard.cover}`"   class="card-img-top" alt="propsCard.title"> -->
+                    <img :src="propsCard.cover" class="card-img-top" :alt="propsCard.title">
 
-            </div>
-            <h5 class="card-title p-2">{{ propsCard.title }}</h5>
-            <!-- <p class="card-text p-2 w-100">{{ propsCard.description }}</p> -->
-            <ul>
-                <li class="list-group-item"> <i class="fa-solid fa-location-dot"></i> {{ propsCard.address }}</li>
-                <li class="list-group-item"> <strong>stanze da letto:</strong>{{ propsCard.bedrooms }} <br>
-                    <strong>bagni:</strong> {{ propsCard.bathrooms }}</li>
-                <li class="list-group-item"> <strong>prezzo: </strong>{{ propsCard.price }} €</li>
-            </ul>
-        </div>
+                </div>
+                <h5 class="card-title p-2">{{ propsCard.title }}</h5>
+                <!-- <p class="card-text p-2 w-100">{{ propsCard.description }}</p> -->
+                <ul>
+                    <li class="list-group-item"> <i class="fa-solid fa-location-dot"></i> {{ propsCard.address }}</li>
+                    <li class="list-group-item"> <strong>stanze da letto:</strong>{{ propsCard.bedrooms }} <br>
+                        <strong>bagni:</strong> {{ propsCard.bathrooms }}</li>
+                    <li class="list-group-item"> <strong>prezzo: </strong>{{ propsCard.price }} €</li>
+                </ul>
+            </div> 
+        </router-link>   
     </div>
 </template>
 
@@ -97,6 +100,8 @@ img {
     filter: brightness(0.7);
     transition: transform 0.9s ease;
 }
-
+a {
+    text-decoration: none;
+}
 
 </style>
