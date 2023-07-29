@@ -184,8 +184,7 @@
             }
         }
 
-        .navbar-toggler {    
-            // background-color: #fff;
+        .navbar-toggler {
             margin: 15px;
         }
     

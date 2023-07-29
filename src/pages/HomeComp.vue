@@ -28,7 +28,7 @@ import TeamComp from '../components/TeamComp.vue';
         getApartment() {
             axios.get(`${this.baseUrl}/api/apartments`).then((res) => {
                 this.apartments = res.data.apartment.data;
-                console.log(this.apartments);
+                console.log(res.data);
             });
         },
         autocomplete() {
@@ -70,7 +70,8 @@ import TeamComp from '../components/TeamComp.vue';
 }
 </script>
 <template>
-    <!-- <h1>home page</h1> -->
+   
+    <!-- jumbo -->
     <JumboComp 
     v-if="apartments.length"
         :image="apartments[store.activeSlide].cover"
@@ -78,13 +79,21 @@ import TeamComp from '../components/TeamComp.vue';
         @autocomplete="autocomplete"
     />
 
+    <!-- the best team -->
     <div class="py-5">
         <TeamComp/>
     </div>
 
-    <div class="container">
+    <!-- sponsored -->
+
+
+    <!-- apartments -->
+    <div class="container mt-5">
         <div class="row">
-            <CardComp v-for="(elem, index) in apartments" :key='index' :propsCard="elem"/>
+            <CardComp  
+                v-for="(elem, index) in apartments" :key='index'
+                :propsCard="elem"
+            />
         </div>
     </div>
    
@@ -93,5 +102,7 @@ import TeamComp from '../components/TeamComp.vue';
 
 
 <style lang="scss" scoped>
+@import '../style/main.scss';
+
 
 </style>
