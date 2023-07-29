@@ -13,6 +13,7 @@ export default{
             name: '',
             email: '',
             message: '',
+            loading: false,
             success: false
         }
     },
@@ -118,7 +119,9 @@ export default{
                 email: this.email,
                 message: this.message,
                 apartment_id: this.apartment.id
-            }      
+            } 
+
+            this.loading = true;
 
             axios.post(`${store.baseUrl}/api/contacts`, data ).then( response => {
 
@@ -128,6 +131,9 @@ export default{
                     this.email = '',
                     this.message = ''
                 }
+            }).finally(() => {
+                // Imposta loading a false dopo aver ricevuto la risposta
+                this.loading = false;
             });
             
         }
@@ -214,10 +220,16 @@ export default{
 
                     <input type="hidden" name="apartment_id" v-model="apartment.id">
     
-                    <button type="submit" class="btn">
+                    <!-- <button type="submit" class="btn">
                         Invia
+                    </button> -->
+                    <button type="submit" class="btn" :class="{ 'btn-primary': !loading, 'btn-secondary': loading }" :disabled="loading">
+                        <span v-if="!loading">Invia</span>
+                        <span v-else>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span role="status">Caricamento...</span>
+                        </span>
                     </button>
-    
                 </form>
             </div>    
         </div>
