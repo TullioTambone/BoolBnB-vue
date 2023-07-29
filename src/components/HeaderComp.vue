@@ -4,6 +4,8 @@
 
         data() {
             return {
+                hovering: false,
+                hover: true
             }
         },
         mounted() {
@@ -13,40 +15,74 @@
             window.removeEventListener('wheel', this.scroll);
         },
         methods: {
+            handleHover(event) {
+                // Set the hovering flag based on mouseenter and mouseleave events
+                this.hovering = event.type === 'mouseenter';
+                const link = event.target; 
+                const a = document.querySelectorAll('.nav-link');
+                const nav = document.querySelector('nav');
+
+                if (this.hovering && this.hover) {
+                    link.style.color = '#C6AB7C';
+                } else if (this.hovering && !this.hover) {
+                    nav.style.background = '#ffffff';
+                } else {
+                    link.style.color = '#ffffff';
+                }
+
+            },
+            handleHoverOut(event) {
+                // Set the hovering flag based on mouseenter and mouseleave events
+                this.hovering = event.type === 'mouseleave';
+                const a = document.querySelectorAll('.nav-link');
+                const link = event.target;
+                const nav = document.querySelector('nav');
+
+                if (this.hovering && this.hover) {
+                    link.style.color = '#ffffff';
+                    
+                } else if (this.hovering && !this.hover) {
+                    nav.style.background = '#ffffffda';
+                }
+            },
             scroll(event) {
 
                 const scrollDirection = event.deltaY > 0 ? 'down' : 'up';
-                // altezza visibile della finestra del browser
-                const windowHeight = window.innerHeight;
-
-                // altezza totale del documento HTML
-                const documentHeight = document.documentElement.scrollHeight;
 
                 // posizione verticale dello scroll della finestra rispetto all'inizio del documento
                 const scrollPosition = window.scrollY;
 
-                const remainingDistance = documentHeight - (scrollPosition + windowHeight);
-
                 const nav = document.querySelector('nav');
-                
-                // se delta è positivo e quindi scorri verso il basso
-                // if (remainingDistance < 500) {
-
-                //     document.querySelector('nav').style.filter = 'opacity(0.5)';
-                // }
+                const a = document.querySelectorAll('.nav-link');
+                const logo = document.querySelector('.logo-img');
 
                 if (scrollDirection === 'down') {
                     // Se l'utente ha scorso più di 100px dalla parte superiore della pagina, applica lo stile filtrato
-                    if (scrollPosition > 80) {
-                        nav.style.background = '#ffffff';
+                    if (scrollPosition > 500) {
+                        this.hover = false;
+                        nav.style.background = '#ffffffda';
+                        a.forEach( (elem) => {
+                            elem.style.color = '#C6AB7C';
+                        })
+                        logo.src = '/img/Boolbnb-logo-transparente.png'
                     } else {
+                        this.hover = true;
                         // Altrimenti, rimuovi lo stile filtrato
-                        nav.style.background = '#ffffff5e';
+                        nav.style.background = '#C6AB7C';
+                        a.forEach( (elem) => {
+                            elem.style.color = '#ffffff';
+                        })
+                        logo.src = '/img/Boolbnb-logo-transparente-white.png'
                     }
                 } else {
-                    // Se l'utente sta scorrendo verso l'alto e la distanza rimanente dalla parte superiore è inferiore a 80px, applica lo stile filtrato
-                    if (scrollPosition <= 80) {
-                        nav.style.background = '#ffffff5e';
+                    // Se l'utente sta scorrendo verso l'alto e la distanza rimanente dalla parte superiore è inferiore a 500px, applica lo stile filtrato
+                    if (scrollPosition < 500) {
+                        this.hover = true;
+                        nav.style.background = '#C6AB7C';
+                        a.forEach( (elem) => {
+                            elem.style.color = '#ffffff';
+                        })
+                        logo.src = '/img/Boolbnb-logo-transparente-white.png'
                     }
                 }
             }
@@ -62,7 +98,7 @@
             <!-- logo -->
             <div class="logo">
                 <router-link class="nav-link" to="/">
-                    <img src="/img/Boolbnb-logo-transparent.png" alt="Boolbnb logo">
+                    <img class="logo-img" src="/img/Boolbnb-logo-transparente-white.png" alt="Boolbnb logo">
                 </router-link>
             </div>
 
@@ -78,7 +114,7 @@
 
                     <!-- home -->
                     <li>
-                        <router-link class="nav-link" to="/">
+                        <router-link class="nav-link" to="/"  @mouseenter="handleHover" @mouseleave="handleHoverOut">
                             <i class="fa-solid fa-house-user me-2"></i>
                             <span>
                                 Home
@@ -88,7 +124,7 @@
 
                     <!-- login -->
                     <li>
-                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"> 
+                        <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login"  @mouseenter="handleHover" @mouseleave="handleHoverOut"> 
                             <i class="fa-solid fa-user me-2"></i>
                             <span>
                                 Profilo
@@ -96,7 +132,7 @@
                         </a>
                     </li>
                     <li>
-                        <router-link class="nav-link" to="/search">
+                        <router-link class="nav-link" to="/search"  @mouseenter="handleHover" @mouseleave="handleHoverOut">
                             <span>
                                 <i class="fa-solid fa-magnifying-glass"></i> Cerca
                             </span>
@@ -119,13 +155,13 @@
 
 // nav
 .navbar {
-    height: 5rem;
+    height: 4.5rem;
     width: 100vw;
     margin-top: 0;
     padding: 0;
     display: flex;
     align-items: center;
-    background: #ffffff5e;
+    background: #C6AB7C;
     position: fixed;
     top: 0;
     left: 0;
@@ -174,8 +210,7 @@
                     text-decoration: none;
                     padding: 5px;
                     font-size: 16px;
-                    font-family: sans-serif;
-                    color: #C6AB7C;
+                    color: #ffffffd3;
                     text-transform: uppercase;
                     transition: 0.5s;            
                     
@@ -187,7 +222,7 @@
                         width: 100%;
                         height: 100%;
                         border-radius: 7px;
-                        background: #C6AB7C;
+                        background: #ffffff;
                         transition: 0.5s;
                         transform-origin: right;
                         transform: scaleX(0);
@@ -200,20 +235,12 @@
                         transform: scaleX(1);
                     }
             
+                    &:hover {
+                        color: #C6AB7C;
+                        transform: scale(1.1);
+                    }
                 }
                 
-                &:hover a {
-                    color: #ffffff ;
-                    transform: scale(1.1);
-                    opacity: 0.95;
-                    // filter: blur(0);
-                    text-decoration: none;
-
-                    // &:not(:hover) {
-                    //     filter: blur(1px);
-    
-                    // }
-                }
 
             }            
         }    

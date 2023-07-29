@@ -54,7 +54,7 @@ export default {
 
     
     .container-fluid {
-        height: 90vh;
+        height: 95vh;
         
         .container-abs {
             top: 50%;
@@ -83,6 +83,7 @@ export default {
 
                 img {
                     width: 100%;
+                    object-position: 0 -50px;
                 }        
             }
         }
