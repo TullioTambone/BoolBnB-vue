@@ -45,9 +45,11 @@ import TeamComp from '../components/TeamComp.vue';
                     const results = response.results;
                     console.log(results);
                     // se abbiamo dei risultati ottenuti
+                    const datalist = document.getElementById("datalistOptions");
+
                     if (results.length) {
                         for (const elem of results) {
-                            document.getElementById("datalistOptions").innerHTML += `<option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>`;
+                            datalist.innerHTML += `<option value="${elem.address.freeformAddress}">${elem.address.freeformAddress}</option>`;
                         }
                     }
                 });
@@ -62,7 +64,7 @@ import TeamComp from '../components/TeamComp.vue';
     
                     store.activeSlide = 0;
                 }
-            }, 2000 );
+            }, 4000 );
         }
     }
 }
@@ -73,6 +75,7 @@ import TeamComp from '../components/TeamComp.vue';
     v-if="apartments.length"
         :image="apartments[store.activeSlide].cover"
         :title="apartments[store.activeSlide].title"
+        @autocomplete="autocomplete"
     />
 
     <div class="py-5">

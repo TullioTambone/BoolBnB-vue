@@ -76,7 +76,7 @@
                     }
                 } else {
                     // Se l'utente sta scorrendo verso l'alto e la distanza rimanente dalla parte superiore è inferiore a 500px, applica lo stile filtrato
-                    if (scrollPosition < 500) {
+                    if (scrollPosition < 600) {
                         this.hover = true;
                         nav.style.background = '#C6AB7C';
                         a.forEach( (elem) => {
@@ -92,7 +92,7 @@
 <template>
 
     <!-- nav -->
-    <nav class="navbar navbar-expand-lg py-1 z-3">
+    <nav class="navbar navbar-expand-sm py-1">
         <div class="container">
 
             <!-- logo -->
@@ -166,7 +166,7 @@
     top: 0;
     left: 0;
     transition: 0.2s;
-    // filter: opacity(0.5);
+    z-index: 999999999;
     
     .container {
         height: 100%;
