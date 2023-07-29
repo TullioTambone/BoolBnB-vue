@@ -130,6 +130,9 @@ export default{
                     this.name = '',
                     this.email = '',
                     this.message = ''
+
+                    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                    confirmationModal.show();
                 }
             }).finally(() => {
                 // Imposta loading a false dopo aver ricevuto la risposta
@@ -230,6 +233,20 @@ export default{
                             <span role="status">Caricamento...</span>
                         </span>
                     </button>
+
+                    <div class="modal mt-5" id="confirmationModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Messaggio inviato con successo!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>    
         </div>
