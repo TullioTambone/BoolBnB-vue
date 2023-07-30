@@ -41,10 +41,23 @@ import { store } from '../store';
                 : formattedIntPart;
 
             return formattedNumber;
-        }
-    },
-    components: { 
+        },
+        getSubscriptionClass(subscriptionId) {
+            const subscription = this.propsCard.subscriptions.find((sub) => sub.id === subscriptionId);
 
+            if (subscription) {
+                switch (subscriptionId) {
+                    case 1:
+                    return "bronze-color";
+                    case 2:
+                    return "gold-color";
+                    case 3:
+                    return "platinum-color";
+                    default:
+                    return "";
+                }
+            }
+        },
     }
 }
 </script>
@@ -53,7 +66,10 @@ import { store } from '../store';
 
         <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
 
-            <div class="card" >
+            <div class="card position-relative">
+                <div class="position-absolute top-0 start-100 translate-middle z-index-3" v-if="propsCard.subscriptions.length !== 0" >
+                    <i class="fa-solid fa-bookmark" :class="getSubscriptionClass(propsCard.subscriptions[0].id)"></i>
+                </div>
 
                 <!-- image -->
                 <div class="zoom">
@@ -102,6 +118,15 @@ import { store } from '../store';
 
 <style lang="scss" scoped>
 @import '../style/main.scss';
+.bronze-color{
+    color: sandybrown;
+}
+.gold-color{
+    color: gold;
+}
+.platinum-color{
+    color: rgb(229, 228, 226);
+}
 
 a {
     text-decoration: none;
