@@ -246,4 +246,24 @@
     }
 }
 
+@media screen and (max-width: 575.98px) {
+    
+    .navbar-collapse{
+        background-color: rgba($color: #000000, $alpha: 0.6);
+        height: 130px;
+        border-radius: 20px;
+        animation:altezza 0.5s;
+    }
+    
+    
+    
+    @keyframes altezza{
+        from{
+            height: 0px;
+        }
+        to{
+            height: 130px;
+        }
+    }
+}
 </style>
