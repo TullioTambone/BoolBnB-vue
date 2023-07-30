@@ -15,7 +15,33 @@ import { store } from '../store';
 
     },
     methods: {
- 
+        getVote(vote) {
+
+            if(vote === 3) {
+                return "Buono"
+            } else if(vote === 4) {
+                return "Ottimo"
+            } else {
+                return "Eccellente"
+            }
+        },
+        getPrice(price) {
+            // Converto il numero in stringa per poterlo manipolare
+            const numString = price.toString();
+
+            // Divido il numero in due parti, parte intera e parte decimale
+            const [intPart, decimalPart] = numString.split('.');
+
+            // Aggiungo un punto ogni tre cifre nella parte intera
+            const formattedIntPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Ricostruisco il numero con la parte decimale (se presente) e la parte intera formattata
+            const formattedNumber = decimalPart !== undefined
+                ? `${formattedIntPart}.${decimalPart}`
+                : formattedIntPart;
+
+            return formattedNumber;
+        }
     },
     components: { 
 
@@ -27,7 +53,7 @@ import { store } from '../store';
 
         <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
 
-            <div class="card p-1" >
+            <div class="card" >
 
                 <!-- image -->
                 <div class="zoom">
@@ -38,7 +64,7 @@ import { store } from '../store';
                 <!-- list -->
                 <div class="card-body pt-2">
 
-                    <ul class="p-0">
+                    <ul class="p-0 m-0">
 
                         <!-- address -->
                         <li class="list-group-item address-card">
@@ -50,22 +76,21 @@ import { store } from '../store';
                             </h6>
                         </li>
 
-                        <!-- bedrooms -->
-                        <li class="list-group-item">
-                            <strong>Stanze da letto:</strong>
-                            {{ propsCard.bedrooms }}
-                        </li>
-
-                        <!-- bathrooms -->
-                        <li class="list-group-item">
-                            <strong>Bagni:</strong>
-                            {{ propsCard.bathrooms }}
+                        <!-- vote -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <i v-for=" elem in 5" class="text-warning fa-star" :class=" elem <= propsCard.vote ? `fa-solid` : `fa-regular` "></i>
+                            </div>
+                            <span class="fw-bold btn btn-vote px-1 py-0">
+                                {{ getVote(propsCard.vote) }}
+                            </span>                            
                         </li>
 
                         <!-- price -->
                         <li class="list-group-item">
-                            <strong>Prezzo:</strong>
-                            {{ propsCard.price }} €
+                            <span class="price">
+                                {{ getPrice(propsCard.price) }} €
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -78,23 +103,25 @@ import { store } from '../store';
 <style lang="scss" scoped>
 @import '../style/main.scss';
 
-
-
 a {
     text-decoration: none;
+
+    // card
     .card {
-        flex: 0 0 calc(33.33% - 10px); /* Dividere il contenitore in tre colonne con uno spazio di 10px tra le card */
         margin-bottom: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+        border-radius: 0 0 20px 20px;;
 
 
+        // img
         img {
-            width: 100%;
+            height: 100%;
+            min-width: 100%;
             display: block;
             transition: all 0.7s ease-in-out;
         }
 
+        // image
         .zoom {
             overflow: hidden;
             width: 100%;
@@ -107,16 +134,35 @@ a {
             }
         }
 
+        // card-body
         .card-body {
             ul {
+
+                // address
                 li.address-card {
-                    height: 3.8rem;
+                    height: 3rem;
 
                     h6 {
                         i {
                             align-self: center;
                             font-size: 1.3rem;
                         }
+                    }
+                }
+                
+                li {
+
+                    // vote
+                    .btn-vote {
+                        background-color: #C6AB7C;
+                        font-size: 1.05rem;
+                        color: #323232;
+                    }
+
+                    // price
+                    .price {
+                        font-weight: 600;
+                        font-size: 1.1rem;
                     }
                 }
             }
