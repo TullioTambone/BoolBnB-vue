@@ -223,9 +223,6 @@ export default{
 
                     <input type="hidden" name="apartment_id" v-model="apartment.id">
     
-                    <!-- <button type="submit" class="btn">
-                        Invia
-                    </button> -->
                     <button type="submit" class="btn" :class="{ 'btn-primary': !loading, 'btn-secondary': loading }" :disabled="loading">
                         <span v-if="!loading">Invia</span>
                         <span v-else>
