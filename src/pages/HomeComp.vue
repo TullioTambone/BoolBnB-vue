@@ -29,10 +29,9 @@ import TeamComp from '../components/TeamComp.vue';
             axios.get(`${this.baseUrl}/api/apartments`).then((res) => {
                 // this.apartments = res.data.apartment.data;
                 this.apartments = res.data.apartment.data
-                
-                store.sponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
-                
-                store.nonSponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length === 0);
+                store.sponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
+                store.nonSponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length === 0);
+                console.log(store.sponsoredApartments);
             });
         },
         autocomplete() {
@@ -93,7 +92,7 @@ import TeamComp from '../components/TeamComp.vue';
 
     <!-- apartments -->
     <div class="container my-5">
-        <div class="row my-5 border-bottom border-top rounded">
+        <div class="row my-5 border-bottom border-top round">
             <span class="text-end text-secondary mb-2">sponsorizzati</span>
             <CardComp  
                 v-for="(elem, index) in store.sponsoredApartments" :key='index'
@@ -112,6 +111,5 @@ import TeamComp from '../components/TeamComp.vue';
 
 <style lang="scss" scoped>
 @import '../style/main.scss';
-
 
 </style>

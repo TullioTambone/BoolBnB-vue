@@ -18,10 +18,10 @@ export default {
 
 
 <template>
- <div class="contenitore">
+ <div class="contenitore border-top">
     <div class="contenitore2 d-flex justify-content-between ">
         <div class="p-3">
-            <img class="logo-img" src="/img/Boolbnb-logo-transparente-total-white.png" alt="Boolbnb logo">
+            <img class="logo-img" src="/img/Boolbnb-logo-transparente.png" alt="Boolbnb logo">
         </div>
         <div class="d-flex p-3">
                 <li><a href="#"><i class="fab fa-facebook"></i></a></li>
@@ -35,7 +35,7 @@ export default {
         <div>
             <ul class="mt-3 p-3">
                 <li>
-                    SOCIETA'
+                    <strong>SOCIETA'</strong>
                 </li>
                 <li>
                     <a href="">Posizioni aperte</a>
@@ -50,7 +50,9 @@ export default {
         </div>
         <div>
             <ul class="mt-3 p-3">
-                <li>AIUTO</li>
+                <li>
+                    <strong>AIUTO</strong>
+                </li>
                 <li> <a href="">Scopri come funziona Boolbnb</a> </li>
                 <li> <a href="">Termini e condizioni</a> </li>
                 <li> <a href="">Note legali</a> </li>
@@ -63,7 +65,7 @@ export default {
         <div>
             <ul class="mt-3 p-3">
                 <li>
-                    INFORMAZIONI SU BOOLBNB
+                    <strong>INFORMAZIONI SU BOOLBNB</strong>
                 </li>
                 <li>
                 <a href="">News</a> 
@@ -90,13 +92,11 @@ export default {
 <style lang="scss" scoped>
 .contenitore {
     width: 100%;
-    border: 1px solid black;
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     color: white;
     .contenitore3 {
         width: 80%;
         margin: 0 auto;
-        border: 1px solid black;
 
         li {
             list-style-type: none;
@@ -109,18 +109,17 @@ export default {
                 color: rgb(86, 104, 104);
             }
             a:hover {
-                    color: white;
+                    color: gold;
                 }
         }
     }
     .contenitore2{
         width: 80%;
         margin: 0 auto;
-        border: 1px solid black;
          i {
             color: rgb(130, 179, 179);
             &:hover {
-                color: white;
+                color: gold;
             }
         }
 
@@ -138,7 +137,7 @@ span {
     width: 70px;
 }
 a:hover {
-    color: white;
+    color: gold;
 }
 .p-3 img {
     width: 90px;
