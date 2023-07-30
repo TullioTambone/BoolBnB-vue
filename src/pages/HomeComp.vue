@@ -88,7 +88,7 @@ import TeamComp from '../components/TeamComp.vue';
 
 
     <!-- apartments -->
-    <div class="container mt-5">
+    <div class="container my-5">
         <div class="row">
             <CardComp  
                 v-for="(elem, index) in apartments" :key='index'
@@ -98,8 +98,6 @@ import TeamComp from '../components/TeamComp.vue';
     </div>
    
 </template>
-
-
 
 <style lang="scss" scoped>
 @import '../style/main.scss';
