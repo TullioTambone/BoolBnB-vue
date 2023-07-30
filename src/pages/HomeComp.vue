@@ -83,12 +83,9 @@ import TeamComp from '../components/TeamComp.vue';
     />
 
     <!-- the best team -->
-    <div class="py-5">
+    <!-- <div class="py-5">
         <TeamComp/>
-    </div>
-
-    <!-- sponsored -->
-
+    </div> -->
 
     <!-- apartments -->
     <div class="container my-5">

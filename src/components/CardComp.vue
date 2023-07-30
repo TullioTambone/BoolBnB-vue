@@ -62,13 +62,13 @@ import { store } from '../store';
 }
 </script>
 <template>
-   <div class="col-12 col-md-4 col-lg-3" v-if="propsCard.visibility">
+   <div class="col-12 col-md-6 col-lg-4 col-xl-3" v-if="propsCard.visibility">
 
         <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
 
             <div class="card position-relative">
                 <div class="position-absolute top-0 start-100 translate-middle z-index-3" v-if="propsCard.subscriptions.length !== 0" >
-                    <i class="fa-solid fa-bookmark" :class="getSubscriptionClass(propsCard.subscriptions[0].id)"></i>
+                    <i class="fa-solid fa-bookmark fs-2" :class="getSubscriptionClass(propsCard.subscriptions[0].id)"></i>
                 </div>
 
                 <!-- image -->
@@ -151,11 +151,11 @@ a {
             overflow: hidden;
             width: 100%;
             height: 200px;
-
+            
             &:hover img {
                 transform: scale(1.5);
-                filter: brightness(0.7);
-                transition: transform 0.9s ease;
+                filter: brightness(0.8);
+                transition: 2s;
             }
         }
 
@@ -195,8 +195,7 @@ a {
 
         /* Stile aggiuntivo per rendere il layout più accattivante */
         &:hover {
-        transform: translateY(-5px);
-        transition: transform 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
     }
