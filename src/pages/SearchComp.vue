@@ -2,11 +2,12 @@
 import axios from 'axios';
 import ttServices from "@tomtom-international/web-sdk-services";
 import { store } from '../store';
+import CardComp from '../components/CardComp.vue';
 
     export default {
         name: "SearchComp",
         components: {
-
+            CardComp
         },
         data() {
             return {
@@ -137,9 +138,12 @@ import { store } from '../store';
 
                 axios.get(`${this.baseUrl}/api/apartments`, { params } ).then((res) =>{
                     console.log(res.data.apartment)
-                    this.apartments = res.data.apartment.data
+                    store.nonSponsoredApartments = res.data.apartment.data
                     this.currentPage = res.data.apartment.current_page
                     this.lastPage = res.data.apartment.last_page
+
+                    store.sponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
+
                     this.updateFiltersAndFetchData()
                 })
             },
@@ -330,7 +334,24 @@ import { store } from '../store';
         </div>
 
         <!-- apartments -->
-        <div class="container">
+        <div class="container my-5">
+            <div v-if="store.sponsoredApartments.lenght !== 0" class="row my-5 border-bottom border-top rounded">
+                <span class="text-end text-secondary mb-2">sponsorizzati</span>
+                <CardComp  
+                    v-for="(elem, index) in store.sponsoredApartments" :key='index'
+                    :propsCard="elem"
+                />
+            </div>
+            <div class="row">
+                <CardComp  
+                    v-for="(elem, index) in store.nonSponsoredApartments" :key='index'
+                    :propsCard="elem"
+                />
+            </div>
+        </div>
+
+        <!-- apartments -->
+        <!-- <div class="container">
             <div class="row">
                 <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
                     <div class="car mb-4">
@@ -339,14 +360,13 @@ import { store } from '../store';
                         <img v-else class="img-fluid" :src="elem.cover" :alt="elem.title">
                     </div>
                 </router-link>
-
                 
                 <div v-if="apartments.length === 0">
                     <h1>Non ci sono appartamenti</h1>
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
         <!-- pagination -->
         <ul class="pagination my-2">

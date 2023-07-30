@@ -29,9 +29,10 @@ import TeamComp from '../components/TeamComp.vue';
             axios.get(`${this.baseUrl}/api/apartments`).then((res) => {
                 // this.apartments = res.data.apartment.data;
                 this.apartments = res.data.apartment.data
-                store.sponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
-                store.nonSponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length === 0);
-                console.log(store.sponsoredApartments);
+                
+                store.sponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
+                
+                store.nonSponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length === 0);
             });
         },
         autocomplete() {
