@@ -261,11 +261,7 @@ export default {
 
 <!-- immagini per gli appartamenti -->
 
-<!-- <img src="https://live.staticflickr.com/65535/53077744048_cc0f08f157_h.jpg" width="1600" height="1200" alt="reisetopia-T0H3DS-0BiA-unsplash"/>
-
-<img src="https://live.staticflickr.com/65535/53077244626_0892274a77_h.jpg" width="1600" height="1067" alt="grant-durr-owDt6QksGEg-unsplash"/>
-
-<img src="https://live.staticflickr.com/65535/53077743998_6a3cfcf049_h.jpg" width="1600" height="1067" alt="peter-borter-dWiwaNKAxWM-unsplash"/>
+<!-- <img src="https://live.staticflickr.com/65535/53077743998_6a3cfcf049_h.jpg" width="1600" height="1067" alt="peter-borter-dWiwaNKAxWM-unsplash"/>
 
 <img src="https://live.staticflickr.com/65535/53077654645_8c6a0b999d_h.jpg" width="1600" height="1060" alt="shawnanggg-6UMPsbJraDA-unsplash"/>
 
