@@ -164,16 +164,20 @@ export default{
                     
                     <!-- images -->
                     <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
-                        <div class="box margine content">   
-                            <a href="#image1" class="wiggle">                      
-                            <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+
+                        
+                        <div class="box margine content">
+                            <a href="#image1" class="wiggle">
+                                <img class="d-block" v-if="elem.url.includes('images')" :src="`${store.baseUrl}/storage/${elem.url}`"  alt="">
+                                <img v-else class="d-block" :src="elem.url" :alt="apartment.title">
                             </a>
                             <div  class="lightbox short-animate" id="image1">
-                            <img class="d-block v h-50 w-50 rounded" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                                <img class="d-block v h-50 w-50 rounded" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
                             </div>
                             <div id="lightbox-controls" class="short-animate">
                             <a id="close-lightbox" class="long-animate" href="#!">Close Lightbox</a>
                             </div>
+
                         </div>
                     </div>
                 </div>
