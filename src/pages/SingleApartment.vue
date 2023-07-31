@@ -25,7 +25,6 @@ export default{
         async getMap(longitude, latitude) {
             //    PROVE PER INTEGRAZIONE MAPPA E PUNTATORE MAPPA
 
-            //document.querySelector('.mapboxgl-marker').classList.add("position-absolute");
             const point =  [longitude, latitude];
 
             console.log(point);
@@ -61,30 +60,31 @@ export default{
                 }).then( (response) => {
                         
                         const results = response.results;
-                        // console.log(results)
+                        console.log(results)
                         
                         // se abbiamo dei risultati ottenuti
                         if (results.length)  {   
 
-                            const userAddressLower = address.toLowerCase();
+                            const userAddressLower = address.replace(/[\d,]/g, '').toLowerCase();
 
                             let latitude, longitude
                 
                             for (const elem of results) {                          
                                             
                                 let resultAddressLower = elem.address.freeformAddress.toLowerCase();
-                
+
+                                console.log(resultAddressLower)
                                 // Controlla se l'indirizzo ottenuto contiene la stringa inserita dall'utente
-                                if (resultAddressLower.includes(userAddressLower)) {
+                                if (resultAddressLower.indexOf(userAddressLower) !== -1) {
                                     latitude = elem.position.lat;
                                     longitude = elem.position.lng;                
                                     break; 
                                 } 
                             }
                             
-                            if(latitude && longitude) {
-                                this.getMap(longitude, latitude)
-                            }
+                            // if(latitude && longitude) {
+                            //     this.getMap(longitude, latitude)
+                            // }
                         } else {
                             console.error('Nessun risultato trovato per l\'indirizzo fornito.');
                         }
@@ -101,8 +101,12 @@ export default{
            
                 this.apartment = response.data.apartment;
 
-                if (this.apartment.address) {
-                    this.getTom(this.apartment.address)
+                // if (this.apartment.address) {
+                //     this.getTom(this.apartment.address)
+                // }
+
+                if (this.apartment.latitude && this.apartment.longitude) {
+                    this.getMap(this.apartment.longitude, this.apartment.latitude)
                 }
             } catch (error) {
                 if(this.res.data.data.success){
