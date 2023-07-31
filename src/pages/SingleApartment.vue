@@ -145,75 +145,104 @@ export default{
 </script>
 
 <template>
-    <div class="container">
+    <div class="container mb-5">
 
         <div v-if="apartment" class="row">
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-12 col-md-7 col-lg-7 px-5">
     
                 <!-- cover -->
                 <div v-if="apartment.cover">
                     <img class="img-fluid w-100" v-if="apartment.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${apartment.cover}`"  alt="">
                     <img v-else class="img-fluid w-100" :src="apartment.cover" :alt="apartment.title">
-                </div>
-                
+                </div>                
               
                 <div class="d-flex over">
                     
-                <!-- images -->
-                <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
-                    <div class="box margine">                              
-                        <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                    <!-- images -->
+                    <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
+                        <div class="box margine">                              
+                            <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                        </div>
+                    </div>
+                    <!-- mappa -->
+                    <div id='map' class='map mt-5 margine'>
                     </div>
                 </div>
-                <!-- mappa -->
-                </div>
-                     <div id='map' class='map mt-5 margine' style="height: 200px;"></div>
-                </div>
+            </div>
+
             <!-- details -->
-            <div class="col-12 col-md-6 col-lg-6 ">
-                <h1 class="border-bottom">{{ apartment.title }}</h1>
-                <span class="d-block">
-                    <i class="fa-solid fa-location-dot"></i> {{ apartment.address }}
-                    </span>
+            <div class="col-12 col-md-5 col-lg-5 px-4">
+
+                <!-- title and address -->
+                <ul class="p-0">
+                    <li>
+                        <h1 class="border-bottom mb-2 pb-1">{{ apartment.title }}</h1>
+                    </li>
+                    <li>
+                        <h6>
+                            <i class="fa-solid fa-location-dot"></i>
+                            {{ apartment.address }}
+                        </h6>
+                    </li>
+                </ul>
+
+                <!-- info appartamento -->
                 <h4 class="mt-2">Info Appartamento</h4>
-                <p>{{ apartment.description }}</p>
+                <ul class="p-0">
+                    <li>
+                        <p>{{ apartment.description }}</p>
+                    </li>
+                    <li>
+                        <strong>Stanze:</strong>
+                        {{ apartment.rooms }}
+                    </li>
+                    <li>
+                        <strong>Stanze letto:</strong>
+                        {{ apartment.bedrooms }}
+                    </li>
+                    <li>
+                        <strong>Bagni:</strong>
+                        {{ apartment.bathrooms }}
+                    </li>
+                    <li>
+                        <strong>Metri quadri:</strong>
+                        {{ apartment.square_meters }}mq
+                    </li>
+                    <li v-if="apartment.price">
+                        <strong>Prezzo:</strong>
+                        {{ apartment.price }}&euro;
+                    </li>
+                    <li>
+                        <strong>visibilità:</strong>
+                        {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
+                    </li>
+                </ul>
+
+                <!-- servizi -->
                 <div>
-                        <span class="d-block">
-                           <strong>Stanze:</strong>  {{ apartment.rooms }}
-                        </span>
-                        <span class="d-block">
-                           <strong>Stanze letto:</strong>  {{ apartment.bedrooms }}
-                        </span>
-                        <span class="d-block">
-                           <strong>Bagni:</strong>  {{ apartment.bathrooms }}
-                        </span>
-                        <span class="d-block">
-                          <strong>Metri quadri:</strong>   {{ apartment.square_meters }}mq
-                        </span>
-                        <span v-if="apartment.price" class="d-block">
-                          <strong>Prezzo:</strong>   {{ apartment.price }}&euro;
-                        </span>
-                        <span class="d-block">
-                           <strong>visibilità:</strong>  {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
-                        </span>
-                        <h5 class="mt-2"> Servizi della struttura</h5>
-                            <span v-for="( elem, index ) in apartment.services" :key="index" class="p-1 mt-1 card d-inline"> 
-                                <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
-                            </span>
+                    <h5 class="mt-2"> Servizi della struttura</h5>
+                    <span v-for="( elem, index ) in apartment.services" :key="index" class="p-1 mt-1 card d-inline"> 
+                        <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
+                    </span>
                 </div>
+
                 <!-- form contatta la truttura -->
-                <form class="card p-4 mt-5 mb-4 margine" action="" @submit.prevent="sendForm()">
+                <form class="card p-3 mt-5 mb-4 margine" action="" @submit.prevent="sendForm()">
                     <h3 class="">Contatta la struttura</h3>
+
+                    <!-- name -->
                     <div class="mb-3">
                         <label for="" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="name" placeholder="Nome" name="name" v-model="name">
                     </div>
     
+                    <!-- email -->
                     <div class="mb-3">
                         <label for="" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" v-model="email">
                     </div>
     
+                    <!-- message -->
                     <div class="mb-3">
                         <div class="mb-3">
                             <label for="" class="form-label">Messaggio</label>
@@ -221,8 +250,10 @@ export default{
                         </div>
                     </div>
 
+                    <!-- apartment_id -->
                     <input type="hidden" name="apartment_id" v-model="apartment.id">
     
+                    <!-- button -->
                     <button type="submit" class="btn" :class="{ 'btn-primary': !loading, 'btn-secondary': loading }" :disabled="loading">
                         <span v-if="!loading">Invia</span>
                         <span v-else>
@@ -231,13 +262,19 @@ export default{
                         </span>
                     </button>
 
+                    <!-- confirmation modal -->
                     <div class="modal mt-5" id="confirmationModal" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
+
+                                <!-- header -->
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Messaggio inviato con successo!</h5>
+                                    <h5 class="modal-title">
+                                        Messaggio inviato con successo!
+                                    </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
+                                <!-- footer -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                                 </div>
@@ -245,7 +282,9 @@ export default{
                         </div>
                     </div>
                 </form>
-            </div>    
+
+            </div>
+
         </div>
     </div>
 </template>
@@ -263,7 +302,7 @@ export default{
             &:hover {
                 transform: translateY(-5px);
                 transition: transform 0.3s ease;
-}
+            }
         }
     }
     img {
@@ -273,6 +312,7 @@ export default{
 .over {
     overflow-x: auto;
 }
+
 form {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 
@@ -282,11 +322,16 @@ form {
     }
 }
 .map {
+    aspect-ratio: 3/2;
+    width: 100%;
     border-radius: 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .margine {
     margin-top: 40px;
+}
+
+ul {
+    list-style: none;
 }
  
 </style>
