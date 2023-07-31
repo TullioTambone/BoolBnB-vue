@@ -61,33 +61,35 @@ export default {
     <div class="cards">
      <h3>Boolean</h3>
      <h1>Il Team  7️⃣</h1>
-     <div class="card card__one">
-        <div class="card__bg"></div>
-        <img class="card__img" src="/img/01_gabri.png" />
-        <div class="card__text">
-            <p class="card__title">Gabriele Damiani</p>
-        </div>
-     </div>
-     <div class="card card__two">
-        <div class="card__bg"></div>
-        <img class="card__img" src="/img/02_alva.png" />
-        <div class="card__text">
-            <p class="card__title">Alvaro Arbaiza</p>
-        </div>
-     </div>
-     <div class="card card__three">
-        <div class="card__bg"></div>
-        <img class="card__img" src="/img/03_tullio.png" />
-        <div class="card__text">
-            <p class="card__title">Tullio Tambone</p>
-        </div>
-     </div>
-     <div class="card card__four">
-        <div class="card__bg"></div>
-        <img class="card__img" src="/img/04_edo.png" />
-        <div class="card__text">
-            <p class="card__title">Edoardo Monti</p>
-        </div>
+     <div class="row justify-content-center">
+       <div class="card card__one col-12 col-md-6 col-lg-3 my-1">
+          <div class="card__bg"></div>
+          <img class="card__img" src="/img/01_gabri.png" />
+          <div class="card__text">
+              <p class="card__title">Gabriele Damiani</p>
+          </div>
+       </div>
+       <div class="card card__two col-12 col-md-6 col-lg-3 my-1">
+          <div class="card__bg"></div>
+          <img class="card__img" src="/img/02_alva.png" />
+          <div class="card__text">
+              <p class="card__title">Alvaro Arbaiza</p>
+          </div>
+       </div>
+       <div class="card card__three col-12 col-md-6 col-lg-3 my-1">
+          <div class="card__bg"></div>
+          <img class="card__img" src="/img/03_tullio.png" />
+          <div class="card__text">
+              <p class="card__title">Tullio Tambone</p>
+          </div>
+       </div>
+       <div class="card card__four col-12 col-md-6 col-lg-3 my-1">
+          <div class="card__bg"></div>
+          <img class="card__img" src="/img/04_edo.png" />
+          <div class="card__text">
+              <p class="card__title">Edoardo Monti</p>
+          </div>
+       </div>
      </div>
    </div>
 </div>
@@ -138,7 +140,6 @@ h3 {
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
   transform: rotateX(11deg) rotateY(16.5deg);
-  min-width: 595px;
 }
 
 .card {
@@ -161,9 +162,9 @@ h3 {
      transform: translatez(60px);
    }
   
-  &:not(:last-child) {
-    margin-right: 30px;
-  }
+  // &:not(:last-child) {
+  //   margin-right: 30px;
+  // }
 }
 
 .card__img {
