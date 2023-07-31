@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios';
 import { store } from '../store';
 
     export default {
@@ -165,7 +164,7 @@ a {
 
                 // address
                 li.address-card {
-                    height: 3rem;
+                    min-height: 4rem;
 
                     h6 {
                         i {
