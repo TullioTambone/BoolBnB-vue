@@ -152,7 +152,7 @@ export default{
     <div class="container mb-5">
 
         <div v-if="apartment" class="row">
-            <div class="col-12 col-md-7 col-lg-7 px-5">
+            <div class="left col-12 col-md-12 col-lg-7 px-5">
     
                 <!-- cover -->
                 <div v-if="apartment.cover">
@@ -160,42 +160,50 @@ export default{
                     <img v-else class="img-fluid w-100" :src="apartment.cover" :alt="apartment.title">
                 </div>                
               
-                <div class="d-flex over">
+                <!-- images -->
+                <div class="d-flex thumbnail">
                     
-                    <!-- images -->
                     <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
 
-                        
                         <div class="box margine content">
-                            <a href="#image1" class="wiggle">
-                                <img class="d-block" v-if="elem.url.includes('images')" :src="`${store.baseUrl}/storage/${elem.url}`"  alt="">
+
+                            <!-- wiggle -->
+                            <a :href="`#${index}`" class="wiggle">
+                                <img class="d-block" v-if="elem.url.includes('images')" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
                                 <img v-else class="d-block" :src="elem.url" :alt="apartment.title">
                             </a>
-                            <div  class="lightbox short-animate" id="image1">
-                                <img class="d-block v h-50 w-50 rounded" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
-                            </div>
-                            <div id="lightbox-controls" class="short-animate">
-                            <a id="close-lightbox" class="long-animate" href="#!">Close Lightbox</a>
+
+                            <!-- lightbox -->
+                            <div class="lightbox short-animate" :id="index">>
+                                <img class="d-block rounded p-5 mt-5" v-if="elem.url.includes('images')" :src="`${store.baseUrl}/storage/${elem.url}`"  :alt="apartment.title">
+                                <img v-else class="d-block rounded p-5 mt-5 " :src="elem.url" :alt="apartment.title">
                             </div>
 
+                            <!-- lightbox controls -->
+                            <div id="lightbox-controls" class="short-animate">
+                                <a id="close-lightbox" class="long-animate" href="#!">
+                                    Close Lightbox
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- mappa -->
-                <div id='map' class='map mt-5 margine'>
+                <div id='map' class='map my-5 margine'>
                 </div>
             </div>
 
             <!-- details -->
-            <div class="col-12 col-md-5 col-lg-5 px-4">
+            <div class="right col-12 col-md-12 col-lg-5 px-4">
 
                 <!-- title and address -->
                 <ul class="p-0">
                     <li>
-                        <h1 class="border-bottom mb-2 pb-1">{{ apartment.title }}</h1>
+                        <h2 class="border-bottom mb-3 pb-1">{{ apartment.title }}</h2>
                     </li>
                     <li>
-                        <h6>
+                        <h6 class="mt-2">
                             <i class="fa-solid fa-location-dot"></i>
                             {{ apartment.address }}
                         </h6>
@@ -203,8 +211,8 @@ export default{
                 </ul>
 
                 <!-- info appartamento -->
-                <h4 class="mt-2">Info Appartamento</h4>
-                <ul class="p-0">
+                <h4 class="mt-3 mb-2">Info Appartamento</h4>
+                <ul class="p-0 d-flex flex-column row-gap-1">
                     <li>
                         <p>{{ apartment.description }}</p>
                     </li>
@@ -213,33 +221,36 @@ export default{
                         {{ apartment.rooms }}
                     </li>
                     <li>
-                        <strong>Stanze letto:</strong>
+                        <strong>Stanze letto: </strong>
                         {{ apartment.bedrooms }}
                     </li>
                     <li>
-                        <strong>Bagni:</strong>
+                        <strong>Bagni: </strong>
                         {{ apartment.bathrooms }}
                     </li>
                     <li>
-                        <strong>Metri quadri:</strong>
+                        <strong>Metri quadri: </strong>
                         {{ apartment.square_meters }}mq
                     </li>
                     <li v-if="apartment.price">
-                        <strong>Prezzo:</strong>
+                        <strong>Prezzo: </strong>
                         {{ apartment.price }}&euro;
                     </li>
                     <li>
-                        <strong>visibilità:</strong>
+                        <strong>Visibilità: </strong>
                         {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
                     </li>
                 </ul>
 
                 <!-- servizi -->
                 <div>
-                    <h5 class="mt-2"> Servizi della struttura</h5>
-                    <span v-for="( elem, index ) in apartment.services" :key="index" class="p-1 mt-1 card d-inline"> 
-                        <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
-                    </span>
+                    <h5 class="mt-3 mb-2"> Servizi della struttura</h5>
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <span v-for="( elem, index ) in apartment.services" :key="index" class="p-1 mt-1 card d-inline"> 
+                            <i :class="`fa-solid ${ elem.icon } me-1`"></i> {{  elem.name }} 
+                        </span>
+                    </div>
                 </div>
 
                 <!-- form contatta la truttura -->
@@ -300,198 +311,250 @@ export default{
                 </form>
 
             </div>
-
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
- .container {
+.container {
     margin-top: 100px;
-    .box {
-        img {
-            width: 100px;
-            height: 100px;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-            cursor: pointer;
 
-            &:hover {
-                transform: translateY(-5px);
-                transition: transform 0.3s ease;
+    .row {
+
+        // left
+        .left {
+
+            // over
+            .thumbnail {
+                overflow-x: auto;
+
+                // box
+                .box {
+    
+                    // wiggle
+                    .wiggle {
+            
+                        img {
+                            width: 100px;
+                            height: 100px;
+                            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+                            cursor: pointer;
+                            border-radius: 10px;
+                            object-fit: cover;
+                
+                            &:hover {
+                                transform: translateY(-5px);
+                                transition: transform 0.3s ease;
+                            }
+                        }
+                    }
+
+                    // lightbox
+                    .lightbox {
+                        position:fixed;
+                        top:-100%;
+                        bottom:100%;
+                        left:0;
+                        right:0;
+                        background:rgba(0, 0, 0, 0.496);
+                        z-index:501;
+                        opacity:0;
+
+                        img {
+                            position:absolute;
+                            margin:auto;
+                            top:0;
+                            left:0;
+                            right:0;
+                            bottom:0;
+                            max-width:100%;
+                            max-height:95%;
+                            object-fit: contain;
+                        }
+
+                        &:target {
+                            top:0%;
+                            bottom:0%;
+                            opacity:1;
+                        }
+
+                        &:target img {
+                            max-width:100%;
+                            max-height:95%;
+                            box-shadow: none;
+                            border-radius: 20px;
+                        }
+
+                        &:target ~ #lightbox-controls {
+                            top:0px;
+                        }
+
+                        &:target ~ #lightbox-controls #close-lightbox:after {
+                            width:50px;
+                        }
+
+                        &:target ~ #lightbox-controls #close-lightbox:before {
+                            height:50px;
+                        }
+                    }
+                    
+                    // lightbox-controls
+                    #lightbox-controls {
+                        position:fixed;
+                        height:70px;
+                        width:70px;
+                        top:-70px;
+                        right:0;
+                        z-index:502;
+                        background:rgba(0,0,0,.1);
+                    
+                        #close-lightbox {
+                            display:block;
+                            position:absolute;
+                            overflow:hidden;
+                            height:50px;
+                            width:50px;
+                            text-indent:-5000px;
+                            right:10px;
+                            top:80px;
+                            -webkit-transform:rotate(45deg);
+                            -moz-transform:rotate(45deg);
+                            -ms-transform:rotate(45deg);
+                            -o-transform:rotate(45deg);
+                            transform:rotate(45deg);
+                            
+                            &:before {
+                                content:'';
+                                display:block;
+                                position:absolute;
+                                height:0px;
+                                width:3px;
+                                left:24px;
+                                top:0;
+                                background:white;
+                                border-radius:2px;
+                                -webkit-transition: .5s .5s ease-in-out;
+                                -moz-transition: .5s .5s ease-in-out;
+                                -ms-transition: .5s .5s ease-in-out;
+                                -o-transition:.5s .5s ease-in-out;
+                                transition:.5s .5s ease-in-out;
+                            }
+                            
+                            &:after {
+                                content:'';
+                                display:block;
+                                position:absolute;
+                                width:0px;
+                                height:3px;
+                                top:24px;
+                                left:0;
+                                background:white;
+                                border-radius:2px;
+                                -webkit-transition: .5s 1s ease-in-out;
+                                -moz-transition: .5s 1s ease-in-out;
+                                -ms-transition: .5s 1s ease-in-out;
+                                -o-transition:.5s 1s ease-in-out;
+                                transition:.5s 1s ease-in-out;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // maps
+            .map {
+                aspect-ratio: 3/2;
+                width: 100%;
+                border-radius: 20px;
+            }
+        }
+
+        // right
+        .right {
+
+            ul {
+                list-style: none;
+            }
+
+            // form
+            form {
+                box-shadow: rgba(50, 50, 93, 0.20) 0px 10px 30px -20px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            
+                .btn {
+                    background-color: #C6AB7C;
+                    color: white;
+                }
             }
         }
     }
-    img {
-        border-radius: 10px;
-    }
-}
-.over {
-    overflow-x: auto;
 }
 
-form {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-
-    .btn {
-        background-color: #C6AB7C;
-        color: white;
-    }
-}
-.map {
-    aspect-ratio: 3/2;
-    width: 100%;
-    border-radius: 20px;
-}
 .margine {
     margin-top: 40px;
 }
 
-ul {
-    list-style: none;
-}
-
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html,body {
-  height:100%;
-  max-height:100%;
-}
 
 .short-animate {
-  -webkit-transition:.5s ease-in-out;
-  -moz-transition:.5s ease-in-out;
-  -ms-transition:.5s ease-in-out;
-  -o-transition:.5s ease-in-out;
-  transition:.5s ease-in-out;
+    -webkit-transition:.5s ease-in-out;
+    -moz-transition:.5s ease-in-out;
+    -ms-transition:.5s ease-in-out;
+    -o-transition:.5s ease-in-out;
+    transition:.5s ease-in-out;
 }
 
 .long-animate {
-  -webkit-transition: .5s .5s ease-in-out;
-  -moz-transition: .5s .5s ease-in-out;
-  -ms-transition: .5s .5s ease-in-out;
-  -o-transition:.5s .5s ease-in-out;
-  transition:.5s .5s ease-in-out;
+    -webkit-transition: .5s .5s ease-in-out;
+    -moz-transition: .5s .5s ease-in-out;
+    -ms-transition: .5s .5s ease-in-out;
+    -o-transition:.5s .5s ease-in-out;
+    transition:.5s .5s ease-in-out;
 }
 
-html,body {
-  height:100%;
-  min-height:100%;
-}
+    @media (max-width: 1024px) { 
+        .container {
+            .row {
+                .right {
+                    ul {
+                        li {
+                            h2 {
+                                font-size: 1.8rem;
+                            }
 
-.lightbox {
-  position:fixed;
-  top:-100%;
-  bottom:100%;
-  left:0;
-  right:0;
-  background:rgba(146, 119, 127, 0.8);
-  z-index:501;
-  opacity:0;
-}
+                            h6 {
+                                font-size: 0.9rem;
+                            }
+                        }
+                    }
 
-.lightbox img {
-	position:absolute;
-  margin:auto;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  max-width:0%;
-  max-height:0%;
-}
+                    h4 {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+    }
 
-#lightbox-controls {
-  position:fixed;
-  height:70px;
-  width:70px;
-  top:-70px;
-  right:0;
-  z-index:502;
-  background:rgba(0,0,0,.1);
-}
+    @media (max-width: 768px) { 
+        .container {
+            .row {
+                .right {
+                    ul {
+                        li {
+                            h2 {
+                                font-size: 1.4rem;
+                            }
 
-#close-lightbox {
-  display:block;
-  position:absolute;
-  overflow:hidden;
-  height:50px;
-  width:50px;
-  text-indent:-5000px;
-  right:10px;
-  top:80px;
-  -webkit-transform:rotate(45deg);
-  -moz-transform:rotate(45deg);
-  -ms-transform:rotate(45deg);
-  -o-transform:rotate(45deg);
-  transform:rotate(45deg);
-}
+                            h6 {
+                                font-size: 0.8rem;
+                            }
+                        }
+                    }
 
-#close-lightbox:before {
-	content:'';
-  display:block;
-  position:absolute;
-  height:0px;
-  width:3px;
-  left:24px;
-  top:0;
-  background:white;
-  border-radius:2px;
-  -webkit-transition: .5s .5s ease-in-out;
-  -moz-transition: .5s .5s ease-in-out;
-  -ms-transition: .5s .5s ease-in-out;
-  -o-transition:.5s .5s ease-in-out;
-  transition:.5s .5s ease-in-out;
-}
-
-#close-lightbox:after {
-	content:'';
-  display:block;
-  position:absolute;
-  width:0px;
-  height:3px;
-  top:24px;
-  left:0;
-  background:white;
-  border-radius:2px;
-  -webkit-transition: .5s 1s ease-in-out;
-  -moz-transition: .5s 1s ease-in-out;
-  -ms-transition: .5s 1s ease-in-out;
-  -o-transition:.5s 1s ease-in-out;
-  transition:.5s 1s ease-in-out;
-}
-
-.lightbox:target {
-  top:0%;
-  bottom:0%;
-  opacity:1;
-}
-
-.lightbox:target img {
-  max-width:100%;
-  max-height:100%;
-  box-shadow: none;
-  border-radius: 20px;
-}
-
-.lightbox:target ~ #lightbox-controls {
-  top:0px;
-}
-
-.lightbox:target ~ #lightbox-controls #close-lightbox:after {
-  width:50px;
-}
-
-.lightbox:target ~ #lightbox-controls #close-lightbox:before {
-  height:50px;
-}
-.v {
-    object-fit: contain;
-}
-
-
+                    h4 {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+        }
+    }
 </style>
