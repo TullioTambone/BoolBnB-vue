@@ -226,7 +226,7 @@ import TeamComp from '../components/TeamComp.vue';
                             <div class="card__text">
                                 <h3>€2.99</h3>
                                 <span>24h</span>
-                                <span>BASE</span>
+                                <span><strong>BASE</strong></span>
                                 <hr>
                                 <p class="card__title"></p>
                                 <div>
@@ -237,6 +237,12 @@ import TeamComp from '../components/TeamComp.vue';
                                             </span>
                                             <span><strong>1</strong> giorno di visibilità</span>
                                         </li>
+                                        <li>
+                                            <span class="icon">
+                                                <i class="fa-solid fa-check"></i>
+                                            </span>
+                                            <span><strong>Badge</strong> "Base"</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -245,7 +251,7 @@ import TeamComp from '../components/TeamComp.vue';
                             <div class="card__text">
                                 <h3>€5.99</h3>
                                 <span>48h</span>
-                                <span>PREMIUM</span>
+                                <span><strong>PREMIUM</strong></span>
                                 <hr>
                                 <p class="card__title"></p>
                                 <div>
@@ -270,7 +276,8 @@ import TeamComp from '../components/TeamComp.vue';
                             <div class="card__text">
                                 <h3>€9.99</h3>
                                 <span>144h</span>
-                                <span>PLATINO</span>
+                                
+                                <span><strong>PLATINO</strong></span>
                                 <hr>
                                 <p class="card__title"></p>
                                 <div>
@@ -332,8 +339,9 @@ import TeamComp from '../components/TeamComp.vue';
                        box-shadow: 5px 5px 20px -7px rgba(0,0,0,0.5);
                      }
                      .card__text{
+                        margin: auto;
                         h3{
-                            padding-top: 40px;
+                            
                             font-size: 40px;
                         }
                         span{
