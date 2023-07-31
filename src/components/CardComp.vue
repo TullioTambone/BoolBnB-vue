@@ -56,7 +56,7 @@ import { store } from '../store';
                     return "";
                 }
             }
-        },
+        }
     }
 }
 </script>
@@ -66,8 +66,13 @@ import { store } from '../store';
         <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
 
             <div class="card position-relative">
-                <div class="position-absolute top-0 start-100 translate-middle z-index-3" v-if="propsCard.subscriptions.length !== 0" >
+                <div class="position-absolute top-0 start-100 translate-middle z-index-2" v-if="propsCard.subscriptions.length !== 0" >
                     <i class="fa-solid fa-bookmark fs-2" :class="getSubscriptionClass(propsCard.subscriptions[0].id)"></i>
+                </div>
+                <div class="position-absolute top-0 start-100 translate-middle z-index-3" v-if="propsCard.subscriptions.length !== 0" >
+                    <span v-if="propsCard.subscriptions[0].name == 'Base'">B</span>
+                    <span v-else-if="propsCard.subscriptions[0].name == 'Premium'">PR</span>
+                    <span v-if="propsCard.subscriptions[0].name == 'Platino'">PL</span>
                 </div>
 
                 <!-- image -->
@@ -89,6 +94,10 @@ import { store } from '../store';
                                     {{ propsCard.address }}
                                 </span>
                             </h6>
+                        </li>
+                        
+                        <li class="list-group-item" v-if="propsCard.distance">
+                            <span>distanza: {{ parseInt(propsCard.distance) }}Km</span>
                         </li>
 
                         <!-- vote -->
@@ -168,7 +177,6 @@ a {
 
                     h6 {
                         i {
-                            align-self: center;
                             font-size: 1.3rem;
                         }
                     }
