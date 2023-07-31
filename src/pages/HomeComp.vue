@@ -221,8 +221,8 @@ import TeamComp from '../components/TeamComp.vue';
                         </div>
                     </div>
 
-                    <div class="card-sub d-flex justify-content-center">
-                        <div class="card card__one">
+                    <div class="card-sub d-flex justify-content-center flex-wrap">
+                        <div class="card card__one col-12 col-md-4">
                             <div class="card__text">
                                 <h3>€2.99</h3>
                                 <span>24h</span>
@@ -241,7 +241,7 @@ import TeamComp from '../components/TeamComp.vue';
                                 </div>
                             </div>
                         </div>
-                        <div class="card card__two">
+                        <div class="card card__two col-12 col-md-4">
                             <div class="card__text">
                                 <h3>€5.99</h3>
                                 <span>48h</span>
@@ -266,7 +266,7 @@ import TeamComp from '../components/TeamComp.vue';
                                 </div>
                             </div>
                         </div>
-                        <div class="card card__three">
+                        <div class="card card__three col-12 col-md-4">
                             <div class="card__text">
                                 <h3>€9.99</h3>
                                 <span>144h</span>
