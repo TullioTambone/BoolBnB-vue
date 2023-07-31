@@ -254,7 +254,7 @@ import CardComp from '../components/CardComp.vue';
             <!-- search -->
             <div class="col-12 d-flex pt-5 mt-5">
                 
-                <input class="form-control me-2 w-75" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
+                <input class="form-control me-2 w-75" id="search" name="search" type="search"  placeholder="  Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
 
@@ -265,21 +265,23 @@ import CardComp from '../components/CardComp.vue';
                 <button class="btn btn-primary border py-2 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
     
                 <!-- offcanvas -->
-                <div class="px-3 offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="px-3 offcanvas offcanvas-end forms" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     
                     <!-- header -->
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">Filtraggio</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel"> <strong>Filtraggio</strong></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
     
                     <!-- body -->
                     <div class="offcanvas-body">
                         <div class="col-12">
-    
+                            <div class="d-flex justify-content-center w-75 ms-5 mb-3">
+                                <img class="logo-img object-fit-cover" src="/img/Boolbnb-logo-transparente.png" alt="Boolbnb logo">
+                            </div>
                             <!-- Ricerca -->
                             <div class="mb-3">
-                                <label class="form-label">Ricerca</label>
+                                <label class="form-label"> <strong>Ricerca  <i class="fa-solid fa-magnifying-glass"></i> </strong></label>
                                 <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" list="datalistOptions" @keyup="autocomplete()" required>
                                 <datalist id="datalistOptions">                           
                                 </datalist>
@@ -288,7 +290,7 @@ import CardComp from '../components/CardComp.vue';
     
                             <!-- Stanze totali -->
                             <div class="mb-3">
-                                <label for="" class="form-label">Stanze</label>
+                                <label for="" class="form-label"> <strong>Stanze  <i class="fa-solid fa-door-open"></i> </strong></label>
     
                                 <select v-model="rooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
@@ -299,7 +301,7 @@ import CardComp from '../components/CardComp.vue';
     
                             <!-- Stanze da Letto -->
                             <div class="mb-3">
-                                <label for="" class="form-label">Stanze da Letto</label>
+                                <label for="" class="form-label"> <strong>Stanze da Letto <i class="fa-solid fa-bed"></i>  </strong></label>
     
                                 <select v-model="bedrooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
@@ -310,8 +312,8 @@ import CardComp from '../components/CardComp.vue';
     
                             <!-- Servizi -->
                             <div class="div row mb-3">
-                                <label class="form-label">Servizi</label>
-                                <div v-for="(e, i) in services" :key="i" class="col-5 form-check form-check-inline">
+                                <label class="form-label"> <strong>Servizi</strong></label>
+                                <div v-for="(e, i) in services" :key="i" class="col-5 form-check form-check-inline py-1 pt-1">
                                     <input class="form-check-input" type="checkbox" :value="e.id" v-model="selectedServices">
                                     <label class="form-check-label" for="inlineCheckbox1">
                                         {{ e.name }}
@@ -321,12 +323,12 @@ import CardComp from '../components/CardComp.vue';
     
                             <!-- Distanza -->
                             <div class="div row mb-3">
-                                <label for="distance" class="form-label">Distanza Km</label>
+                                <label for="distance" class="form-label"> <strong>Distanza Km</strong></label>
                                 <input type="number" id="distance" class="form-control" v-model="distance" min="1">
                             </div>
     
                             <!-- button -->
-                            <button class="btn btn-primary" @click="getApartment()">Filtra</button>
+                            <button class="btn border" @click="getApartment()">Filtra</button>
                         </div>
                     </div>
                 </div>            
@@ -349,25 +351,6 @@ import CardComp from '../components/CardComp.vue';
                 />
             </div>
         </div>
-
-        <!-- apartments -->
-        <!-- <div class="container">
-            <div class="row">
-                <router-link v-for="(elem, index) in apartments" :key='index' :to="{ name: 'SingleApartment', params:{ slug: elem.slug }}" class="col-12 col-md-6 col-lg-4">
-                    <div class="car mb-4">
-                        <h3 class="w-75">{{ elem.title }}</h3>
-                        <img v-if="elem.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${elem.cover}`"  alt="">
-                        <img v-else class="img-fluid" :src="elem.cover" :alt="elem.title">
-                    </div>
-                </router-link>
-                
-                <div v-if="apartments.length === 0">
-                    <h1>Non ci sono appartamenti</h1>
-                </div>
-
-            </div>
-        </div> -->
-
         <!-- pagination -->
         <ul class="pagination my-2">
             <li class="page-item">
@@ -411,4 +394,10 @@ import CardComp from '../components/CardComp.vue';
             transition: transform 0.3s ease;
         }
         }
+        .forms{
+            background: rgb(198,171,124);
+            background: linear-gradient(0deg, rgba(198,171,124,1) 0%, rgba(206,183,142,1) 2%, rgba(221,205,176,1) 10%, rgba(235,225,207,1) 31%, rgba(255,255,255,1) 100%);
+
+
+}
 </style>
