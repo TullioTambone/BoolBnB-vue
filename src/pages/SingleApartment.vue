@@ -164,8 +164,10 @@ export default{
                     
                     <!-- images -->
                     <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
-                        <div class="box margine">                              
-                            <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                        <div class="box margine">
+
+                            <img class="d-block" v-if="elem.url.includes('images')" :src="`${store.baseUrl}/storage/${elem.url}`"  alt="">
+                            <img v-else class="d-block" :src="elem.url" :alt="apartment.title">
                         </div>
                     </div>
                     <!-- mappa -->
