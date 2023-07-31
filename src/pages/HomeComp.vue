@@ -82,12 +82,6 @@ import TeamComp from '../components/TeamComp.vue';
         :title="apartments[store.activeSlide].title"
         @autocomplete="autocomplete"
     />
-
-    <!-- the best team -->
-    <!-- <div class="py-5">
-        <TeamComp/>
-    </div> -->
-
     <!-- apartments -->
     <div class="container my-5">
         <div class="row my-5 border-bottom border-top round">
@@ -307,6 +301,12 @@ import TeamComp from '../components/TeamComp.vue';
                 </div>
             </div>
         </div>
+   </section>
+   <section class="py-5 border-top">
+    <div class="py-2">
+        <TeamComp/>
+    </div>
+
    </section>
 </template>
 
