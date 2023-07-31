@@ -160,13 +160,21 @@ export default{
                     
                     <!-- images -->
                     <div v-for="( elem, index ) in apartment.images" :key="index" class="d-flex me-3 mt-3">  
-                        <div class="box margine">                              
+                        <div class="box margine content">   
+                            <a href="#image1" class="wiggle">                      
                             <img class="d-block" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                            </a>
+                            <div  class="lightbox short-animate" id="image1">
+                            <img class="d-block v h-50 w-50 rounded" :src="`${store.baseUrl}/storage/${elem.url}`" :alt="apartment.title">
+                            </div>
+                            <div id="lightbox-controls" class="short-animate">
+                            <a id="close-lightbox" class="long-animate" href="#!">Close Lightbox</a>
+                            </div>
                         </div>
                     </div>
-                    <!-- mappa -->
-                    <div id='map' class='map mt-5 margine'>
-                    </div>
+                </div>
+                <!-- mappa -->
+                <div id='map' class='map mt-5 margine'>
                 </div>
             </div>
 
@@ -333,5 +341,149 @@ form {
 ul {
     list-style: none;
 }
- 
+
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body {
+  height:100%;
+  max-height:100%;
+}
+
+.short-animate {
+  -webkit-transition:.5s ease-in-out;
+  -moz-transition:.5s ease-in-out;
+  -ms-transition:.5s ease-in-out;
+  -o-transition:.5s ease-in-out;
+  transition:.5s ease-in-out;
+}
+
+.long-animate {
+  -webkit-transition: .5s .5s ease-in-out;
+  -moz-transition: .5s .5s ease-in-out;
+  -ms-transition: .5s .5s ease-in-out;
+  -o-transition:.5s .5s ease-in-out;
+  transition:.5s .5s ease-in-out;
+}
+
+html,body {
+  height:100%;
+  min-height:100%;
+}
+
+.lightbox {
+  position:fixed;
+  top:-100%;
+  bottom:100%;
+  left:0;
+  right:0;
+  background:rgba(146, 119, 127, 0.8);
+  z-index:501;
+  opacity:0;
+}
+
+.lightbox img {
+	position:absolute;
+  margin:auto;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  max-width:0%;
+  max-height:0%;
+}
+
+#lightbox-controls {
+  position:fixed;
+  height:70px;
+  width:70px;
+  top:-70px;
+  right:0;
+  z-index:502;
+  background:rgba(0,0,0,.1);
+}
+
+#close-lightbox {
+  display:block;
+  position:absolute;
+  overflow:hidden;
+  height:50px;
+  width:50px;
+  text-indent:-5000px;
+  right:10px;
+  top:80px;
+  -webkit-transform:rotate(45deg);
+  -moz-transform:rotate(45deg);
+  -ms-transform:rotate(45deg);
+  -o-transform:rotate(45deg);
+  transform:rotate(45deg);
+}
+
+#close-lightbox:before {
+	content:'';
+  display:block;
+  position:absolute;
+  height:0px;
+  width:3px;
+  left:24px;
+  top:0;
+  background:white;
+  border-radius:2px;
+  -webkit-transition: .5s .5s ease-in-out;
+  -moz-transition: .5s .5s ease-in-out;
+  -ms-transition: .5s .5s ease-in-out;
+  -o-transition:.5s .5s ease-in-out;
+  transition:.5s .5s ease-in-out;
+}
+
+#close-lightbox:after {
+	content:'';
+  display:block;
+  position:absolute;
+  width:0px;
+  height:3px;
+  top:24px;
+  left:0;
+  background:white;
+  border-radius:2px;
+  -webkit-transition: .5s 1s ease-in-out;
+  -moz-transition: .5s 1s ease-in-out;
+  -ms-transition: .5s 1s ease-in-out;
+  -o-transition:.5s 1s ease-in-out;
+  transition:.5s 1s ease-in-out;
+}
+
+.lightbox:target {
+  top:0%;
+  bottom:0%;
+  opacity:1;
+}
+
+.lightbox:target img {
+  max-width:100%;
+  max-height:100%;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+.lightbox:target ~ #lightbox-controls {
+  top:0px;
+}
+
+.lightbox:target ~ #lightbox-controls #close-lightbox:after {
+  width:50px;
+}
+
+.lightbox:target ~ #lightbox-controls #close-lightbox:before {
+  height:50px;
+}
+.v {
+    object-fit: contain;
+}
+
+
 </style>
