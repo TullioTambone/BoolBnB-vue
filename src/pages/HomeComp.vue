@@ -22,7 +22,8 @@ export default {
         };
     },
     mounted() {
-        this.getApartment()
+        this.getApartment(),
+        this.autoScroll()
     },
     methods: {
         getApartment() {
@@ -58,6 +59,17 @@ export default {
                     }
                 });
             }
+        },
+        autoScroll() {
+            
+            this.autoscroll = setInterval( () => {
+                store.activeSlide++;
+    
+                if ( store.activeSlide === this.apartments.length ) {
+    
+                    store.activeSlide = 0;
+                }
+            }, 4000 );
         }
     }
 }
