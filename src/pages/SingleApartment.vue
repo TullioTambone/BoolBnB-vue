@@ -253,10 +253,6 @@ export default{
                         <strong>Prezzo: </strong>
                         {{ getPrice(apartment.price) }}&euro;
                     </li>
-                    <li>
-                        <strong>Visibilità: </strong>
-                        {{ (apartment.visibility) ? 'visibile' : 'non visibile' }}
-                    </li>
                 </ul>
 
                 <!-- servizi -->
