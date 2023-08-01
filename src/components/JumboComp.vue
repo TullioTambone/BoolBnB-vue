@@ -15,20 +15,9 @@ export default {
         };
     },
     mounted() {
-        this.autoScroll();
     },
     methods: {
-        autoScroll() {
-            
-            this.autoscroll = setInterval( () => {
-                store.activeSlide++;
-    
-                if ( store.activeSlide === this.apartments.length ) {
-    
-                    store.activeSlide = 0;
-                }
-            }, 4000 );
-        }
+        
     }
 }
 </script>
