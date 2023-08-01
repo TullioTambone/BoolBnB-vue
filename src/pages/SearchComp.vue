@@ -137,7 +137,8 @@ import CardComp from '../components/CardComp.vue';
                 
                 axios.get(`${this.baseUrl}/api/apartments`, { params } ).then((res) =>{
                     console.log(res.data.apartment)
-                    store.nonSponsoredApartments = res.data.apartment.data
+                    // store.nonSponsoredApartments = res.data.apartment.data
+                    store.nonSponsoredApartments = res.data.apartment.data.filter(apartment => apartment.subscriptions.length === 0);
                     this.currentPage = res.data.apartment.current_page
                     this.lastPage = res.data.apartment.last_page
 

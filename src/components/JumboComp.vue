@@ -30,7 +30,13 @@ export default {
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="text-jumbo col-12 text-center text-white">
-                        <h2>La Felicità è a Portata di Chiavi</h2>
+                        <h2 class="mb-2">
+                            La
+                            <span class="text-gold">
+                                felicità
+                            </span>
+                              è a portata di chiavi
+                        </h2>
                         <h5>Trova la Casa dei Tuoi Sogni</h5>
                     </div>
                 </div>
@@ -120,6 +126,9 @@ export default {
 
                         h2 {
                             font-size: 4rem !important;
+                            .text-gold {
+                                color: #C6AB7C;
+                            }
                         }
                     }
                 }
@@ -141,7 +150,7 @@ export default {
                 .b-black {
                     width: 100%;
                     height: 100vh;
-                    background-color: #00000045;
+                    background-color: rgb(0 0 0 / 40%);
                 }
 
                 img {
@@ -162,6 +171,12 @@ export default {
                     .row {
                         .text-jumbo {
                             width: 600px;
+                            h2{
+                                font-size: 3rem !important;
+                            }
+                            h5 {
+                                font-size: 1rem !important;
+                            }
                         }
 
                         .input-search {
@@ -183,7 +198,7 @@ export default {
                         .text-jumbo {
                             width: 400px;
                             h2 {
-                                font-size: 3.8rem !important;
+                                font-size: 3rem !important;
                             }
                         }
                         
@@ -232,7 +247,7 @@ export default {
                             width: 350px;
 
                             h2 {
-                                font-size: 3.6rem !important;
+                                font-size: 2.6rem !important;
                             }
                         }
 
@@ -254,7 +269,7 @@ export default {
                             width: 300px;
 
                             h2 {
-                                font-size: 3.4rem !important;
+                                font-size: 2.3rem !important;
                             }
                         }
 
