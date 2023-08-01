@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store';
+import { useRoute } from 'vue-router';
 
     export default {
     name: "CardComp",
@@ -12,6 +13,16 @@ import { store } from '../store';
     },
     mounted() {
 
+    },
+    setup() {
+        const route = useRoute();        
+        // Verifica se la route corrente è la pagina Projects
+        const isHomePage = route.path === '/';
+        
+        // se la pagina corrente sarà Projects, isProjectsPage = 'true', else 'false'
+        return {
+            isHomePage
+        };
     },
     methods: {
         getVote(vote) {
@@ -40,22 +51,6 @@ import { store } from '../store';
                 : formattedIntPart;
 
             return formattedNumber;
-        },
-        getSubscriptionClass(subscriptionId) {
-            const subscription = this.propsCard.subscriptions.find((sub) => sub.id === subscriptionId);
-
-            if (subscription) {
-                switch (subscriptionId) {
-                    case 1:
-                    return "bronze-color";
-                    case 2:
-                    return "gold-color";
-                    case 3:
-                    return "platinum-color";
-                    default:
-                    return "";
-                }
-            }
         }
     }
 }
@@ -65,20 +60,23 @@ import { store } from '../store';
 
         <router-link :to="{ name: 'SingleApartment', params:{ slug: propsCard.slug }}">
 
-            <div class="card position-relative">
-                <div class="position-absolute top-0 start-100 translate-middle z-index-2" v-if="propsCard.subscriptions.length !== 0" >
-                    <i class="fa-solid fa-bookmark fs-2" :class="getSubscriptionClass(propsCard.subscriptions[0].id)"></i>
-                </div>
-                <div class="position-absolute top-0 start-100 translate-middle z-index-3" v-if="propsCard.subscriptions.length !== 0" >
-                    <span v-if="propsCard.subscriptions[0].name == 'Base'">B</span>
-                    <span v-else-if="propsCard.subscriptions[0].name == 'Premium'">PR</span>
-                    <span v-if="propsCard.subscriptions[0].name == 'Platino'">PL</span>
-                </div>
+            <!-- card -->
+            <div class="card">
+               
 
                 <!-- image -->
-                <div class="zoom">
+                <div class="zoom position-relative">
                     <img v-if="propsCard.cover.includes('apartment_cover_img')" :src="`${store.baseUrl}/storage/${propsCard.cover}`"  :alt="propsCard.title">
                     <img v-else :src="propsCard.cover" :alt="propsCard.title">
+
+                    <!-- subscription mark -->
+                    <div v-if="propsCard.subscriptions.length">
+                        
+                        <span class="position-absolute sub-mark" >
+                            <i class="fa-solid fa-trophy me-1"></i>
+                            SPONSORIZZATO
+                        </span>
+                    </div>
                 </div>
 
                 <!-- list -->
@@ -96,8 +94,8 @@ import { store } from '../store';
                             </h6>
                         </li>
                         
-                        <li class="list-group-item" v-if="propsCard.distance">
-                            <span>distanza: {{ parseInt(propsCard.distance) }}Km</span>
+                        <li class="list-group-item" v-if="propsCard.distance && !isHomePage">
+                            <span>Distanza: {{ parseInt(propsCard.distance) }}Km</span>
                         </li>
 
                         <!-- vote -->
@@ -105,7 +103,7 @@ import { store } from '../store';
                             <div>
                                 <i v-for=" elem in 5" class="text-warning fa-star" :class=" elem <= propsCard.vote ? `fa-solid` : `fa-regular` "></i>
                             </div>
-                            <span class="fw-bold btn btn-vote px-1 py-0">
+                            <span class="fw-bold btn btn-vote">
                                 {{ getVote(propsCard.vote) }}
                             </span>                            
                         </li>
@@ -126,15 +124,6 @@ import { store } from '../store';
 
 <style lang="scss" scoped>
 @import '../style/main.scss';
-.bronze-color{
-    color: sandybrown;
-}
-.gold-color{
-    color: gold;
-}
-.platinum-color{
-    color: rgb(229, 228, 226);
-}
 
 a {
     text-decoration: none;
@@ -145,20 +134,32 @@ a {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 0 0 20px 20px;;
 
-
-        // img
-        img {
-            height: 100%;
-            min-width: 100%;
-            display: block;
-            transition: all 0.7s ease-in-out;
-        }
-
+        
         // image
         .zoom {
             overflow: hidden;
             width: 100%;
             height: 200px;
+            
+            // img
+            img {
+                height: 100%;
+                min-width: 100%;
+                display: block;
+                transition: all 0.7s ease-in-out;
+            }
+            
+            .sub-mark {
+                z-index: 9999;
+                top: 0.7rem;
+                left: 1.2rem;
+                padding: 0.4rem 0.6rem;
+                filter: brightness(1.05);
+                border-radius: 5px;
+                font-size: 0.8rem;
+                font-weight: 800;
+                background-color: #CBC8CC;
+            }
             
             &:hover img {
                 transform: scale(1.5);
@@ -189,6 +190,7 @@ a {
                         background-color: #C6AB7C;
                         font-size: 1.05rem;
                         color: #323232;
+                        padding: 0.1rem 0.8rem;
                     }
 
                     // price

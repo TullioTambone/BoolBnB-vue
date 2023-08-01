@@ -14,6 +14,22 @@ export default {
             store
         };
     },
+    mounted() {
+        this.autoScroll();
+    },
+    methods: {
+        autoScroll() {
+            
+            this.autoscroll = setInterval( () => {
+                store.activeSlide++;
+    
+                if ( store.activeSlide === this.apartments.length ) {
+    
+                    store.activeSlide = 0;
+                }
+            }, 4000 );
+        }
+    }
 }
 </script>
 
@@ -51,6 +67,7 @@ export default {
         <div class="contenitore d-flex position-relative">
             <div class="item position-absolute">
                 <div class="b-black position-absolute"></div>
+
                 <img 
                     v-if="image.includes('apartment_cover_img')" 
                     :src="`${store.baseUrl}/storage/${image}`" 
@@ -100,6 +117,10 @@ export default {
                             
                             .fa-magnifying-glass {
                                 display: none;
+                            }
+                            
+                            &:hover {
+                                filter: brightness(1.1);
                             }
                         }
                     }

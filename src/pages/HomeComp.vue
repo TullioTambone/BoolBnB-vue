@@ -6,13 +6,14 @@ import { store } from '../store';
 import JumboComp from '../components/JumboComp.vue';
 import CardComp from '../components/CardComp.vue';
 import TeamComp from '../components/TeamComp.vue';
-    export default {
+
+export default {
     name: "HomeComp",
     components: {
-    JumboComp,
-    CardComp,
-    TeamComp
-},
+        JumboComp,
+        CardComp,
+        TeamComp
+    },
     data() {
         return {
             store,
@@ -21,8 +22,7 @@ import TeamComp from '../components/TeamComp.vue';
         };
     },
     mounted() {
-        this.getApartment();
-        this.autoScroll();
+        this.getApartment()
     },
     methods: {
         getApartment() {
@@ -58,17 +58,6 @@ import TeamComp from '../components/TeamComp.vue';
                     }
                 });
             }
-        },
-        autoScroll() {
-            
-            this.autoscroll = setInterval( () => {
-                store.activeSlide++;
-    
-                if ( store.activeSlide === this.apartments.length ) {
-    
-                    store.activeSlide = 0;
-                }
-            }, 4000 );
         }
     }
 }
@@ -77,28 +66,29 @@ import TeamComp from '../components/TeamComp.vue';
    
     <!-- jumbo -->
     <JumboComp 
-    v-if="apartments.length"
+        v-if="apartments.length"
         :image="apartments[store.activeSlide].cover"
         :title="apartments[store.activeSlide].title"
         @autocomplete="autocomplete"
     />
     <!-- apartments -->
     <div class="container my-5">
-        <div class="row my-5 border-bottom border-top round">
-            <span class="text-end text-secondary mb-2">sponsorizzati</span>
+        <div class="row pb-5 mt-5 border-bottom round">
+            <span class="text-center evidenza mb-5 pt-3 fs-2">IN EVIDENZA</span>
             <CardComp  
                 v-for="(elem, index) in store.sponsoredApartments" :key='index'
                 :propsCard="elem"
             />
         </div>
-        <div class="row">
+        <div class="row mt-5">
+            <span class="text-start mb-5 pt-1 fs-2">I nostri Appartamenti</span>
             <CardComp  
                 v-for="(elem, index) in store.nonSponsoredApartments" :key='index'
                 :propsCard="elem"
             />
         </div>
     </div>
-   <section class="container-fluid border-top">
+    <section class="container-fluid">
         
         <!-- {{-- dashboard --}} -->
         <div id="dashboard">
@@ -120,17 +110,17 @@ import TeamComp from '../components/TeamComp.vue';
                     </div>
                     <!-- {{-- img --}} -->
                     <div class="box-img col-12 col-md-4 col-lg-6 d-flex justify-content-center align-items-center">
-                        <img src="/img/Boolbnb-logo.png" alt="">
+                        <img src="https://live.staticflickr.com/65535/53085395045_1a407c43ce_h.jpg" alt="casa  dei sogni">
                     </div>
                 </div>
 
                 <!-- {{-- benvenuto --}} -->
                 <div class="row mb-5">
                     <div class="box-img col-12 col-md-4 col-lg-6 d-flex justify-content-center align-items-center">
-                        <img src="/img/Boolbnb-logo.png" alt="logo boolb&b">
+                        <img src="https://live.staticflickr.com/65535/53085484023_9a1e35de13_h.jpg" alt="logo boolb&b">
                     </div>
                     <div class="box-description col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
-                        <div class="d-flex flex-column">
+                        <div class="d-flex w-75 flex-column">
                             <h2>
                                 Scopri BoolB&B è facile e intuitivo!
                             </h2>
@@ -275,23 +265,33 @@ import TeamComp from '../components/TeamComp.vue';
                 </div>
             </div>
         </div>
-   </section>
-   <section class="py-5 border-top">
+    </section>
+    <section class="pb-5 pt-3">
         <div class="py-2 mt-5">
             <TeamComp/>
         </div>
-
-   </section>
+    </section>
 </template>
 
 <style lang="scss" scoped>
 @import '../style/main.scss';
 
+.container {
+    .row {
+        .evidenza {
+            background-color: #c6ab7cc8;
+            line-height: 2rem;
+            padding-bottom: 1rem;
+            color:  #ffffff;
+        }
+    }
+}
 
 #dashboard{
     .container{
         .row{
             margin-bottom: 100px;
+
             .card-sub{
                 margin-top: 50px;
                 .card {
@@ -302,13 +302,13 @@ import TeamComp from '../components/TeamComp.vue';
                     width: 250px;
                     text-align: center;
                     margin: 0 30px;
-                     &:hover {
-                       box-shadow: 5px 5px 20px -7px rgba(0,0,0,0.5);
-                     }
-                     .card__text{
-                        margin: auto;
-                        h3{
-                            
+
+                    &:hover {
+                    box-shadow: 5px 5px 20px -7px rgba(0,0,0,0.5);
+                    }
+                    .card__text{
+                        margin: 3rem auto 0 auto;
+                        h3{                            
                             font-size: 40px;
                         }
                         span{
@@ -351,9 +351,8 @@ import TeamComp from '../components/TeamComp.vue';
 
             .box-img{
                 img{
-                    width: 300px;
+                    max-width: 100%;
                 }
-                // border: 1px solid black;
             }
             .box-description{
                 h2{

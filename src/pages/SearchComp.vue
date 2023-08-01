@@ -135,7 +135,6 @@ import CardComp from '../components/CardComp.vue';
                     params.services_ids = this.selectedServices.join(',');
                 }   
                 
-
                 axios.get(`${this.baseUrl}/api/apartments`, { params } ).then((res) =>{
                     console.log(res.data.apartment)
                     store.nonSponsoredApartments = res.data.apartment.data
@@ -145,6 +144,7 @@ import CardComp from '../components/CardComp.vue';
                     store.sponsoredApartments = res.data.apartmentAll.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
 
                     this.updateFiltersAndFetchData()
+
                 })
             },
             async getServices(){
@@ -254,22 +254,27 @@ import CardComp from '../components/CardComp.vue';
             <!-- search -->
             <div class="col-12 d-flex pt-5 mt-5">
                 
+                <!-- search -->
                 <input class="form-control me-2 w-75" id="search" name="search" type="search"  placeholder="  Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
 
-                <button class="btn btn-outline-success mx-2" type="submit" @click="getApartment()">
+                <!-- submit -->
+                <button id="submit" class="btn mx-2" type="submit" @click="getApartment()">
                     Cerca
                 </button>
+
                 <!-- button offcanvas -->
-                <button class="btn btn-primary border py-2 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
+                <button id="filter" class="btn border py-2 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
     
                 <!-- offcanvas -->
                 <div class="px-3 offcanvas offcanvas-end forms" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     
                     <!-- header -->
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel"> <strong>Filtraggio</strong></h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">
+                            <strong>Filtraggio</strong>
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
     
@@ -306,7 +311,9 @@ import CardComp from '../components/CardComp.vue';
                                 <select v-model="bedrooms" class="form-select" name="" id="">
                                     <option value="0"> -- Tutte -- </option>
     
-                                    <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
+                                    <option v-for="(e, i) in selectRooms" :key="i" :value="e">
+                                        {{ e }}{{ (e == 5 ? '+' : '') }}
+                                    </option>
                                 </select>
                             </div>
     
@@ -323,7 +330,9 @@ import CardComp from '../components/CardComp.vue';
     
                             <!-- Distanza -->
                             <div class="div row mb-3">
-                                <label for="distance" class="form-label"> <strong>Distanza Km</strong></label>
+                                <label for="distance" class="form-label">
+                                    <strong>Distanza Km</strong>
+                                </label>
                                 <input type="number" id="distance" class="form-control" v-model="distance" min="1">
                             </div>
     
@@ -375,7 +384,27 @@ import CardComp from '../components/CardComp.vue';
 @import '../style/main.scss';
 
     .container {
-        
+        .row {
+            .col-12 {
+                #submit {
+                    border: 3px solid #C6AB7C;
+
+                    &:hover {
+                        background-color: #C6AB7C;
+                        color: #ffffff;
+                    }
+                }
+
+                #filter {
+                    background-color: #C6AB7C;
+                    color: #ffffff;
+
+                    &:hover {
+                        filter: brightness(1.1);
+                    }
+                }
+            }
+        }
         img {
             border-radius: 20px;
             width: 300px;
