@@ -1,12 +1,13 @@
 <script>
 import { store } from '../store.js'
+
 export default {
-  name: 'FooterComp',
-  props: [],
-  components: {
-   
-  },
-  data() {
+    name: 'FooterComp',
+    props: [],
+    components: {
+    
+    },
+    data() {
         return {
             store
         };
@@ -15,8 +16,8 @@ export default {
 </script>
 
 <template>
-    <footer>
-        <div class="container border-top px-0 pb-3">
+    <footer>        
+        <div class="container border-top px-0 py-3">
             <div class="p-3">
                 <img class="logo-img" src="/img/Boolbnb-logo-transparente.png" alt="Boolbnb logo">
             </div>

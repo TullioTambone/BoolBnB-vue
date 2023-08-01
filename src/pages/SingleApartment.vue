@@ -143,6 +143,23 @@ export default{
                 this.loading = false;
             });
             
+        },
+        getPrice(price) {
+            // Converto il numero in stringa per poterlo manipolare
+            const numString = price.toString();
+
+            // Divido il numero in due parti, parte intera e parte decimale
+            const [intPart, decimalPart] = numString.split('.');
+
+            // Aggiungo un punto ogni tre cifre nella parte intera
+            const formattedIntPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Ricostruisco il numero con la parte decimale (se presente) e la parte intera formattata
+            const formattedNumber = decimalPart !== undefined
+                ? `${formattedIntPart}.${decimalPart}`
+                : formattedIntPart;
+
+            return formattedNumber;
         }
     }
 }
@@ -200,7 +217,7 @@ export default{
                 <!-- title and address -->
                 <ul class="p-0">
                     <li>
-                        <h2 class="border-bottom mb-3 pb-1">{{ apartment.title }}</h2>
+                        <h2 class="border-bottom mb-3 pb-3">{{ apartment.title }}</h2>
                     </li>
                     <li>
                         <h6 class="mt-2">
@@ -212,7 +229,7 @@ export default{
 
                 <!-- info appartamento -->
                 <h4 class="mt-3 mb-2">Info Appartamento</h4>
-                <ul class="p-0 d-flex flex-column row-gap-1">
+                <ul class="p-0 d-flex flex-column row-gap-2">
                     <li>
                         <p>{{ apartment.description }}</p>
                     </li>
@@ -234,7 +251,7 @@ export default{
                     </li>
                     <li v-if="apartment.price">
                         <strong>Prezzo: </strong>
-                        {{ apartment.price }}&euro;
+                        {{ getPrice(apartment.price) }}&euro;
                     </li>
                     <li>
                         <strong>Visibilità: </strong>
@@ -254,8 +271,8 @@ export default{
                 </div>
 
                 <!-- form contatta la truttura -->
-                <form class="card p-3 mt-5 mb-4 margine" action="" @submit.prevent="sendForm()">
-                    <h3 class="">Contatta la struttura</h3>
+                <form class="card p-4 mt-5 mb-4 margine" action="" @submit.prevent="sendForm()">
+                    <h3 class="mb-2">Contatta la struttura</h3>
 
                     <!-- name -->
                     <div class="mb-3">
@@ -281,7 +298,7 @@ export default{
                     <input type="hidden" name="apartment_id" v-model="apartment.id">
     
                     <!-- button -->
-                    <button type="submit" class="btn" :class="{ 'btn-primary': !loading, 'btn-secondary': loading }" :disabled="loading">
+                    <button type="submit" class="btn" :disabled="loading">
                         <span v-if="!loading">Invia</span>
                         <span v-else>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -303,7 +320,7 @@ export default{
                                 </div>
                                 <!-- footer -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                                    <button type="button" class="btn" data-bs-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>
