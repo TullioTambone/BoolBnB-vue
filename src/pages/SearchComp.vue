@@ -346,13 +346,17 @@ import CardComp from '../components/CardComp.vue';
 
         <!-- apartments -->
         <div class="container my-5">
+
+            <!-- sponsored -->
             <div v-if="store.sponsoredApartments.lenght !== 0" class="row my-5 border-bottom border-top rounded">
                 <span class="text-end text-secondary mb-2">sponsorizzati</span>
                 <CardComp  
-                    v-for="(elem, index) in store.sponsoredApartments" :key='index'
+                    v-for="(elem, index) in store.sponsoredApartments.slice(0, 4)" :key='index'
                     :propsCard="elem"
                 />
             </div>
+
+            <!-- no sponsored -->
             <div class="row">
                 <CardComp  
                     v-for="(elem, index) in store.nonSponsoredApartments" :key='index'
@@ -422,11 +426,12 @@ import CardComp from '../components/CardComp.vue';
             transform: translateY(-5px);
             transition: transform 0.3s ease;
         }
-        }
+    }
+
         .forms{
             background: rgb(198,171,124);
             background: linear-gradient(0deg, rgba(198,171,124,1) 0%, rgba(206,183,142,1) 2%, rgba(221,205,176,1) 10%, rgba(235,225,207,1) 31%, rgba(255,255,255,1) 100%);
+            z-index: 99999999999;
 
-
-}
+        }
 </style>

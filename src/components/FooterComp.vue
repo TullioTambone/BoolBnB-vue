@@ -25,7 +25,7 @@ export default {
 
                 <!-- links -->
                 <div class="col-12 col-xl-8 d-flex px-0">
-                    <div class="row m-0 justify-content-center">                        
+                    <div class="row m-0 justify-content-center row-gap-3">                        
                         <ul class="col-12 col-md-4">
                             <li>
                                 <strong>SOCIETA'</strong>
@@ -96,7 +96,7 @@ export default {
                 <div class="col-12 col-xl-2 d-flex justify-content-center p-0">
                     <div class="d-flex justify-content-center align-items-center flex-column socials mt-4">
                         <h2 class="m-0">Socials:</h2>
-                        <ul class="d-flex gap-4 pe-4">
+                        <ul class="d-flex gap-4">
                             <li>
                                 <a href="#">
                                     <i class="fab fa-facebook"></i>

@@ -76,14 +76,14 @@ export default {
         <div class="row pb-5 mt-5 border-bottom round">
             <span class="text-center evidenza mb-5 pt-3 fs-2">IN EVIDENZA</span>
             <CardComp  
-                v-for="(elem, index) in store.sponsoredApartments" :key='index'
+                v-for="(elem, index) in store.sponsoredApartments.slice(0, 8)" :key='index'
                 :propsCard="elem"
             />
         </div>
         <div class="row mt-5">
             <span class="text-start mb-5 pt-1 fs-2">I nostri Appartamenti</span>
             <CardComp  
-                v-for="(elem, index) in store.nonSponsoredApartments" :key='index'
+                v-for="(elem, index) in store.nonSponsoredApartments.slice(0, 12)" :key='index'
                 :propsCard="elem"
             />
         </div>
@@ -93,7 +93,7 @@ export default {
         <!-- {{-- dashboard --}} -->
         <div id="dashboard">
             <div class="container pt-5">
-                <div class="row">
+                <div class="row row-gap-5">
 
                     <!-- {{-- description --}} -->
                     <div class="box-description col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
@@ -122,7 +122,7 @@ export default {
                     <div class="box-description col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
                         <div class="d-flex w-75 flex-column">
                             <h2>
-                                Scopri BoolB&B è facile e intuitivo!
+                                Scopri BoolB&B, è facile e intuitivo!
                             </h2>
                             <ul class="p-0">
                                 <li>
@@ -172,7 +172,7 @@ export default {
                         </div>
                     </div>
 
-                    <div class="card-sub d-flex justify-content-center flex-wrap">
+                    <div class="card-sub d-flex justify-content-center flex-wrap row-gap-4 column-gap-4">
                         <div class="card card__one col-12 col-md-4">
                             <div class="card__text">
                                 <h3>€2.99</h3>
@@ -301,7 +301,6 @@ export default {
                     overflow: hidden;
                     width: 250px;
                     text-align: center;
-                    margin: 0 30px;
 
                     &:hover {
                     box-shadow: 5px 5px 20px -7px rgba(0,0,0,0.5);
@@ -386,7 +385,7 @@ export default {
 
 
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
     #dashboard{
         .container{
             .row{
