@@ -31,7 +31,18 @@ export default {
                 // this.apartments = res.data.apartment.data;
                 this.apartments = res.data.apartment.data
                 console.log(res.data)
-                store.sponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length !== 0).sort((a, b) => b.subscriptions[0].id - a.subscriptions[0].id);
+
+                // sponsored
+                store.sponsoredApartments = res.data.apartmentAll.filter( e => e.subscriptions.length !== 0)
+                .sort((a, b) => {
+                    // Ordina in base alla data di creazione dell'ultima subscription
+                    const lastSubscriptionA = a.subscriptions[a.subscriptions.length - 1];
+                    const lastSubscriptionB = b.subscriptions[b.subscriptions.length - 1];
+                    return new Date(lastSubscriptionB.created_at) - new Date(lastSubscriptionA.created_at);
+                })
+                .slice(0, 8);
+
+                // no sponsored
                 store.nonSponsoredApartments = res.data.apartment.data.filter(e => e.subscriptions.length === 0);
                 console.log(store.sponsoredApartments, store.nonSponsoredApartments);
             });
@@ -88,7 +99,7 @@ export default {
         <div class="row pb-5 mt-5 border-bottom round">
             <span class="text-center evidenza mb-5 pt-3 fs-2">IN EVIDENZA</span>
             <CardComp  
-                v-for="(elem, index) in store.sponsoredApartments.slice(0, 8)" :key='index'
+                v-for="(elem, index) in store.sponsoredApartments" :key='index'
                 :propsCard="elem"
             />
         </div>
