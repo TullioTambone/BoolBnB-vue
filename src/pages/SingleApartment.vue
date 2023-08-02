@@ -198,7 +198,7 @@ export default{
 
                             <!-- lightbox controls -->
                             <div id="lightbox-controls" class="short-animate">
-                                <a id="close-lightbox" class="long-animate" href="#!">
+                                <a id="close-lightbox" class="long-animate" href="#">
                                     Close Lightbox
                                 </a>
                             </div>

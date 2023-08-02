@@ -111,7 +111,7 @@ import { useRoute } from 'vue-router';
                         <!-- price -->
                         <li class="list-group-item">
                             <span class="price">
-                                {{ getPrice(propsCard.price) }} €
+                                {{ getPrice(propsCard.price) }}€/notte
                             </span>
                         </li>
                     </ul>

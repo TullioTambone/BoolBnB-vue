@@ -429,10 +429,26 @@ import CardComp from '../components/CardComp.vue';
         }
     }
 
-        .forms{
-            background: rgb(198,171,124);
-            background: linear-gradient(0deg, rgba(198,171,124,1) 0%, rgba(206,183,142,1) 2%, rgba(221,205,176,1) 10%, rgba(235,225,207,1) 31%, rgba(255,255,255,1) 100%);
-            z-index: 99999999999;
+    .forms{
+        background: rgb(198,171,124);
+        background: linear-gradient(0deg, rgba(198,171,124,1) 0%, rgba(206,183,142,1) 2%, rgba(221,205,176,1) 10%, rgba(235,225,207,1) 31%, rgba(255,255,255,1) 100%);
+        z-index: 99999999999;
+    }
 
+    .active > .page-link{
+        background-color: #C6AB7C;
+        border-color: #C6AB7C;
+    }
+
+    .page-link {
+
+        &:focus {
+            box-shadow: none;
         }
+
+        &:hover {
+            color: #ffffff;
+            background-color: #c6ab7cc4;
+        }
+    }
 </style>
