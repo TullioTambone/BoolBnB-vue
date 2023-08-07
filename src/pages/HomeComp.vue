@@ -293,7 +293,7 @@ export default {
         <div class="py-2 mt-5">
             <TeamComp/>
         </div>
-    </section>
+    </section>    
 </template>
 
 <style lang="scss" scoped>

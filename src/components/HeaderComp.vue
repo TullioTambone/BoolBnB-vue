@@ -142,14 +142,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- colori
-    Beige (#DDD0C8),
-    dark grey (#323232),
-    bianco
-    nero 
-    -->
-
 </template>
 <style lang="scss" scoped>
 

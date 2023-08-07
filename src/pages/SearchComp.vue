@@ -304,7 +304,9 @@ import CardComp from '../components/CardComp.vue';
                             <select v-model="rooms" class="form-select" name="" id="">
                                 <option value="0"> -- Tutte -- </option>
 
-                                <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
+                                <option v-for="(e, i) in selectRooms" :key="i" :value="e">
+                                    {{ e }}{{ (e == 5 ? '+' : '') }}
+                                </option>
                             </select>
                         </div>
 
