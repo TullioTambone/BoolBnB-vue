@@ -11,13 +11,25 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            placeholderText: "Cerca il tuo primo appartamento"
         };
     },
     mounted() {
+        this.updatePlaceholderText();
+        window.addEventListener("resize", this.updatePlaceholderText);
     },
     methods: {
-        
+        updatePlaceholderText() {
+            if (window.innerWidth <= 425) {
+                this.placeholderText = "Cerca un indirizzo";
+            } else {
+                this.placeholderText = "Cerca il tuo primo appartamento";
+            }
+        }
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.updatePlaceholderText);
     }
 }
 </script>
@@ -42,7 +54,7 @@ export default {
                 </div>
                 <div class="row flex-nowrap justify-content-center mt-3">
                     <div class="input-search position-relative">
-                        <input autocomplete="off" class="form-control" id="search" name="search" type="search" placeholder="Cerca il tuo primo appartamento" aria-label="Ricerca appartamento" v-model="store.address" @keyup="$emit('autocomplete')" list="datalistOptions">
+                        <input autocomplete="off" class="form-control" id="search" name="search" type="search" :placeholder="placeholderText" aria-label="Ricerca appartamento" v-model="store.address" @keyup="$emit('autocomplete')" list="datalistOptions">
                         <datalist id="datalistOptions" class="position-absolute">                
                         </datalist>
                     </div>
@@ -180,7 +192,7 @@ export default {
                         }
 
                         .input-search {
-                            width: 300px;
+                            width: 310px;
                         }
                     }
                 }

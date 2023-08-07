@@ -558,7 +558,7 @@ export default{
                             }
 
                             h6 {
-                                font-size: 0.8rem;
+                                font-size: 0.9rem;
                             }
                         }
                     }

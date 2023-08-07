@@ -249,107 +249,109 @@ import CardComp from '../components/CardComp.vue';
     }
 </script>
 <template>
-    <div class="container mt-3">
-        <div class="row mb-5">
-
+    <div class="container mt-5">
+        <div class="row mb-5 pt-5 mt-5 align-items-center row-gap-2">
+            
             <!-- search -->
-            <div class="col-12 d-flex pt-5 mt-5">
-                
-                <!-- search -->
-                <input class="form-control me-2 w-75" id="search" name="search" type="search"  placeholder="  Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
+            <div class="col-xl-9 col-lg-9 col-md-7 col-12">
+                <input class="form-control" id="search" name="search" type="search"  placeholder="  Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address"  list="datalistOptions" @keyup="autocomplete()" @keyup.enter="getApartment()">
                 <datalist id="datalistOptions">                           
                 </datalist>
+            </div>
 
-                <!-- submit -->
-                <button id="submit" class="btn mx-2" type="submit" @click="getApartment()">
+            <!-- submit -->
+            <div class="col-xl-1 col-lg-1 col-md-2 col-6 d-flex justify-content-center px-0 sub-button">
+                <button id="submit" class="btn w-100" type="submit" @click="getApartment()">
                     Cerca
                 </button>
-
-                <!-- button offcanvas -->
-                <button id="filter" class="btn border py-2 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
-    
-                <!-- offcanvas -->
-                <div class="px-3 offcanvas offcanvas-end forms" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    
-                    <!-- header -->
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">
-                            <strong>Filtraggio</strong>
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-    
-                    <!-- body -->
-                    <div class="offcanvas-body">
-                        <div class="col-12">
-                            <div class="d-flex justify-content-center w-75 ms-5 mb-3">
-                                <img class="logo-img object-fit-cover" src="/img/Boolbnb-logo-transparente.png" alt="Boolbnb logo">
-                            </div>
-                            <!-- Ricerca -->
-                            <div class="mb-3">
-                                <label class="form-label"> <strong>Ricerca  <i class="fa-solid fa-magnifying-glass"></i> </strong></label>
-                                <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" list="datalistOptions" @keyup="autocomplete()" required>
-                                <datalist id="datalistOptions">                           
-                                </datalist>
-                            </div>
-    
-    
-                            <!-- Stanze totali -->
-                            <div class="mb-3">
-                                <label for="" class="form-label"> <strong>Stanze  <i class="fa-solid fa-door-open"></i> </strong></label>
-    
-                                <select v-model="rooms" class="form-select" name="" id="">
-                                    <option value="0"> -- Tutte -- </option>
-    
-                                    <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
-                                </select>
-                            </div>
-    
-                            <!-- Stanze da Letto -->
-                            <div class="mb-3">
-                                <label for="" class="form-label"> <strong>Stanze da Letto <i class="fa-solid fa-bed"></i>  </strong></label>
-    
-                                <select v-model="bedrooms" class="form-select" name="" id="">
-                                    <option value="0"> -- Tutte -- </option>
-    
-                                    <option v-for="(e, i) in selectRooms" :key="i" :value="e">
-                                        {{ e }}{{ (e == 5 ? '+' : '') }}
-                                    </option>
-                                </select>
-                            </div>
-    
-                            <!-- Servizi -->
-                            <div class="div row mb-3">
-                                <label class="form-label"> <strong>Servizi</strong></label>
-                                <div v-for="(e, i) in services" :key="i" class="col-5 form-check form-check-inline py-1 pt-1">
-                                    <input class="form-check-input" type="checkbox" :value="e.id" v-model="selectedServices">
-                                    <label class="form-check-label" for="inlineCheckbox1">
-                                        {{ e.name }}
-                                    </label>
-                                </div>
-                            </div>
-    
-                            <!-- Distanza -->
-                            <div class="div row mb-3">
-                                <label for="distance" class="form-label">
-                                    <strong>Distanza Km</strong>
-                                </label>
-                                <input type="number" id="distance" class="form-control" v-model="distance" min="1">
-                            </div>
-    
-                            <!-- button -->
-                            <button class="btn border" @click="getApartment()">Filtra</button>
-                        </div>
-                    </div>
-                </div>            
             </div>
+
+            <!-- button offcanvas -->
+            <div class="col-xl-2 col-lg-2 col-md-3 col d-flex justify-content-center">
+                <button id="filter" class="btn border py-2 w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filtro avanzato</button>
+            </div>
+    
+            <!-- offcanvas -->
+            <div class="px-3 offcanvas offcanvas-end forms" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+
+                <!-- header -->
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasRightLabel">
+                        <strong>Filtraggio</strong>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <!-- body -->
+                <div class="offcanvas-body">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center w-75 ms-5 mb-3">
+                            <img class="logo-img object-fit-cover" src="/img/Boolbnb-logo-transparente.png" alt="Boolbnb logo">
+                        </div>
+                        <!-- Ricerca -->
+                        <div class="mb-3">
+                            <label class="form-label"> <strong>Ricerca  <i class="fa-solid fa-magnifying-glass"></i> </strong></label>
+                            <input class="form-control" id="search" name="search" type="search" placeholder="Inserisci la città o l'indirizzo" aria-label="Search" v-model="store.address" list="datalistOptions" @keyup="autocomplete()" required>
+                            <datalist id="datalistOptions">                           
+                            </datalist>
+                        </div>
+
+
+                        <!-- Stanze totali -->
+                        <div class="mb-3">
+                            <label for="" class="form-label"> <strong>Stanze  <i class="fa-solid fa-door-open"></i> </strong></label>
+
+                            <select v-model="rooms" class="form-select" name="" id="">
+                                <option value="0"> -- Tutte -- </option>
+
+                                <option v-for="(e, i) in selectRooms" :key="i" :value="e">{{ e }}{{ (e == 5 ? '+' : '') }}</option>
+                            </select>
+                        </div>
+
+                        <!-- Stanze da Letto -->
+                        <div class="mb-3">
+                            <label for="" class="form-label"> <strong>Stanze da Letto <i class="fa-solid fa-bed"></i>  </strong></label>
+
+                            <select v-model="bedrooms" class="form-select" name="" id="">
+                                <option value="0"> -- Tutte -- </option>
+
+                                <option v-for="(e, i) in selectRooms" :key="i" :value="e">
+                                    {{ e }}{{ (e == 5 ? '+' : '') }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Servizi -->
+                        <div class="div row mb-3">
+                            <label class="form-label"> <strong>Servizi</strong></label>
+                            <div v-for="(e, i) in services" :key="i" class="col-5 form-check form-check-inline py-1 pt-1">
+                                <input class="form-check-input" type="checkbox" :value="e.id" v-model="selectedServices">
+                                <label class="form-check-label" for="inlineCheckbox1">
+                                    {{ e.name }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Distanza -->
+                        <div class="div row mb-3">
+                            <label for="distance" class="form-label">
+                                <strong>Distanza Km</strong>
+                            </label>
+                            <input type="number" id="distance" class="form-control" v-model="distance" min="1">
+                        </div>
+
+                        <!-- button -->
+                        <button class="btn border" @click="getApartment()">Filtra</button>
+                    </div>
+                </div>
+            </div>            
         </div>
 
         <!-- apartments -->
         <div class="container my-5">
 
             <!-- sponsored -->
-            <div v-if="store.sponsoredApartments.lenght !== 0" class="row my-5 border-bottom border-top rounded">
+            <div v-if="store.sponsoredApartments.lenght !== 0" class="row my-5 border-bottom border-top">
                 <span class="text-end text-secondary mb-2">sponsorizzati</span>
                 <CardComp  
                     v-for="(elem, index) in store.sponsoredApartments.slice(0, 4)" :key='index'
@@ -372,9 +374,11 @@ import CardComp from '../components/CardComp.vue';
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item" v-for="(elem, index) in lastPage" :key="index"
-                :class="(currentPage === elem) ? 'active' : ''" >
-                <a class="page-link" href="#" @click.prevent="getApartment(elem)">{{ elem }}</a>
+            <li class="page-item d-none d-md-block" v-for="(elem, index) in lastPage" :key="index"
+                :class="(currentPage === elem) ? 'active' : '' " >
+                <a class="page-link" href="#" @click.prevent="getApartment(elem)">
+                    {{ elem }}
+                </a>
             </li>
             <li class="page-item">
                 <a class="page-link" @click.prevent="getApartment((currentPage + 1))" href="#" aria-label="Next" :disabled="currentPage === lastPage">
@@ -390,23 +394,21 @@ import CardComp from '../components/CardComp.vue';
 
     .container {
         .row {
-            .col-12 {
-                #submit {
-                    border: 3px solid #C6AB7C;
+            #submit {
+                border: 3px solid #C6AB7C;
 
-                    &:hover {
-                        background-color: #C6AB7C;
-                        color: #ffffff;
-                    }
-                }
-
-                #filter {
+                &:hover {
                     background-color: #C6AB7C;
                     color: #ffffff;
+                }
+            }
 
-                    &:hover {
-                        filter: brightness(1.1);
-                    }
+            #filter {
+                background-color: #C6AB7C;
+                color: #ffffff;
+
+                &:hover {
+                    filter: brightness(1.1);
                 }
             }
         }
@@ -423,10 +425,7 @@ import CardComp from '../components/CardComp.vue';
                 font-size: 20px;
             }
         }
-        .car:hover {
-            transform: translateY(-5px);
-            transition: transform 0.3s ease;
-        }
+
     }
 
     .forms{
@@ -449,6 +448,17 @@ import CardComp from '../components/CardComp.vue';
         &:hover {
             color: #ffffff;
             background-color: #c6ab7cc4;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .container {
+            .row {
+                .sub-button {
+                    padding-left: 1rem !important;
+                }
+            }
         }
     }
 </style>
